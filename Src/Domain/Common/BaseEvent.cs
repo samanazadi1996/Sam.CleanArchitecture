@@ -6,4 +6,16 @@ namespace Domain.Common
     {
 
     }
+    public class BaseEventDeleted<T> : INotification where T : BaseEntity
+    {
+        public BaseEventDeleted()
+        {
+
+        }
+        public void SetId(long id)
+        {
+            Id = id;
+        }
+        public long Id { get; private set; }
+    }
 }
