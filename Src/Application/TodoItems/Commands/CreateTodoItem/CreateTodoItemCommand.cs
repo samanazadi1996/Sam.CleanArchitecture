@@ -10,7 +10,6 @@ namespace Application.TodoItems.Commands.CreateTodoItem
 {
     public record CreateTodoItemCommand : IRequest<long>
     {
-
         public string Title { get; set; }
         public string Description { get; set; }
         public string Color { get; set; }
