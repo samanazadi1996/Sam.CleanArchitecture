@@ -1,4 +1,5 @@
 ﻿using Application.Common.Exceptions;
+using Application.Common.Models;
 using Domain.ToDoListDomain.Entities;
 using Infrastructure.Persistence;
 using MediatR;
@@ -7,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace Application.TodoItems.Commands.DeleteTodoItem
 {
-    public record DeleteTodoItemCommand(long Id) : IRequest;
+    public record DeleteTodoItemCommand(long Id) : IRequest<BaseResult>;
 
-    public class DeleteTodoItemCommandHandler : IRequestHandler<DeleteTodoItemCommand>
+    public class DeleteTodoItemCommandHandler : IRequestHandler<DeleteTodoItemCommand, BaseResult>
     {
         private readonly IApplicationDbContext _context;
 
@@ -18,7 +19,7 @@ namespace Application.TodoItems.Commands.DeleteTodoItem
             _context = context;
         }
 
-        public async Task<Unit> Handle(DeleteTodoItemCommand request, CancellationToken cancellationToken)
+        public async Task<BaseResult> Handle(DeleteTodoItemCommand request, CancellationToken cancellationToken)
         {
             var entity = await _context.TodoItems.FindAsync(new object[] { request.Id }, cancellationToken);
 
@@ -31,7 +32,7 @@ namespace Application.TodoItems.Commands.DeleteTodoItem
 
             await _context.SaveChangesAsync(cancellationToken);
 
-            return Unit.Value;
+            return new BaseResult();
         }
     }
 

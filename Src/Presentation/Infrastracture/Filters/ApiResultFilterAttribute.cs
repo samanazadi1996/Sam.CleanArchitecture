@@ -11,70 +11,57 @@ namespace Presentation.Infrastracture.Filters
     {
         public override void OnResultExecuting(ResultExecutingContext context)
         {
-            string apiVersion = context.GetApiVersions();
-
+            var apiVersion = context.GetApiVersions();
+            object result = new object();
             if (context.Result is OkObjectResult okObjectResult)
             {
-                var apiResult = new BaseResult(true, "Ok", apiVersion, okObjectResult.Value);
-                context.Result = new JsonResult(apiResult);
+                result = new BaseResult<object>().Ok(okObjectResult.Value);
             }
             else if (context.Result is OkResult okResult)
             {
-                var apiResult = new BaseResult(true, "Ok", apiVersion);
-                context.Result = new JsonResult(apiResult);
+                result = new JsonResult(new BaseResult());
             }
             else if (context.Result is BadRequestResult badRequestResult)
             {
-                var apiResult = new BaseResult(true, "BadRequest", apiVersion);
-                context.Result = new JsonResult(apiResult);
-
+                result = new BaseResult().BadRequest();
             }
             else if (context.Result is BadRequestObjectResult badRequestObjectResult)
             {
-
-                var messages = ((Microsoft.AspNetCore.Mvc.ValidationProblemDetails)badRequestObjectResult.Value).Errors;
-                List<string> allErrors = new();
+                var allErrors = new List<string>();
                 if (badRequestObjectResult.Value is SerializableError errors)
                 {
                     allErrors = errors.SelectMany(p => (string[])p.Value).Distinct().ToList();
                 }
                 else
                 {
-                    foreach (var item in messages)
-                    {
+                    foreach (var item in ((ValidationProblemDetails)badRequestObjectResult.Value).Errors)
                         foreach (var vals in item.Value)
-                        {
-                            if (!allErrors.Any())
-                                allErrors.Add(vals.ToString());
-                        }
-                    }
+                            allErrors.Add(vals.ToString());
                 }
-
-                var apiResult = new BaseResult(false, "BadRequest", apiVersion, null, allErrors);
-                context.Result = new JsonResult(apiResult);
-
+                result = new BaseResult().BadRequest(allErrors.ToArray());
             }
             else if (context.Result is ContentResult contentResult)
             {
-                var apiResult = new BaseResult(true, "Ok", apiVersion, contentResult.Content);
-                context.Result = new JsonResult(apiResult);
+                result = new BaseResult<object>().Ok(contentResult.Content);
             }
             else if (context.Result is NotFoundResult notFoundResult)
             {
-                var apiResult = new BaseResult(false, "NotFound", apiVersion);
-                context.Result = new JsonResult(apiResult);
+                result = new BaseResult().NotFound();
             }
             else if (context.Result is NotFoundObjectResult notFoundObjectResult)
             {
-                var apiResult = new BaseResult(false, "NotFound", apiVersion, notFoundObjectResult.Value, null);
-                context.Result = new JsonResult(apiResult);
-                context.HttpContext.Response.StatusCode = notFoundObjectResult.StatusCode.Value;
+                result = new BaseResult<object>().NotFound(notFoundObjectResult.Value);
             }
             else if (context.Result is ObjectResult objectResult && objectResult.StatusCode == null && !(objectResult.Value is BaseResult))
             {
-                var apiResult = new BaseResult(true, "Ok", apiVersion, objectResult.Value, null);
-                context.Result = new JsonResult(apiResult);
+                result = new BaseResult<object>().Ok(objectResult.Value);
             }
+
+            if (context.Result is ObjectResult myObjectResult && myObjectResult.Value is BaseResult baseResult)
+                result = baseResult.SetApiVersion(apiVersion);
+
+            context.Result = new JsonResult(result);
+
             context.HttpContext.Response.StatusCode = context.HttpContext.Response.StatusCode;
 
             base.OnResultExecuting(context);

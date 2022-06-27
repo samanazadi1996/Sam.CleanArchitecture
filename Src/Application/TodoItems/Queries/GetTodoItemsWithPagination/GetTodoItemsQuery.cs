@@ -1,4 +1,5 @@
-﻿using Infrastructure.Persistence;
+﻿using Application.Common.Models;
+using Infrastructure.Persistence;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
@@ -8,11 +9,11 @@ using System.Threading.Tasks;
 
 namespace CleanArchitecture.Application.TodoItems.Queries.GetTodoItemsWithPagination
 {
-    public record GetTodoItemsQuery : IRequest<List<TodoItemDto>>
+    public record GetTodoItemsQuery : IRequest<BaseResult<List<TodoItemDto>>>
     {
     }
 
-    public class GetTodoItemsWithPaginationQueryHandler : IRequestHandler<GetTodoItemsQuery, List<TodoItemDto>>
+    public class GetTodoItemsWithPaginationQueryHandler : IRequestHandler<GetTodoItemsQuery, BaseResult<List<TodoItemDto>>>
     {
         private readonly IApplicationDbContext _context;
 
@@ -21,15 +22,19 @@ namespace CleanArchitecture.Application.TodoItems.Queries.GetTodoItemsWithPagina
             _context = context;
         }
 
-        public async Task<List<TodoItemDto>> Handle(GetTodoItemsQuery request, CancellationToken cancellationToken)
+        public async Task<BaseResult<List<TodoItemDto>>> Handle(GetTodoItemsQuery request, CancellationToken cancellationToken)
         {
-            return await _context.TodoItems.AsNoTracking().Select(p => new TodoItemDto()
+            var result = new BaseResult<List<TodoItemDto>>();
+
+            result.Ok(await _context.TodoItems.AsNoTracking().Select(p => new TodoItemDto()
             {
                 Id = p.Id,
                 Title = p.Title.Value,
                 Description = p.Description.Value,
                 TimeTodo = p.TimeTodo.Value
-            }).ToListAsync();
+            }).ToListAsync());
+
+            return result;
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Application.Common.Exceptions;
+using Application.Common.Models;
 using Domain.ToDoListDomain.Entities;
 using Domain.ToDoListDomain.ValueObjects;
 using Infrastructure.Persistence;
@@ -10,7 +11,7 @@ using System.Threading.Tasks;
 namespace Application.TodoItems.Commands.UpdateTodoItem
 {
 
-    public record UpdateTodoItemCommand : IRequest
+    public record UpdateTodoItemCommand : IRequest<BaseResult>
     {
         public long Id { get; set; }
         public string Title { get; set; }
@@ -19,7 +20,7 @@ namespace Application.TodoItems.Commands.UpdateTodoItem
         public DateTime TimeTodo { get; set; }
     }
 
-    public class UpdateTodoItemCommandHandler : IRequestHandler<UpdateTodoItemCommand>
+    public class UpdateTodoItemCommandHandler : IRequestHandler<UpdateTodoItemCommand, BaseResult>
     {
         private readonly IApplicationDbContext _context;
 
@@ -28,7 +29,7 @@ namespace Application.TodoItems.Commands.UpdateTodoItem
             _context = context;
         }
 
-        public async Task<Unit> Handle(UpdateTodoItemCommand request, CancellationToken cancellationToken)
+        public async Task<BaseResult> Handle(UpdateTodoItemCommand request, CancellationToken cancellationToken)
         {
             var entity = await _context.TodoItems.FindAsync(new object[] { request.Id }, cancellationToken);
 
@@ -45,7 +46,7 @@ namespace Application.TodoItems.Commands.UpdateTodoItem
 
             await _context.SaveChangesAsync(cancellationToken);
 
-            return Unit.Value;
+            return new BaseResult();
         }
     }
 }

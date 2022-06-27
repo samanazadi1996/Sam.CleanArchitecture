@@ -1,4 +1,5 @@
-﻿using Application.TodoItems.Commands.CreateTodoItem;
+﻿using Application.Common.Models;
+using Application.TodoItems.Commands.CreateTodoItem;
 using Application.TodoItems.Commands.DeleteTodoItem;
 using Application.TodoItems.Commands.UpdateTodoItem;
 using CleanArchitecture.Application.TodoItems.Queries.GetTodoItemsWithPagination;
@@ -12,23 +13,21 @@ namespace Presentation.Controllers.TodoItemsControllers
     public class TodoItemsCommandsController : ApiControllerBase
     {
         [HttpPost]
-        public async Task<ActionResult<int>> Create(CreateTodoItemCommand command)
+        public async Task<BaseResult<long>> Create(CreateTodoItemCommand command)
         {
-            return Ok(await Mediator.Send(command));
+            return await Mediator.Send(command);
         }
 
         [HttpPut]
-        public async Task<ActionResult> Update(UpdateTodoItemCommand command)
+        public async Task<BaseResult> Update(UpdateTodoItemCommand command)
         {
-            await Mediator.Send(command);
-            return Ok();
+            return await Mediator.Send(command);
         }
 
         [HttpDelete("{id}")]
-        public async Task<ActionResult> Delete(int id)
+        public async Task<BaseResult> Delete(int id)
         {
-            await Mediator.Send(new DeleteTodoItemCommand(id));
-            return Ok();
+            return await Mediator.Send(new DeleteTodoItemCommand(id));
         }
     }
 }

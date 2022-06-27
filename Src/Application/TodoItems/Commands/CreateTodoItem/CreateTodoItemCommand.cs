@@ -1,4 +1,5 @@
-﻿using Domain.ToDoListDomain.Entities;
+﻿using Application.Common.Models;
+using Domain.ToDoListDomain.Entities;
 using Domain.ToDoListDomain.ValueObjects;
 using Infrastructure.Persistence;
 using MediatR;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Application.TodoItems.Commands.CreateTodoItem
 {
-    public record CreateTodoItemCommand : IRequest<long>
+    public record CreateTodoItemCommand : IRequest<BaseResult<long>>
     {
         public string Title { get; set; }
         public string Description { get; set; }
@@ -16,7 +17,7 @@ namespace Application.TodoItems.Commands.CreateTodoItem
         public DateTime TimeTodo { get; set; }
     }
 
-    public class CreateTodoItemCommandHandler : IRequestHandler<CreateTodoItemCommand, long>
+    public class CreateTodoItemCommandHandler : IRequestHandler<CreateTodoItemCommand, BaseResult<long>>
     {
         private readonly IApplicationDbContext _context;
 
@@ -25,7 +26,7 @@ namespace Application.TodoItems.Commands.CreateTodoItem
             _context = context;
         }
 
-        public async Task<long> Handle(CreateTodoItemCommand request, CancellationToken cancellationToken)
+        public async Task<BaseResult<long>> Handle(CreateTodoItemCommand request, CancellationToken cancellationToken)
         {
             var entity = new TodoItem(
                 new TitleValueObject(request.Title),
@@ -37,7 +38,7 @@ namespace Application.TodoItems.Commands.CreateTodoItem
 
             await _context.SaveChangesAsync(cancellationToken);
 
-            return entity.Id;
+            return new BaseResult<long>().Ok(entity.Id);
         }
     }
 }

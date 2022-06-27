@@ -13,7 +13,8 @@ namespace Presentation.Infrastracture.Filters
     {
         public override async Task OnExceptionAsync(ExceptionContext context)
         {
-            var result = new BaseResult(false, context.Exception.Message, context.GetApiVersions());
+            var result = new BaseExceptionResult().Exception(context.Exception.Message);
+            result.SetApiVersion(context.GetApiVersions());
             var json = JsonConvert.SerializeObject(result);
 
             context.HttpContext.Response.ContentType = "application/json";

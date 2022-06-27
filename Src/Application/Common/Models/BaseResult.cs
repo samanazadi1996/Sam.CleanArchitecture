@@ -1,28 +1,54 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace Application.Common.Models
 {
-    public class BaseResult : IActionResult
+    public class BaseResult
     {
-        public BaseResult(bool success, string message, string apiVersion, object result = null, List<string> error = null)
+        public BaseResult()
         {
-            Success = success;
-            Message = message;
-            ApiVersion = apiVersion;
-            Error = error;
-            Result = result;
+            Success = true;
+            Message = "Ok";
         }
         public bool Success { get; set; }
         public string Message { get; set; }
         public string ApiVersion { get; set; }
         public List<string> Error { get; set; }
-        public object Result { get; set; }
 
-        public Task ExecuteResultAsync(ActionContext context)
+        public BaseResult NotFound(params string[] errors)
         {
-            return Task.CompletedTask;
+            Success = false;
+            Message = "NotFound";
+            Error = errors.ToList();
+            return this;
+        }
+        public BaseResult BadRequest(params string[] errors)
+        {
+            Success = false;
+            Message = "BadRequest";
+            Error = errors.ToList();
+            return this;
+        }
+        public BaseResult SetApiVersion(string version)
+        {
+            ApiVersion = version;
+            return this;
+        }
+    }
+    public class BaseResult<T> : BaseResult
+    {
+        public T Result { get; set; }
+
+        public BaseResult<T> Ok(T result)
+        {
+            Result = result;
+            return this;
+        }
+        public BaseResult<T> NotFound(T result, params string[] errors)
+        {
+            NotFound(errors);
+            Result = result;
+            return this;
         }
     }
 }
