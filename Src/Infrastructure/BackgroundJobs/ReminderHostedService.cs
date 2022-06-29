@@ -1,5 +1,5 @@
-﻿using Hangfire;
-using Infrastructure.Persistence;
+﻿using Application.Common.Interfaces;
+using Hangfire;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;

@@ -1,10 +1,8 @@
-﻿using Domain.Common;
+﻿using Application.Common.Interfaces;
 using Domain.ToDoListDomain.Entities;
+using Infrastructure.Persistence.Interceptors;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using System.IO;
-using System.Linq;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
@@ -15,11 +13,17 @@ namespace Infrastructure.Persistence
     {
 
         private readonly IMediator _mediator;
-        public ApplicationDbContext(IMediator mediator)
+        private readonly AuditableEntitySaveChangesInterceptor _auditableEntitySaveChangesInterceptor;
+
+        public ApplicationDbContext(
+            DbContextOptions<ApplicationDbContext> options,
+            IMediator mediator,
+            AuditableEntitySaveChangesInterceptor auditableEntitySaveChangesInterceptor)
+            : base(options)
         {
             _mediator = mediator;
+            _auditableEntitySaveChangesInterceptor = auditableEntitySaveChangesInterceptor;
         }
-
         public DbSet<TodoItem> TodoItems { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
@@ -39,15 +43,7 @@ namespace Infrastructure.Persistence
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            if (!optionsBuilder.IsConfigured)
-            {
-                IConfigurationRoot configuration = new ConfigurationBuilder()
-                   .SetBasePath(Directory.GetCurrentDirectory())
-                   .AddJsonFile("appsettings.json")
-                   .Build();
-                var connectionString = configuration.GetConnectionString("DefaultConnection");
-                optionsBuilder.UseSqlServer(connectionString);
-            }
+            optionsBuilder.AddInterceptors(_auditableEntitySaveChangesInterceptor);
         }
     }
 }

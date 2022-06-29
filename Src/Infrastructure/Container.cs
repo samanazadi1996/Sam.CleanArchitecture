@@ -1,14 +1,16 @@
-﻿using Hangfire;
+﻿using Application.Common.Interfaces;
+using Hangfire;
 using Infrastructure.BackgroundJobs;
 using Infrastructure.Persistence;
+using Infrastructure.Persistence.Interceptors;
+using Infrastructure.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
 
-namespace Infrastructure
+namespace Microsoft.Extensions.DependencyInjection
 {
-    public static class Container
+    public static class ConfigureServices
     {
         public static IServiceCollection AddInfrastructureServices(this IServiceCollection services, IConfiguration configuration)
         {
@@ -18,6 +20,8 @@ namespace Infrastructure
                 builder => builder.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName)));
 
             services.AddScoped<IApplicationDbContext>(provider => provider.GetRequiredService<ApplicationDbContext>());
+            services.AddTransient<IDateTime, DateTimeService>();
+            services.AddScoped<AuditableEntitySaveChangesInterceptor>();
 
             services.AddHangfire(x => x.UseSqlServerStorage(connectionString));
             services.AddHangfireServer();

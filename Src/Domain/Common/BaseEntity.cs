@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Domain.Common
@@ -7,7 +6,6 @@ namespace Domain.Common
     public abstract class BaseEntity
     {
         public long Id { get; set; }
-        public DateTime InsertDateTime { get; set; } = DateTime.Now;
 
         private List<BaseEvent> domainEvents = new();
 
@@ -30,5 +28,6 @@ namespace Domain.Common
             domainEvents.Clear();
         }
     }
+
 
 }

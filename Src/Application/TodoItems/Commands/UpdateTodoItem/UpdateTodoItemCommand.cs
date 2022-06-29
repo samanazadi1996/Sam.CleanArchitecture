@@ -1,8 +1,8 @@
 ﻿using Application.Common.Exceptions;
+using Application.Common.Interfaces;
 using Application.Common.Models;
 using Domain.ToDoListDomain.Entities;
 using Domain.ToDoListDomain.ValueObjects;
-using Infrastructure.Persistence;
 using MediatR;
 using System;
 using System.Threading;

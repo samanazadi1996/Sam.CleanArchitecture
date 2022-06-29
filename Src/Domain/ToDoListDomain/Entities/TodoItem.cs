@@ -4,7 +4,7 @@ using Domain.ToDoListDomain.ValueObjects;
 
 namespace Domain.ToDoListDomain.Entities
 {
-    public class TodoItem : BaseEntity
+    public class TodoItem : BaseAuditableEntity
     {
         public TitleValueObject Title { get; private set; }
         public DescriptionValueObject Description { get; private set; }

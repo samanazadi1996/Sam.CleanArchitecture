@@ -1,5 +1,5 @@
-﻿using Application.Common.Models;
-using Infrastructure.Persistence;
+﻿using Application.Common.Interfaces;
+using Application.Common.Models;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
