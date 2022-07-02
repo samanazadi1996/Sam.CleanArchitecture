@@ -10,5 +10,6 @@ namespace Application.Common.Interfaces
         DbSet<TodoItem> TodoItems { get; }
 
         Task<int> SaveChangesAsync(CancellationToken cancellationToken);
+        Task PushNotifications();
     }
 }

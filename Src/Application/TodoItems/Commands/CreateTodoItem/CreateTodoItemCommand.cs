@@ -36,6 +36,8 @@ namespace Application.TodoItems.Commands.CreateTodoItem
                 );
             _context.TodoItems.Add(entity);
 
+            await _context.PushNotifications();
+
             await _context.SaveChangesAsync(cancellationToken);
 
             return new BaseResult<long>().Ok(entity.Id);

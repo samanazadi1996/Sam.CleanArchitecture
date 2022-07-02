@@ -29,7 +29,8 @@ namespace Application.TodoItems.Commands.DeleteTodoItem
             }
 
             _context.TodoItems.Remove(entity);
-
+            
+            await _context.PushNotifications();
             await _context.SaveChangesAsync(cancellationToken);
 
             return new BaseResult();

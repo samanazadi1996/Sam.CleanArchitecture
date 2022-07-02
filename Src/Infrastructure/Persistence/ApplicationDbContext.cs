@@ -34,10 +34,9 @@ namespace Infrastructure.Persistence
         }
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
-            await BeforeSaveTriggers();
             return await base.SaveChangesAsync(cancellationToken);
         }
-        private async Task BeforeSaveTriggers()
+        public async Task PushNotifications()
         {
             await _mediator.DispatchDomainEvents(this);
         }

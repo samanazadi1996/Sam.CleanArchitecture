@@ -44,6 +44,8 @@ namespace Application.TodoItems.Commands.UpdateTodoItem
                 new TimeTodoValueObject(request.TimeTodo)
                 );
 
+            await _context.PushNotifications();
+
             await _context.SaveChangesAsync(cancellationToken);
 
             return new BaseResult();
