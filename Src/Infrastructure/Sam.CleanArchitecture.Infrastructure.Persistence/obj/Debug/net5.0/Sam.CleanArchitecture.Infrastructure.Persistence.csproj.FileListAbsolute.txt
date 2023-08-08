@@ -1,0 +1,17 @@
+G:\project\My\Sam.CleanArchitecture\Src\Infrastructure\Sam.CleanArchitecture.Infrastructure.Persistence\obj\Debug\net5.0\Sam.CleanArchitecture.Infrastructure.Persistence.csproj.AssemblyReference.cache
+G:\project\My\Sam.CleanArchitecture\Src\Infrastructure\Sam.CleanArchitecture.Infrastructure.Persistence\obj\Debug\net5.0\Sam.CleanArchitecture.Infrastructure.Persistence.GeneratedMSBuildEditorConfig.editorconfig
+G:\project\My\Sam.CleanArchitecture\Src\Infrastructure\Sam.CleanArchitecture.Infrastructure.Persistence\obj\Debug\net5.0\Sam.CleanArchitecture.Infrastructure.Persistence.AssemblyInfoInputs.cache
+G:\project\My\Sam.CleanArchitecture\Src\Infrastructure\Sam.CleanArchitecture.Infrastructure.Persistence\obj\Debug\net5.0\Sam.CleanArchitecture.Infrastructure.Persistence.AssemblyInfo.cs
+G:\project\My\Sam.CleanArchitecture\Src\Infrastructure\Sam.CleanArchitecture.Infrastructure.Persistence\obj\Debug\net5.0\Sam.CleanArchitecture.Infrastructure.Persistence.csproj.CoreCompileInputs.cache
+G:\project\My\Sam.CleanArchitecture\Src\Infrastructure\Sam.CleanArchitecture.Infrastructure.Persistence\bin\Debug\net5.0\Sam.CleanArchitecture.Infrastructure.Persistence.deps.json
+G:\project\My\Sam.CleanArchitecture\Src\Infrastructure\Sam.CleanArchitecture.Infrastructure.Persistence\bin\Debug\net5.0\Sam.CleanArchitecture.Infrastructure.Persistence.dll
+G:\project\My\Sam.CleanArchitecture\Src\Infrastructure\Sam.CleanArchitecture.Infrastructure.Persistence\bin\Debug\net5.0\ref\Sam.CleanArchitecture.Infrastructure.Persistence.dll
+G:\project\My\Sam.CleanArchitecture\Src\Infrastructure\Sam.CleanArchitecture.Infrastructure.Persistence\bin\Debug\net5.0\Sam.CleanArchitecture.Infrastructure.Persistence.pdb
+G:\project\My\Sam.CleanArchitecture\Src\Infrastructure\Sam.CleanArchitecture.Infrastructure.Persistence\bin\Debug\net5.0\Sam.CleanArchitecture.Application.dll
+G:\project\My\Sam.CleanArchitecture\Src\Infrastructure\Sam.CleanArchitecture.Infrastructure.Persistence\bin\Debug\net5.0\Sam.CleanArchitecture.Domain.dll
+G:\project\My\Sam.CleanArchitecture\Src\Infrastructure\Sam.CleanArchitecture.Infrastructure.Persistence\bin\Debug\net5.0\Sam.CleanArchitecture.Application.pdb
+G:\project\My\Sam.CleanArchitecture\Src\Infrastructure\Sam.CleanArchitecture.Infrastructure.Persistence\bin\Debug\net5.0\Sam.CleanArchitecture.Domain.pdb
+G:\project\My\Sam.CleanArchitecture\Src\Infrastructure\Sam.CleanArchitecture.Infrastructure.Persistence\obj\Debug\net5.0\Sam.CleanArchitecture.Infrastructure.Persistence.csproj.CopyComplete
+G:\project\My\Sam.CleanArchitecture\Src\Infrastructure\Sam.CleanArchitecture.Infrastructure.Persistence\obj\Debug\net5.0\Sam.CleanArchitecture.Infrastructure.Persistence.dll
+G:\project\My\Sam.CleanArchitecture\Src\Infrastructure\Sam.CleanArchitecture.Infrastructure.Persistence\obj\Debug\net5.0\ref\Sam.CleanArchitecture.Infrastructure.Persistence.dll
+G:\project\My\Sam.CleanArchitecture\Src\Infrastructure\Sam.CleanArchitecture.Infrastructure.Persistence\obj\Debug\net5.0\Sam.CleanArchitecture.Infrastructure.Persistence.pdb
