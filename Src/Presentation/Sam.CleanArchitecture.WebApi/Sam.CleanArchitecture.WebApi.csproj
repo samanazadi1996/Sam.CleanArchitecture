@@ -20,6 +20,7 @@
 	<ItemGroup>
 	  <ProjectReference Include="..\..\Core\Sam.CleanArchitecture.Application\Sam.CleanArchitecture.Application.csproj" />
 	  <ProjectReference Include="..\..\Core\Sam.CleanArchitecture.Domain\Sam.CleanArchitecture.Domain.csproj" />
+	  <ProjectReference Include="..\..\Infrastructure\Sam.CleanArchitecture.Infrastructure.FileManager\Sam.CleanArchitecture.Infrastructure.FileManager.csproj" />
 	  <ProjectReference Include="..\..\Infrastructure\Sam.CleanArchitecture.Infrastructure.Identity\Sam.CleanArchitecture.Infrastructure.Identity.csproj" />
 	  <ProjectReference Include="..\..\Infrastructure\Sam.CleanArchitecture.Infrastructure.Persistence\Sam.CleanArchitecture.Infrastructure.Persistence.csproj" />
 	</ItemGroup>

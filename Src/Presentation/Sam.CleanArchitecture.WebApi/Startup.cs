@@ -15,6 +15,7 @@ using Sam.CleanArchitecture.Infrastructure.Persistence;
 using Sam.CleanArchitecture.WebApi.Infrastracture.Extensions;
 using Sam.CleanArchitecture.WebApi.Infrastracture.Middlewares;
 using Sam.CleanArchitecture.WebApi.Infrastracture.Services;
+using Sam.CleanArchitecture.Infrastructure.FileManager;
 
 namespace Sam.CleanArchitecture.WebApi
 {
@@ -32,9 +33,11 @@ namespace Sam.CleanArchitecture.WebApi
         {
             services.AddApplicationLayer(Configuration);
             services.AddPersistenceInfrastructure(Configuration);
+            services.AddFileManagerInfrastructure(Configuration);
+            services.AddIdentityInfrastructure(Configuration);
+
             services.AddScoped<IAuthenticatedUserService, AuthenticatedUserService>();
             services.AddDistributedMemoryCache();
-            services.AddIdentityInfrastructure(Configuration);
             services.AddJwt(Configuration);
 
             services.AddControllers().AddFluentValidation(options =>
