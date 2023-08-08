@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
 using Sam.CleanArchitecture.Application.Behaviours;
+using Sam.CleanArchitecture.Application.Interfaces;
 
 namespace Sam.CleanArchitecture.Application.DTOs.Account.Requests
 {
@@ -10,16 +11,18 @@ namespace Sam.CleanArchitecture.Application.DTOs.Account.Requests
     }
     public class ChangePasswordRequestValidator : AbstractValidator<ChangePasswordRequest>
     {
-        public ChangePasswordRequestValidator()
+        public ChangePasswordRequestValidator(ITranslator translator)
         {
             RuleFor(x => x.Password)
                 .NotEmpty().NotNull()
                 .MinimumLength(6)
-                .Matches(Regexs.Password);
+                .Matches(Regexs.Password)
+                .WithName(translator["Password"]);
 
             RuleFor(x => x.ConfirmPassword)
                 .Equal(x => x.Password)
-                .Matches(Regexs.Password);
+                .Matches(Regexs.Password)
+                .WithName(translator["ConfirmPassword"]);
         }
     }
 

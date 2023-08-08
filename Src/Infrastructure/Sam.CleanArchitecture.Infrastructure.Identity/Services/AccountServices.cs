@@ -24,14 +24,16 @@ namespace Sam.CleanArchitecture.Infrastructure.Identity.Services
         private readonly SignInManager<ApplicationUser> signInManager;
         private readonly IAuthenticatedUserService authenticatedUser;
         private readonly JWTSettings jwtSettings;
+        private readonly ITranslator translator;
 
 
-        public AccountServices(UserManager<ApplicationUser> userManager, IAuthenticatedUserService authenticatedUser, SignInManager<ApplicationUser> signInManager, IOptions<JWTSettings> jwtSettings)
+        public AccountServices(UserManager<ApplicationUser> userManager, IAuthenticatedUserService authenticatedUser, SignInManager<ApplicationUser> signInManager, IOptions<JWTSettings> jwtSettings, ITranslator translator)
         {
             this.userManager = userManager;
             this.authenticatedUser = authenticatedUser;
             this.signInManager = signInManager;
             this.jwtSettings = jwtSettings.Value;
+            this.translator = translator;
         }
 
         public async Task<BaseResult> ChangePassword(ChangePasswordRequest model)
@@ -67,12 +69,12 @@ namespace Sam.CleanArchitecture.Infrastructure.Identity.Services
             var user = await userManager.FindByNameAsync(request.UserName);
             if (user == null)
             {
-                return new Result<AuthenticationResponse>(new Error(ErrorCode.NotFound, "Account notfound with UserName", nameof(request.UserName)));
+                return new Result<AuthenticationResponse>(new Error(ErrorCode.NotFound, translator.GetString(Messages.AccountMessages.Account_notfound_with_UserName(request.UserName)), nameof(request.UserName)));
             }
             var result = await signInManager.PasswordSignInAsync(user.UserName, request.Password, false, lockoutOnFailure: false);
             if (!result.Succeeded)
             {
-                return new Result<AuthenticationResponse>(new Error(ErrorCode.FieldDataInvalid, "Invalid password", nameof(request.Password)));
+                return new Result<AuthenticationResponse>(new Error(ErrorCode.FieldDataInvalid, translator.GetString(Messages.AccountMessages.Invalid_password()), nameof(request.Password)));
             }
 
             var rolesList = await userManager.GetRolesAsync(user).ConfigureAwait(false);
@@ -97,7 +99,7 @@ namespace Sam.CleanArchitecture.Infrastructure.Identity.Services
             var user = await userManager.FindByNameAsync(username);
             if (user == null)
             {
-                return new Result<AuthenticationResponse>(new Error(ErrorCode.NotFound, "Account notfound with UserName", nameof(username)));
+                return new Result<AuthenticationResponse>(new Error(ErrorCode.NotFound, translator.GetString(Messages.AccountMessages.Account_notfound_with_UserName(username)), nameof(username)));
             }
 
             var rolesList = await userManager.GetRolesAsync(user).ConfigureAwait(false);

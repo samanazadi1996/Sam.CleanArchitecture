@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
 using Sam.CleanArchitecture.Application.Behaviours;
+using Sam.CleanArchitecture.Application.Interfaces;
 
 namespace Sam.CleanArchitecture.Application.DTOs.Account.Requests
 {
@@ -11,15 +12,14 @@ namespace Sam.CleanArchitecture.Application.DTOs.Account.Requests
     }
     public class AuthenticationRequestValidator : AbstractValidator<AuthenticationRequest>
     {
-        public AuthenticationRequestValidator()
+        public AuthenticationRequestValidator(ITranslator translator)
         {
             RuleFor(x => x.UserName)
-                .NotEmpty().NotNull();
+                .NotEmpty().NotNull().WithName(translator["UserName"]);
 
             RuleFor(x => x.Password)
                 .NotEmpty().NotNull()
-                .Matches(Regexs.Password);
+                .Matches(Regexs.Password).WithName(translator["Password"]);
         }
     }
-
 }

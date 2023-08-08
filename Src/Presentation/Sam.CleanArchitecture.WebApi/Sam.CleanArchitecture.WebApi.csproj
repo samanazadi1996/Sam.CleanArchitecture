@@ -23,6 +23,7 @@
 	  <ProjectReference Include="..\..\Infrastructure\Sam.CleanArchitecture.Infrastructure.FileManager\Sam.CleanArchitecture.Infrastructure.FileManager.csproj" />
 	  <ProjectReference Include="..\..\Infrastructure\Sam.CleanArchitecture.Infrastructure.Identity\Sam.CleanArchitecture.Infrastructure.Identity.csproj" />
 	  <ProjectReference Include="..\..\Infrastructure\Sam.CleanArchitecture.Infrastructure.Persistence\Sam.CleanArchitecture.Infrastructure.Persistence.csproj" />
+	  <ProjectReference Include="..\..\Infrastructure\Sam.CleanArchitecture.Infrastructure.Resources\Sam.CleanArchitecture.Infrastructure.Resources.csproj" />
 	</ItemGroup>
 
 </Project>

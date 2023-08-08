@@ -16,6 +16,7 @@ using Sam.CleanArchitecture.WebApi.Infrastracture.Extensions;
 using Sam.CleanArchitecture.WebApi.Infrastracture.Middlewares;
 using Sam.CleanArchitecture.WebApi.Infrastracture.Services;
 using Sam.CleanArchitecture.Infrastructure.FileManager;
+using Sam.CleanArchitecture.Infrastructure.Resources;
 
 namespace Sam.CleanArchitecture.WebApi
 {
@@ -35,6 +36,7 @@ namespace Sam.CleanArchitecture.WebApi
             services.AddPersistenceInfrastructure(Configuration);
             services.AddFileManagerInfrastructure(Configuration);
             services.AddIdentityInfrastructure(Configuration);
+            services.AddResourcesInfrastructure(Configuration);
 
             services.AddScoped<IAuthenticatedUserService, AuthenticatedUserService>();
             services.AddDistributedMemoryCache();

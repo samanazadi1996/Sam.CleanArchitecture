@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
 using Sam.CleanArchitecture.Application.Behaviours;
+using Sam.CleanArchitecture.Application.Interfaces;
 
 namespace Sam.CleanArchitecture.Application.DTOs.Account.Requests
 {
@@ -9,12 +10,13 @@ namespace Sam.CleanArchitecture.Application.DTOs.Account.Requests
     }
     public class ChangeUserNameRequestValidator : AbstractValidator<ChangeUserNameRequest>
     {
-        public ChangeUserNameRequestValidator()
+        public ChangeUserNameRequestValidator(ITranslator translator)
         {
             RuleFor(x => x.UserName)
                 .NotEmpty().NotNull()
                 .MinimumLength(4)
-                .Matches(Regexs.UserName);
+                .Matches(Regexs.UserName)
+                .WithName(translator["UserName"]);
         }
     }
 }
