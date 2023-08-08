@@ -20,7 +20,7 @@ namespace Sam.CleanArchitecture.WebApi.Controllers.v1
         }
 
         [HttpPost]
-        public async Task<Result<AuthenticationResponse>> Authenticate(AuthenticationRequest request)
+        public async Task<BaseResult<AuthenticationResponse>> Authenticate(AuthenticationRequest request)
             => await accountServices.Authenticate(request);
 
         [HttpPut, Authorize]
@@ -32,7 +32,7 @@ namespace Sam.CleanArchitecture.WebApi.Controllers.v1
             => await accountServices.ChangePassword(model);
 
         [HttpPost]
-        public async Task<Result<AuthenticationResponse>> Start()
+        public async Task<BaseResult<AuthenticationResponse>> Start()
         {
             var gostUsername = await accountServices.RegisterGostAccount();
             return await accountServices.AuthenticateByUserName(gostUsername.Data);

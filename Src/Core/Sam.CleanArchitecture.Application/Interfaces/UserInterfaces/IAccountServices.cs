@@ -7,11 +7,11 @@ namespace Sam.CleanArchitecture.Application.Interfaces.UserInterfaces
 {
     public interface IAccountServices
     {
-        Task<Result<string>> RegisterGostAccount();
+        Task<BaseResult<string>> RegisterGostAccount();
         Task<BaseResult> ChangePassword(ChangePasswordRequest model);
         Task<BaseResult> ChangeUserName(ChangeUserNameRequest model);
-        Task<Result<AuthenticationResponse>> Authenticate(AuthenticationRequest request);
-        Task<Result<AuthenticationResponse>> AuthenticateByUserName(string username);
+        Task<BaseResult<AuthenticationResponse>> Authenticate(AuthenticationRequest request);
+        Task<BaseResult<AuthenticationResponse>> AuthenticateByUserName(string username);
 
     }
 }

@@ -30,7 +30,7 @@ namespace Sam.CleanArchitecture.WebApi.Infrastracture.Middlewares
             {
                 var response = context.Response;
                 response.ContentType = "application/json";
-                var responseModel = new Result<string>(new Error(ErrorCode.Exception, error?.Message));
+                var responseModel = new BaseResult<string>(new Error(ErrorCode.Exception, error?.Message));
 
                 switch (error)
                 {

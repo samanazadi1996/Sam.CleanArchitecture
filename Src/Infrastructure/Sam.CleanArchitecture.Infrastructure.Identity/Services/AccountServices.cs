@@ -64,17 +64,17 @@ namespace Sam.CleanArchitecture.Infrastructure.Identity.Services
             return new BaseResult(identityResult.Errors.Select(p => new Error(ErrorCode.ErrorInIdentity, p.Description)));
         }
 
-        public async Task<Result<AuthenticationResponse>> Authenticate(AuthenticationRequest request)
+        public async Task<BaseResult<AuthenticationResponse>> Authenticate(AuthenticationRequest request)
         {
             var user = await userManager.FindByNameAsync(request.UserName);
             if (user == null)
             {
-                return new Result<AuthenticationResponse>(new Error(ErrorCode.NotFound, translator.GetString(Messages.AccountMessages.Account_notfound_with_UserName(request.UserName)), nameof(request.UserName)));
+                return new BaseResult<AuthenticationResponse>(new Error(ErrorCode.NotFound, translator.GetString(Messages.AccountMessages.Account_notfound_with_UserName(request.UserName)), nameof(request.UserName)));
             }
             var result = await signInManager.PasswordSignInAsync(user.UserName, request.Password, false, lockoutOnFailure: false);
             if (!result.Succeeded)
             {
-                return new Result<AuthenticationResponse>(new Error(ErrorCode.FieldDataInvalid, translator.GetString(Messages.AccountMessages.Invalid_password()), nameof(request.Password)));
+                return new BaseResult<AuthenticationResponse>(new Error(ErrorCode.FieldDataInvalid, translator.GetString(Messages.AccountMessages.Invalid_password()), nameof(request.Password)));
             }
 
             var rolesList = await userManager.GetRolesAsync(user).ConfigureAwait(false);
@@ -91,15 +91,15 @@ namespace Sam.CleanArchitecture.Infrastructure.Identity.Services
                 IsVerified = user.EmailConfirmed,
             };
 
-            return new Result<AuthenticationResponse>(response);
+            return new BaseResult<AuthenticationResponse>(response);
         }
 
-        public async Task<Result<AuthenticationResponse>> AuthenticateByUserName(string username)
+        public async Task<BaseResult<AuthenticationResponse>> AuthenticateByUserName(string username)
         {
             var user = await userManager.FindByNameAsync(username);
             if (user == null)
             {
-                return new Result<AuthenticationResponse>(new Error(ErrorCode.NotFound, translator.GetString(Messages.AccountMessages.Account_notfound_with_UserName(username)), nameof(username)));
+                return new BaseResult<AuthenticationResponse>(new Error(ErrorCode.NotFound, translator.GetString(Messages.AccountMessages.Account_notfound_with_UserName(username)), nameof(username)));
             }
 
             var rolesList = await userManager.GetRolesAsync(user).ConfigureAwait(false);
@@ -116,10 +116,10 @@ namespace Sam.CleanArchitecture.Infrastructure.Identity.Services
                 IsVerified = user.EmailConfirmed,
             };
 
-            return new Result<AuthenticationResponse>(response);
+            return new BaseResult<AuthenticationResponse>(response);
         }
 
-        public async Task<Result<string>> RegisterGostAccount()
+        public async Task<BaseResult<string>> RegisterGostAccount()
         {
             var user = new ApplicationUser()
             {
@@ -129,9 +129,9 @@ namespace Sam.CleanArchitecture.Infrastructure.Identity.Services
             var identityResult = await userManager.CreateAsync(user);
 
             if (identityResult.Succeeded)
-                return new Result<string>(user.UserName);
+                return new BaseResult<string>(user.UserName);
 
-            return new Result<string>(identityResult.Errors.Select(p => new Error(ErrorCode.ErrorInIdentity, p.Description)));
+            return new BaseResult<string>(identityResult.Errors.Select(p => new Error(ErrorCode.ErrorInIdentity, p.Description)));
 
             string GenerateRandomString(int length)
             {

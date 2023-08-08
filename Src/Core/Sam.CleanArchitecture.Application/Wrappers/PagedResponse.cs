@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Sam.CleanArchitecture.Application.Wrappers
 {
-    public class PagedResponse<T> : Result<List<T>>
+    public class PagedResponse<T> : BaseResult<List<T>>
     {
         public int PageNumber { get; }
         public int PageSize { get; }
