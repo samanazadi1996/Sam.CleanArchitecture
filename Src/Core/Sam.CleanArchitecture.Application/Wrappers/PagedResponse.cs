@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Sam.CleanArchitecture.Application.Parameters;
+using System;
 using System.Collections.Generic;
 
 namespace Sam.CleanArchitecture.Application.Wrappers
@@ -23,6 +24,17 @@ namespace Sam.CleanArchitecture.Application.Wrappers
         {
             PageNumber = pageNumber;
             PageSize = pageSize;
+            TotalItems = data.Item2;
+            TotalPages = TotalItems / PageSize;
+            if (TotalItems % PageSize > 0) TotalPages++;
+
+            Data = data.Item1;
+            Success = true;
+        }
+        public PagedResponse(Tuple<List<T>, int> data, PagenationRequestParameter query)
+        {
+            PageNumber = query.PageNumber;
+            PageSize = query.PageSize;
             TotalItems = data.Item2;
             TotalPages = TotalItems / PageSize;
             if (TotalItems % PageSize > 0) TotalPages++;

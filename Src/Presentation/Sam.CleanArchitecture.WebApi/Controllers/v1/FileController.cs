@@ -15,8 +15,8 @@ namespace Sam.CleanArchitecture.WebApi.Controllers.v1
             this.fileManagerService = fileManagerService;
         }
 
-        [HttpGet("GetFile")]
-        public async Task<IActionResult> Get(string name)
+        [HttpGet]
+        public async Task<IActionResult> GetFile(string name)
         {
             var bytes = await fileManagerService.Download(name);
 
@@ -24,5 +24,4 @@ namespace Sam.CleanArchitecture.WebApi.Controllers.v1
         }
 
     }
-
 }

@@ -3,6 +3,12 @@
 	<PropertyGroup>
 		<TargetFramework>net5.0</TargetFramework>
 	</PropertyGroup>
+
+	<ItemGroup>
+	  <Compile Remove="Interfaces\NewFolder\**" />
+	  <EmbeddedResource Remove="Interfaces\NewFolder\**" />
+	  <None Remove="Interfaces\NewFolder\**" />
+	</ItemGroup>
 	<ItemGroup>
 		<PackageReference Include="FluentValidation" Version="11.2.2" />
 		<PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.2.2" />
@@ -14,10 +20,6 @@
 	</ItemGroup>
 	<ItemGroup>
 		<ProjectReference Include="..\Sam.CleanArchitecture.Domain\Sam.CleanArchitecture.Domain.csproj" />
-	</ItemGroup>
-	<ItemGroup>
-		<Folder Include="Features\" />
-		<Folder Include="Interfaces\NewFolder\" />
 	</ItemGroup>
 
 </Project>
