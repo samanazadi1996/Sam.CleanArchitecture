@@ -2,9 +2,9 @@
 using Sam.CleanArchitecture.Application.Wrappers;
 using Sam.CleanArchitecture.Domain.Products.Dtos;
 
-namespace Sam.CleanArchitecture.Application.Features.Products.Queries.GetById
+namespace Sam.CleanArchitecture.Application.Features.Products.Queries.GetProductById
 {
-    public class GetByIdQuery : IRequest<BaseResult<ProductDto>>
+    public class GetProductByIdQuery : IRequest<BaseResult<ProductDto>>
     {
         public long Id { get; set; }
     }

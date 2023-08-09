@@ -6,20 +6,20 @@ using Sam.CleanArchitecture.Domain.Products.Dtos;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Sam.CleanArchitecture.Application.Features.Products.Queries.GetById
+namespace Sam.CleanArchitecture.Application.Features.Products.Queries.GetProductById
 {
-    public class GetByIdQueryHandler : IRequestHandler<GetByIdQuery, BaseResult<ProductDto>>
+    public class GetProductByIdQueryHandler : IRequestHandler<GetProductByIdQuery, BaseResult<ProductDto>>
     {
         private readonly IProductRepository productRepository;
         private readonly ITranslator translator;
 
-        public GetByIdQueryHandler(IProductRepository productRepository, ITranslator translator)
+        public GetProductByIdQueryHandler(IProductRepository productRepository, ITranslator translator)
         {
             this.productRepository = productRepository;
             this.translator = translator;
         }
 
-        public async Task<BaseResult<ProductDto>> Handle(GetByIdQuery request, CancellationToken cancellationToken)
+        public async Task<BaseResult<ProductDto>> Handle(GetProductByIdQuery request, CancellationToken cancellationToken)
         {
             var product = await productRepository.GetByIdAsync(request.Id);
 
