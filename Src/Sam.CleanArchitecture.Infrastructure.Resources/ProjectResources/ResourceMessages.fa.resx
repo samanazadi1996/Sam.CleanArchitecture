@@ -123,6 +123,9 @@
   <data name="Invalid_password" xml:space="preserve">
     <value>گذرواژه اشتباه است</value>
   </data>
+  <data name="Product_notfound_with_id" xml:space="preserve">
+    <value>محصول با شناسه {0} یافت نشد</value>
+  </data>
   <data name="Username_is_already_taken" xml:space="preserve">
     <value>نام کاربری {0} در سیستم ثبت شده است</value>
   </data>

@@ -1,12 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Linq;
-using System.Text.Json;
-using System.Threading;
-using System.Threading.Tasks;
 using Sam.CleanArchitecture.Application.Interfaces;
 using Sam.CleanArchitecture.Domain.Common;
-using Sam.CleanArchitecture.Domain.OutBoxEventItems.Entities;
+using Sam.CleanArchitecture.Domain.Products.Entities;
+using System;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Sam.CleanArchitecture.Infrastructure.Persistence.Contexts
 {
@@ -19,10 +18,9 @@ namespace Sam.CleanArchitecture.Infrastructure.Persistence.Contexts
             this.authenticatedUser = authenticatedUser;
         }
 
-        public DbSet<OutBoxEventItem> OutBoxEventItems { get; set; }
+        public DbSet<Product> Products { get; set; }
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
         {
-            AddDomainEvents();
             if (authenticatedUser.UserId is not null)
             {
                 var userId = Guid.Parse(authenticatedUser.UserId);
@@ -55,44 +53,6 @@ namespace Sam.CleanArchitecture.Infrastructure.Persistence.Contexts
             builder.ApplyConfigurationsFromAssembly(GetType().Assembly);
 
             base.OnModelCreating(builder);
-        }
-        private void AddDomainEvents()
-        {
-            #region AddDomainEvents
-
-            var entities = ChangeTracker
-                .Entries<BaseEntity>()
-                .Where(e => e.Entity.DomainEvents.Any())
-                .Select(e => e.Entity);
-
-            var domainEvents = entities
-                .SelectMany(e => e.DomainEvents)
-                .ToList();
-
-            entities.ToList().ForEach(e => e.ClearDomainEvents());
-
-            foreach (var item in domainEvents)
-                Add(item.GetType(), item);
-
-            #endregion
-
-            #region AddDeletedEvents
-
-            var deletedEntity = ChangeTracker.Entries<BaseEntity>().Where(p => p.State == EntityState.Deleted).Select(p => p.Entity);
-            foreach (var item in deletedEntity)
-                Add(typeof(BaseEventDeleted<>).MakeGenericType(item.GetType()), new { item.Id });
-
-            #endregion
-
-            void Add(Type @type, object item)
-            {
-                OutBoxEventItems.Add(new OutBoxEventItem()
-                {
-                    EventName = @type.Name,
-                    EventTypeName = @type.FullName,
-                    EventPayload = JsonSerializer.Serialize(item)
-                });
-            }
         }
     }
 }
