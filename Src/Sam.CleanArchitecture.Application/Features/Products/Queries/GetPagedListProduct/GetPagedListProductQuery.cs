@@ -7,5 +7,6 @@ namespace Sam.CleanArchitecture.Application.Features.Products.Queries.GetPagedLi
 {
     public class GetPagedListProductQuery : PagenationRequestParameter, IRequest<PagedResponse<ProductDto>>
     {
+        public string Name { get; set; }
     }
 }

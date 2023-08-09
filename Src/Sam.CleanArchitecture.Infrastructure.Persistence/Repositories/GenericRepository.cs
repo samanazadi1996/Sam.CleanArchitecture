@@ -1,7 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Sam.CleanArchitecture.Application.Interfaces.Repositories;
 using Sam.CleanArchitecture.Infrastructure.Persistence.Contexts;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Sam.CleanArchitecture.Infrastructure.Persistence.Repositories
@@ -41,6 +43,18 @@ namespace Sam.CleanArchitecture.Infrastructure.Persistence.Repositories
             return await _dbContext
                  .Set<T>()
                  .ToListAsync();
+        }
+
+        protected async Task<Tuple<List<TEntity>, int>> Paged<TEntity>(IQueryable<TEntity> query, int pageNumber, int pageSize)
+        {
+            var count = await query.CountAsync();
+
+            var pagedResult = await query
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync();
+
+            return new Tuple<List<TEntity>, int>(pagedResult, count);
         }
     }
 }

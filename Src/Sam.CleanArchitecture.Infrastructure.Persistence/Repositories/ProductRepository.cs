@@ -20,17 +20,19 @@ namespace Sam.CleanArchitecture.Infrastructure.Persistence.Repositories
 
         }
 
-        public async Task<Tuple<List<ProductDto>, int>> GetPagedListAsync(int pageNumber, int pageSize)
+        public async Task<Tuple<List<ProductDto>, int>> GetPagedListAsync(int pageNumber, int pageSize, string name)
         {
-            var count = await products.CountAsync();
+            var query = products.AsQueryable();
 
-            var pagedResult = await products
-                .Skip((pageNumber - 1) * pageSize)
-                .Take(pageSize)
-                .Select(p => new ProductDto(p))
-                .ToListAsync();
+            if (!string.IsNullOrEmpty(name))
+            {
+                query = query.Where(p => p.Name.Contains(name));
+            }
 
-            return new Tuple<List<ProductDto>, int>(pagedResult, count);
+            return await Paged(
+                query.Select(p => new ProductDto(p)),
+                pageNumber,
+                pageSize);
 
         }
     }

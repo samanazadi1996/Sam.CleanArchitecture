@@ -18,7 +18,7 @@ namespace Sam.CleanArchitecture.Application.Features.Products.Queries.GetPagedLi
 
         public async Task<PagedResponse<ProductDto>> Handle(GetPagedListProductQuery request, CancellationToken cancellationToken)
         {
-            var result = await productRepository.GetPagedListAsync(request.PageNumber, request.PageSize);
+            var result = await productRepository.GetPagedListAsync(request.PageNumber, request.PageSize, request.Name);
 
             return new PagedResponse<ProductDto>(result, request);
         }
