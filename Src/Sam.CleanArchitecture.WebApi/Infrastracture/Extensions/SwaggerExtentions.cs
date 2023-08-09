@@ -1,20 +1,16 @@
 ﻿
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
-using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 using System;
 using System.Collections.Generic;
-using System.IO;
 
 namespace Sam.CleanArchitecture.WebApi.Infrastracture.Extensions
 {
     public static class SwaggerExtentions
     {
-        private const string swaggerAuthorizationUrl = "/SwaggerAuthorization.js";
         public static IApplicationBuilder UseSwaggerWithVersioning(this IApplicationBuilder app)
         {
             IServiceProvider services = app.ApplicationServices;
@@ -27,7 +23,6 @@ namespace Sam.CleanArchitecture.WebApi.Infrastracture.Extensions
                 foreach (var description in provider.ApiVersionDescriptions)
                 {
                     options.SwaggerEndpoint($"/swagger/{description.GroupName}/swagger.json", description.GroupName.ToUpperInvariant());
-                    options.InjectJavascript(swaggerAuthorizationUrl);
                 }
             });
 
@@ -83,27 +78,5 @@ namespace Sam.CleanArchitecture.WebApi.Infrastracture.Extensions
 
             return services;
         }
-        public static void AddSwaggerAuthorization(this IEndpointRouteBuilder endpoints)
-        {
-            endpoints.MapGet(swaggerAuthorizationUrl, async context =>
-            {
-                await context.Response.WriteAsync(temp());
-                string temp()
-                {
-                    var path = Path.Combine(Directory.GetCurrentDirectory(), "Files", "SwaggerAuthorization.js");
-                    return File.ReadAllText(path);
-                }
-            });
-        }
-        //public static void AddSwaggerAuthorization(this IEndpointRouteBuilder endpoints)
-        //{
-        //    endpoints.Map("/SwaggerAuthorization.js", () => temp());
-        //    string temp()
-        //    {
-        //        var path = Path.Combine(Directory.GetCurrentDirectory(), "Files", "SwaggerAuthorization.js");
-        //        return File.ReadAllText(path);
-        //    }
-        //}
-
     }
 }

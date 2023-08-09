@@ -5,18 +5,18 @@ using Microsoft.AspNetCore.Localization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Reflection;
 using Sam.CleanArchitecture.Application;
 using Sam.CleanArchitecture.Application.Interfaces;
+using Sam.CleanArchitecture.Infrastructure.FileManager;
 using Sam.CleanArchitecture.Infrastructure.Identity;
 using Sam.CleanArchitecture.Infrastructure.Persistence;
+using Sam.CleanArchitecture.Infrastructure.Resources;
 using Sam.CleanArchitecture.WebApi.Infrastracture.Extensions;
 using Sam.CleanArchitecture.WebApi.Infrastracture.Middlewares;
 using Sam.CleanArchitecture.WebApi.Infrastracture.Services;
-using Sam.CleanArchitecture.Infrastructure.FileManager;
-using Sam.CleanArchitecture.Infrastructure.Resources;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Reflection;
 
 namespace Sam.CleanArchitecture.WebApi
 {
@@ -94,7 +94,6 @@ namespace Sam.CleanArchitecture.WebApi
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
-                endpoints.AddSwaggerAuthorization();
             });
         }
     }

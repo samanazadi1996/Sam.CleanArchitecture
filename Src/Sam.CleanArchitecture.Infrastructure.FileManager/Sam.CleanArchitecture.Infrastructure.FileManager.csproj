@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
 		<TargetFramework>net5.0</TargetFramework>
@@ -9,10 +9,9 @@
 		<PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="5.0.0" />
 		<PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="5.0.0" />
 	</ItemGroup>
-
 	<ItemGroup>
-		<ProjectReference Include="..\..\Core\Sam.CleanArchitecture.Application\Sam.CleanArchitecture.Application.csproj" />
-		<ProjectReference Include="..\..\Core\Sam.CleanArchitecture.Domain\Sam.CleanArchitecture.Domain.csproj" />
+		<ProjectReference Include="..\Sam.CleanArchitecture.Application\Sam.CleanArchitecture.Application.csproj" />
 	</ItemGroup>
+
 
 </Project>
