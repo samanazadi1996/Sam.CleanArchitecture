@@ -1,12 +1,11 @@
-using System.Threading.Tasks;
-using Sam.CleanArchitecture.Infrastructure.Identity.Contexts;
-using Sam.CleanArchitecture.Infrastructure.Identity.Models;
-using Sam.CleanArchitecture.Infrastructure.Persistence.Contexts;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Sam.CleanArchitecture.Infrastructure.FileManager.Contexts;
+using Sam.CleanArchitecture.Infrastructure.Identity.Contexts;
+using Sam.CleanArchitecture.Infrastructure.Persistence.Contexts;
+using System.Threading.Tasks;
 
 namespace Sam.CleanArchitecture.WebApi
 {
@@ -22,6 +21,7 @@ namespace Sam.CleanArchitecture.WebApi
 
                 services.GetRequiredService<IdentityContext>().Database.Migrate();
                 services.GetRequiredService<ApplicationDbContext>().Database.Migrate();
+                services.GetRequiredService<FileManagerDbContext>().Database.Migrate();
             }
 
             host.Run();
