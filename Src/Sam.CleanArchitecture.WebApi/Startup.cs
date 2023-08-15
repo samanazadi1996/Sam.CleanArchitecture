@@ -81,7 +81,7 @@ namespace Sam.CleanArchitecture.WebApi
             app.UseMiddleware<ErrorHandlerMiddleware>();
             app.UseHealthChecks("/health");
 
-            var locale = "fa";
+            var locale = "en";
             var localizationOptions = new RequestLocalizationOptions
             {
                 SupportedCultures = new List<CultureInfo> { new CultureInfo(locale) },
