@@ -19,9 +19,10 @@ namespace Sam.CleanArchitecture.WebApi
             {
                 var services = scope.ServiceProvider;
 
-                services.GetRequiredService<IdentityContext>().Database.Migrate();
-                services.GetRequiredService<ApplicationDbContext>().Database.Migrate();
-                services.GetRequiredService<FileManagerDbContext>().Database.Migrate();
+                await services.GetRequiredService<IdentityContext>().Database.MigrateAsync();
+                await services.GetRequiredService<ApplicationDbContext>().Database.MigrateAsync();
+                await services.GetRequiredService<FileManagerDbContext>().Database.MigrateAsync();
+
             }
 
             host.Run();
@@ -34,4 +35,5 @@ namespace Sam.CleanArchitecture.WebApi
                     webBuilder.UseStartup<Startup>();
                 });
     }
+
 }
