@@ -76,6 +76,7 @@ If you found this Implementation helpful or used it in your Projects, do give it
 - Database Seeding
 - Custom Exception Handling Middlewares
 - API Versioning
+- Localization (fa / en)
 - Fluent Validation
 - Complete User Management Module (Register / Authenticate / Change UserName / Change Password)
 - User Auditing
