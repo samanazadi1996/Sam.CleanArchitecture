@@ -6,6 +6,9 @@ using Sam.CleanArchitecture.Infrastructure.FileManager.Contexts;
 using Sam.CleanArchitecture.Infrastructure.Identity.Contexts;
 using Sam.CleanArchitecture.Infrastructure.Persistence.Contexts;
 using System.Threading.Tasks;
+using Serilog;
+using System;
+using Microsoft.Extensions.Configuration;
 
 namespace Sam.CleanArchitecture.WebApi
 {
@@ -13,7 +16,9 @@ namespace Sam.CleanArchitecture.WebApi
     {
         public async static Task Main(string[] args)
         {
-            var host = CreateHostBuilder(args).Build();
+            ConfigureLogging();
+
+            var host = CreateHostBuilder(args).UseSerilog().Build();
 
             using (var scope = host.Services.CreateScope())
             {
@@ -33,5 +38,19 @@ namespace Sam.CleanArchitecture.WebApi
                 {
                     webBuilder.UseStartup<Startup>();
                 });
+        private static void ConfigureLogging()
+        {
+            var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+            var configuration = new ConfigurationBuilder()
+                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+                .AddJsonFile($"appsettings.{Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT")}.json", optional: true)
+                .Build();
+
+            Log.Logger = new LoggerConfiguration()
+                .Enrich.WithProperty("Environment", environment)
+                .ReadFrom.Configuration(configuration)
+                .CreateLogger();
+        }
+
     }
 }
