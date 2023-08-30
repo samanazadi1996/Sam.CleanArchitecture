@@ -1,0 +1,25 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net5.0</TargetFramework>
+	</PropertyGroup>
+
+	<ItemGroup>
+	  <Compile Remove="Interfaces\NewFolder\**" />
+	  <EmbeddedResource Remove="Interfaces\NewFolder\**" />
+	  <None Remove="Interfaces\NewFolder\**" />
+	</ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="FluentValidation" Version="11.2.2" />
+		<PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.2.2" />
+		<PackageReference Include="Microsoft.AspNetCore.Http.Features" Version="5.0.17" />
+		<PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
+		<PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="7.0.0" />
+		<PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="6.0.0" />
+
+	</ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\TestTemplate.Domain\TestTemplate.Domain.csproj" />
+	</ItemGroup>
+
+</Project>
