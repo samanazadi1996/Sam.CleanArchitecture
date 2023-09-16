@@ -2,11 +2,9 @@
 
 An Implementation of Clean Architecture with ASP.NET Core 5 WebApi. With this Open-Source BoilerPlate Template, you will get access to the world of Loosely-Coupled and Inverted-Dependency Architecture in ASP.NET Core 5 WebApi with a lot of best practices.
 
-Check out the [Project Page](https://github.com/samanazadi1996/Sam.CleanArchitecture) to learn more about this Open Source Project.
-
 # Getting Started
 
-### Download the Extension
+### [Download the Extension]([https://github.com/samanazadi1996/Sam.CleanArchitecture](https://marketplace.visualstudio.com/items?itemName=SamanAzadi1996.ASPDotnetCoreCleanArchitecture))
 
 Download this Extension and install it on your machine. Make sure Visual Studio 2022 is installed on your machine with the latest SDK.
 
