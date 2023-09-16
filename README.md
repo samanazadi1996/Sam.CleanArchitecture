@@ -4,9 +4,7 @@ An Implementation of Clean Architecture with ASP.NET Core 5 WebApi. With this Op
 
 # Getting Started
 
-### [Download the Extension]([https://github.com/samanazadi1996/Sam.CleanArchitecture](https://marketplace.visualstudio.com/items?itemName=SamanAzadi1996.ASPDotnetCoreCleanArchitecture))
-
-Download this Extension and install it on your machine. Make sure Visual Studio 2022 is installed on your machine with the latest SDK.
+[Download the Extension](https://marketplace.visualstudio.com/items?itemName=SamanAzadi1996.ASPDotnetCoreCleanArchitecture) and install it on your machine. Make sure Visual Studio 2022 is installed on your machine with the latest SDK.
 
 Follow these Steps to get started.
 
