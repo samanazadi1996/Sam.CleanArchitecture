@@ -20,7 +20,7 @@ using TestTemplate.Infrastructure.Identity.Services;
 
 namespace TestTemplate.Infrastructure.Identity
 {
-    public static class ServiceExtensions
+    public static class ServiceRegistration
     {
 
         public static void AddIdentityCookie(this IServiceCollection services, IConfiguration configuration)
@@ -86,13 +86,6 @@ namespace TestTemplate.Infrastructure.Identity
                     };
                     o.Events = new JwtBearerEvents()
                     {
-                        OnAuthenticationFailed = c =>
-                        {
-                            c.NoResult();
-                            c.Response.StatusCode = 401;
-                            c.Response.ContentType = "text/plain";
-                            return c.Response.WriteAsync(c.Exception.ToString());
-                        },
                         OnChallenge = context =>
                         {
                             context.HandleResponse();
