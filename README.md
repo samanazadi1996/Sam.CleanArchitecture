@@ -2,21 +2,17 @@
 
 An Implementation of Clean Architecture with ASP.NET Core 5 WebApi. With this Open-Source BoilerPlate Template, you will get access to the world of Loosely-Coupled and Inverted-Dependency Architecture in ASP.NET Core 5 WebApi with a lot of best practices.
 
-Check out the [Project Page](https://github.com/samanazadi1996/Sam.CleanArchitecture) to learn more about this Open Source Project.
-
 # Getting Started
 
-### Download the Extension
-
-Download this Extension and install it on your machine. Make sure Visual Studio 2022 is installed on your machine with the latest SDK.
+[Download the Extension](https://marketplace.visualstudio.com/items?itemName=SamanAzadi1996.ASPDotnetCoreCleanArchitecture) and install it on your machine. Make sure Visual Studio 2022 is installed on your machine with the latest SDK.
 
 Follow these Steps to get started.
 
-![caa8f4f8-014b-4286-8f0d-270c79184ada__1.png](https://samanazadi1996.gallerycdn.vsassets.io/extensions/samanazadi1996/aspdotnetcorecleanarchitecture/1.1/1692169776531/caa8f4f8-014b-4286-8f0d-270c79184ada__1.png)
+![1__1.png](https://samanazadi1996.gallerycdn.vsassets.io/extensions/samanazadi1996/aspdotnetcorecleanarchitecture/1.2/1693387066158/1__1.png)
 
 You Solution Template is Ready!
 
-![5a0eae3d-318f-4802-b576-0006abf3e962__3.png](https://samanazadi1996.gallerycdn.vsassets.io/extensions/samanazadi1996/aspdotnetcorecleanarchitecture/1.1/1692169776531/5a0eae3d-318f-4802-b576-0006abf3e962__3.png)
+![2__1.png](https://samanazadi1996.gallerycdn.vsassets.io/extensions/samanazadi1996/aspdotnetcorecleanarchitecture/1.2/1693387066158/2__1.png)
 
 Next, open up WebAPI/appsettings.json to change the connection strings. Here you can choose to have multiple DBs for a separation of the IdentityDB or have the same DB for Identity and Application and FileManager.
 
@@ -35,7 +31,7 @@ Here are the credentials for the default users.
 
 You can use these default credentials to generate valid JWTokens at the ../api/v1/Account/Authenticate endpoint.
 
-![cleanArchitecture_swagger.png](https://www.codewithmukesh.com/wp-content/uploads/2020/08/cleanArchitecture_swagger.png)
+![3__2.png](https://samanazadi1996.gallerycdn.vsassets.io/extensions/samanazadi1996/aspdotnetcorecleanarchitecture/1.2/1693387066158/3__2.png)
 
 # Purpose of this Project
 Does it really make sense to Setup your ASP.NET Core Solution everytime you start a new WebApi Project ? Aren't we wasting quite a lot of time in doing this over and over gain?
@@ -55,7 +51,7 @@ If you found this Implementation helpful or used it in your Projects, do give it
 
 # Technologies
 
-- ASP.NET Core 3.1 WebApi
+- ASP.NET Core 5 WebApi
 - REST Standards
 
 # Features
