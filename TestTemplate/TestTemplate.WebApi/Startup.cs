@@ -58,7 +58,8 @@ namespace TestTemplate.WebApi
                     b.AllowAnyMethod();
 
                 });
-            });
+            }); 
+            services.AddCustomLocalization(Configuration);
 
             services.AddHealthChecks();
             services.AddScoped<IAuthenticatedUserService, AuthenticatedUserService>();
@@ -81,15 +82,7 @@ namespace TestTemplate.WebApi
             app.UseMiddleware<ErrorHandlerMiddleware>();
             app.UseHealthChecks("/health");
 
-            var locale = "en";
-            var localizationOptions = new RequestLocalizationOptions
-            {
-                SupportedCultures = new List<CultureInfo> { new CultureInfo(locale) },
-                SupportedUICultures = new List<CultureInfo> { new CultureInfo(locale) },
-                DefaultRequestCulture = new RequestCulture(locale)
-            };
-
-            app.UseRequestLocalization(localizationOptions);
+            app.UseCustomLocalization();
 
             app.UseEndpoints(endpoints =>
             {
