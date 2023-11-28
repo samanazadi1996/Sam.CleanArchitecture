@@ -15,7 +15,6 @@ namespace TestTemplate.Infrastructure.Identity.Migrations
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
-#pragma warning disable 612, 618
             modelBuilder
                 .HasDefaultSchema("Identity")
                 .UseIdentityColumns()
@@ -273,7 +272,6 @@ namespace TestTemplate.Infrastructure.Identity.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
-#pragma warning restore 612, 618
         }
     }
 }

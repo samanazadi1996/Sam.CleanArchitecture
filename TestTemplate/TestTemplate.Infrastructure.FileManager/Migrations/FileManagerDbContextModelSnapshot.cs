@@ -13,7 +13,6 @@ namespace TestTemplate.Infrastructure.FileManager.Migrations
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
-#pragma warning disable 612, 618
             modelBuilder
                 .UseIdentityColumns()
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
@@ -36,7 +35,6 @@ namespace TestTemplate.Infrastructure.FileManager.Migrations
 
                     b.ToTable("Files");
                 });
-#pragma warning restore 612, 618
         }
     }
 }

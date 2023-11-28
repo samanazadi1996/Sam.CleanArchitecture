@@ -105,7 +105,6 @@ namespace TestTemplate.Infrastructure.Identity.Services
             var rolesList = await userManager.GetRolesAsync(user).ConfigureAwait(false);
 
             var jwToken = await GenerateJwtToken(user);
-            var signinKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("this is my custom Secret key for authentication"));
 
             AuthenticationResponse response = new AuthenticationResponse()
             {

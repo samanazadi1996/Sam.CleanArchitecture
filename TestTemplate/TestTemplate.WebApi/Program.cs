@@ -1,5 +1,6 @@
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -11,6 +12,8 @@ using TestTemplate.Infrastructure.FileManager;
 using TestTemplate.Infrastructure.FileManager.Contexts;
 using TestTemplate.Infrastructure.Identity;
 using TestTemplate.Infrastructure.Identity.Contexts;
+using TestTemplate.Infrastructure.Identity.Models;
+using TestTemplate.Infrastructure.Identity.Seeds;
 using TestTemplate.Infrastructure.Persistence;
 using TestTemplate.Infrastructure.Persistence.Contexts;
 using TestTemplate.Infrastructure.Resources;
@@ -31,17 +34,11 @@ builder.Services.AddScoped<IAuthenticatedUserService, AuthenticatedUserService>(
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddJwt(builder.Configuration);
 
-#pragma warning disable CS0618 // Type or member is obsolete
 builder.Services.AddControllers().AddFluentValidation(options =>
 {
-#pragma warning disable CS0618 // Type or member is obsolete
     options.ImplicitlyValidateChildProperties = true;
-#pragma warning restore CS0618 // Type or member is obsolete
-#pragma warning disable CS0618 // Type or member is obsolete
     options.RegisterValidatorsFromAssembly(Assembly.GetExecutingAssembly());
-#pragma warning restore CS0618 // Type or member is obsolete
 });
-#pragma warning restore CS0618 // Type or member is obsolete
 
 builder.Services.AddSwaggerWithVersioning();
 builder.Services.AddCors(x =>
@@ -69,6 +66,10 @@ using (var scope = app.Services.CreateScope())
     await services.GetRequiredService<IdentityContext>().Database.MigrateAsync();
     await services.GetRequiredService<ApplicationDbContext>().Database.MigrateAsync();
     await services.GetRequiredService<FileManagerDbContext>().Database.MigrateAsync();
+
+    //Seed Data
+    await DefaultRoles.SeedAsync(services.GetRequiredService<RoleManager<ApplicationRole>>());
+    await DefaultBasicUser.SeedAsync(services.GetRequiredService<UserManager<ApplicationUser>>());
 }
 
 if (app.Environment.IsDevelopment())
