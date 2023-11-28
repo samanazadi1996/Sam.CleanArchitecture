@@ -115,6 +115,7 @@ namespace TestTemplate.Infrastructure.Identity.Services
                 Roles = rolesList.ToList(),
                 IsVerified = user.EmailConfirmed,
             };
+
             return new BaseResult<AuthenticationResponse>(response);
         }
 
@@ -160,7 +161,6 @@ namespace TestTemplate.Infrastructure.Identity.Services
                 claims: await GetClaimsAsync(),
                 expires: DateTime.UtcNow.AddMinutes(jwtSettings.DurationInMinutes),
                 signingCredentials: signingCredentials);
-
             return jwtSecurityToken;
 
             async Task<IList<Claim>> GetClaimsAsync()

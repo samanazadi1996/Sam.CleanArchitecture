@@ -64,7 +64,6 @@ namespace TestTemplate.Infrastructure.Identity
             services.AddIdentity<ApplicationUser, ApplicationRole>().AddEntityFrameworkStores<IdentityContext>().AddDefaultTokenProviders();
 
             services.Configure<JWTSettings>(configuration.GetSection("JWTSettings"));
-
             services.AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -120,6 +119,7 @@ namespace TestTemplate.Infrastructure.Identity
 
                     };
                 });
+
         }
 
     }
