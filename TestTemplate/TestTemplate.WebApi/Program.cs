@@ -1,60 +1,87 @@
-using Microsoft.AspNetCore.Hosting;
+using FluentValidation.AspNetCore;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Serilog;
-using System;
-using System.Threading.Tasks;
+using System.Reflection;
+using TestTemplate.Application;
+using TestTemplate.Application.Interfaces;
+using TestTemplate.Infrastructure.FileManager;
 using TestTemplate.Infrastructure.FileManager.Contexts;
+using TestTemplate.Infrastructure.Identity;
 using TestTemplate.Infrastructure.Identity.Contexts;
+using TestTemplate.Infrastructure.Persistence;
 using TestTemplate.Infrastructure.Persistence.Contexts;
+using TestTemplate.Infrastructure.Resources;
+using TestTemplate.WebApi.Infrastracture.Extensions;
+using TestTemplate.WebApi.Infrastracture.Middlewares;
+using TestTemplate.WebApi.Infrastracture.Services;
 
 
-namespace TestTemplate.WebApi
+var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddApplicationLayer(builder.Configuration);
+builder.Services.AddPersistenceInfrastructure(builder.Configuration);
+builder.Services.AddFileManagerInfrastructure(builder.Configuration);
+builder.Services.AddIdentityInfrastructure(builder.Configuration);
+builder.Services.AddResourcesInfrastructure(builder.Configuration);
+
+builder.Services.AddScoped<IAuthenticatedUserService, AuthenticatedUserService>();
+builder.Services.AddDistributedMemoryCache();
+builder.Services.AddJwt(builder.Configuration);
+
+builder.Services.AddControllers().AddFluentValidation(options =>
 {
-    public class Program
+    options.ImplicitlyValidateChildProperties = true;
+    options.RegisterValidatorsFromAssembly(Assembly.GetExecutingAssembly());
+});
+
+builder.Services.AddSwaggerWithVersioning();
+builder.Services.AddCors(x =>
+{
+    x.AddPolicy("Any", b =>
     {
-        public async static Task Main(string[] args)
-        {
-            ConfigureLogging();
+        b.AllowAnyOrigin();
+        b.AllowAnyHeader();
+        b.AllowAnyMethod();
 
-            var host = CreateHostBuilder(args).UseSerilog().Build();
+    });
+});
+builder.Services.AddCustomLocalization(builder.Configuration);
 
-            using (var scope = host.Services.CreateScope())
-            {
-                var services = scope.ServiceProvider;
+builder.Services.AddHealthChecks();
+builder.Services.AddScoped<IAuthenticatedUserService, AuthenticatedUserService>();
+builder.Host.UseSerilog((context, configuration) => configuration.ReadFrom.Configuration(context.Configuration));
 
-                await services.GetRequiredService<IdentityContext>().Database.MigrateAsync();
-                await services.GetRequiredService<ApplicationDbContext>().Database.MigrateAsync();
-                await services.GetRequiredService<FileManagerDbContext>().Database.MigrateAsync();
+var app = builder.Build();
 
-            }
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
 
-            host.Run();
-        }
-
-        public static IHostBuilder CreateHostBuilder(string[] args) =>
-            Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder =>
-                {
-                    webBuilder.UseStartup<Startup>();
-                });
-
-        private static void ConfigureLogging()
-        {
-            var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
-            var configuration = new ConfigurationBuilder()
-                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-                .AddJsonFile($"appsettings.{Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT")}.json", optional: true)
-                .Build();
-
-            Log.Logger = new LoggerConfiguration()
-                .Enrich.WithProperty("Environment", environment)
-                .ReadFrom.Configuration(configuration)
-                .CreateLogger();
-        }
-
-    }
-
+    await services.GetRequiredService<IdentityContext>().Database.MigrateAsync();
+    await services.GetRequiredService<ApplicationDbContext>().Database.MigrateAsync();
+    await services.GetRequiredService<FileManagerDbContext>().Database.MigrateAsync();
 }
+
+if (app.Environment.IsDevelopment())
+{
+    app.UseDeveloperExceptionPage();
+    app.UseSwagger();
+    app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "TestTemplate.WebApi v1"));
+}
+
+app.UseCors("Any");
+app.UseRouting();
+app.UseAuthentication();
+app.UseAuthorization();
+app.UseSwaggerWithVersioning();
+app.UseMiddleware<ErrorHandlerMiddleware>();
+app.UseHealthChecks("/health");
+
+app.UseCustomLocalization();
+app.MapControllers();
+app.UseSerilogRequestLogging();
+
+app.Run();
