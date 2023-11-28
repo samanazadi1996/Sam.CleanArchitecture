@@ -34,11 +34,13 @@ builder.Services.AddScoped<IAuthenticatedUserService, AuthenticatedUserService>(
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddJwt(builder.Configuration);
 
+#pragma warning disable CS0618 // Type or member is obsolete
 builder.Services.AddControllers().AddFluentValidation(options =>
 {
     options.ImplicitlyValidateChildProperties = true;
     options.RegisterValidatorsFromAssembly(Assembly.GetExecutingAssembly());
 });
+#pragma warning restore CS0618 // Type or member is obsolete
 
 builder.Services.AddSwaggerWithVersioning();
 builder.Services.AddCors(x =>
