@@ -64,6 +64,7 @@ namespace TestTemplate.Infrastructure.Identity
             services.AddIdentity<ApplicationUser, ApplicationRole>().AddEntityFrameworkStores<IdentityContext>().AddDefaultTokenProviders();
 
             services.Configure<JWTSettings>(configuration.GetSection("JWTSettings"));
+#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
             services.AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -119,6 +120,7 @@ namespace TestTemplate.Infrastructure.Identity
 
                     };
                 });
+#pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
 
         }
 

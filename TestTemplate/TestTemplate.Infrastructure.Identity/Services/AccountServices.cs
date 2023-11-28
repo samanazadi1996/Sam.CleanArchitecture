@@ -105,6 +105,7 @@ namespace TestTemplate.Infrastructure.Identity.Services
             var rolesList = await userManager.GetRolesAsync(user).ConfigureAwait(false);
 
             var jwToken = await GenerateJwtToken(user);
+            var signinKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("this is my custom Secret key for authentication"));
 
             AuthenticationResponse response = new AuthenticationResponse()
             {
@@ -115,7 +116,6 @@ namespace TestTemplate.Infrastructure.Identity.Services
                 Roles = rolesList.ToList(),
                 IsVerified = user.EmailConfirmed,
             };
-
             return new BaseResult<AuthenticationResponse>(response);
         }
 
@@ -161,6 +161,7 @@ namespace TestTemplate.Infrastructure.Identity.Services
                 claims: await GetClaimsAsync(),
                 expires: DateTime.UtcNow.AddMinutes(jwtSettings.DurationInMinutes),
                 signingCredentials: signingCredentials);
+
             return jwtSecurityToken;
 
             async Task<IList<Claim>> GetClaimsAsync()

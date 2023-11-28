@@ -1,11 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Drawing;
-using System.Threading.Tasks;
-using TestTemplate.Application.Interfaces;
-using TestTemplate.Application.Interfaces.Repositories;
+﻿using TestTemplate.Application.Interfaces;
 using TestTemplate.Application.Interfaces.UserInterfaces;
-using TestTemplate.Application.Wrappers;
 using TestTemplate.Infrastructure.Identity.Contexts;
 
 namespace TestTemplate.Infrastructure.Identity.Services

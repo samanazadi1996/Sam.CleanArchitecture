@@ -1,11 +1,14 @@
-﻿using System;
-using TestTemplate.Domain.Common;
+﻿using TestTemplate.Domain.Common;
 
 namespace TestTemplate.Domain.Products.Entities
 {
     public class Product : AuditableBaseEntity
     {
+#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
+#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
         private Product()
+#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
+#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
         {
         }
         public Product(string name, double price, string barCode)
