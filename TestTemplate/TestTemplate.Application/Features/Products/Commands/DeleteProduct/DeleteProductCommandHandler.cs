@@ -7,19 +7,8 @@ using TestTemplate.Application.Wrappers;
 
 namespace TestTemplate.Application.Features.Products.Commands.DeleteProduct
 {
-    public class DeleteProductCommandHandler : IRequestHandler<DeleteProductCommand, BaseResult>
+    public class DeleteProductCommandHandler(IProductRepository productRepository, IUnitOfWork unitOfWork, ITranslator translator) : IRequestHandler<DeleteProductCommand, BaseResult>
     {
-        private readonly IProductRepository productRepository;
-        private readonly IUnitOfWork unitOfWork;
-        private readonly ITranslator translator;
-
-        public DeleteProductCommandHandler(IProductRepository productRepository, IUnitOfWork unitOfWork, ITranslator translator)
-        {
-            this.productRepository = productRepository;
-            this.unitOfWork = unitOfWork;
-            this.translator = translator;
-        }
-
         public async Task<BaseResult> Handle(DeleteProductCommand request, CancellationToken cancellationToken)
         {
             var product = await productRepository.GetByIdAsync(request.Id);

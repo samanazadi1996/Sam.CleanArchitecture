@@ -7,15 +7,8 @@ using TestTemplate.Domain.Products.Dtos;
 
 namespace TestTemplate.Application.Features.Products.Queries.GetPagedListProduct
 {
-    public class GetPagedListProductQueryHandler : IRequestHandler<GetPagedListProductQuery, PagedResponse<ProductDto>>
+    public class GetPagedListProductQueryHandler(IProductRepository productRepository) : IRequestHandler<GetPagedListProductQuery, PagedResponse<ProductDto>>
     {
-        private readonly IProductRepository productRepository;
-
-        public GetPagedListProductQueryHandler(IProductRepository productRepository)
-        {
-            this.productRepository = productRepository;
-        }
-
         public async Task<PagedResponse<ProductDto>> Handle(GetPagedListProductQuery request, CancellationToken cancellationToken)
         {
             var result = await productRepository.GetPagedListAsync(request.PageNumber, request.PageSize, request.Name);

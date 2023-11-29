@@ -8,17 +8,8 @@ using TestTemplate.Domain.Products.Dtos;
 
 namespace TestTemplate.Application.Features.Products.Queries.GetProductById
 {
-    public class GetProductByIdQueryHandler : IRequestHandler<GetProductByIdQuery, BaseResult<ProductDto>>
+    public class GetProductByIdQueryHandler(IProductRepository productRepository, ITranslator translator) : IRequestHandler<GetProductByIdQuery, BaseResult<ProductDto>>
     {
-        private readonly IProductRepository productRepository;
-        private readonly ITranslator translator;
-
-        public GetProductByIdQueryHandler(IProductRepository productRepository, ITranslator translator)
-        {
-            this.productRepository = productRepository;
-            this.translator = translator;
-        }
-
         public async Task<BaseResult<ProductDto>> Handle(GetProductByIdQuery request, CancellationToken cancellationToken)
         {
             var product = await productRepository.GetByIdAsync(request.Id);

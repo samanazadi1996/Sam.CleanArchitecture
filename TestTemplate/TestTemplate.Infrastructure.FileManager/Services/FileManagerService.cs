@@ -6,14 +6,8 @@ using TestTemplate.Infrastructure.FileManager.Models;
 
 namespace TestTemplate.Infrastructure.FileManager.Services
 {
-    public class FileManagerService : IFileManagerService
+    public class FileManagerService(FileManagerDbContext fileManagerDbContext) : IFileManagerService
     {
-        private readonly FileManagerDbContext fileManagerDbContext;
-
-        public FileManagerService(FileManagerDbContext fileManagerDbContext)
-        {
-            this.fileManagerDbContext = fileManagerDbContext;
-        }
         public async Task Create(string name, byte[] content)
         {
             await fileManagerDbContext.Files.AddAsync(new FileEntity(name, content));

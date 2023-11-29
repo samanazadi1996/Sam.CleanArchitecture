@@ -6,15 +6,8 @@ using TestTemplate.Application.Interfaces;
 namespace TestTemplate.WebApi.Controllers.v1
 {
     [ApiVersion("1")]
-    public class FileController : BaseApiController
+    public class FileController(IFileManagerService fileManagerService) : BaseApiController
     {
-        private readonly IFileManagerService fileManagerService;
-
-        public FileController(IFileManagerService fileManagerService)
-        {
-            this.fileManagerService = fileManagerService;
-        }
-
         [HttpGet]
         public async Task<IActionResult> GetFile(string name)
         {
@@ -22,6 +15,5 @@ namespace TestTemplate.WebApi.Controllers.v1
 
             return File(bytes, MediaTypeNames.Application.Octet, name);
         }
-
     }
 }

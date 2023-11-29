@@ -11,16 +11,8 @@ using TestTemplate.Infrastructure.Identity.Contexts;
 
 namespace TestTemplate.Infrastructure.Identity.Services
 {
-    public class GetUserServices : IGetUserServices
+    public class GetUserServices(IdentityContext identityContext) : IGetUserServices
     {
-        private readonly IdentityContext identityContext;
-        private readonly IAuthenticatedUserService authenticatedUser;
-
-        public GetUserServices(IdentityContext identityContext, IAuthenticatedUserService authenticatedUser)
-        {
-            this.identityContext = identityContext;
-            this.authenticatedUser = authenticatedUser;
-        }
         public async Task<PagedResponse<UserDto>> GetPagedUsers(GetAllUsersRequest model)
         {
             var skip = (model.PageNumber - 1) * model.PageSize;

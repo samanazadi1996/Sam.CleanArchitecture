@@ -7,7 +7,7 @@ using TestTemplate.Application.Behaviours;
 
 namespace TestTemplate.Application
 {
-    public static class ServiceExtensions
+    public static class ServiceRegistration
     {
         public static void AddApplicationLayer(this IServiceCollection services, IConfiguration _config)
         {

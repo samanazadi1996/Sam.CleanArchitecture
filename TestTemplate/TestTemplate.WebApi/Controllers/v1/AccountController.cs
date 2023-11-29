@@ -10,15 +10,8 @@ using TestTemplate.Application.Wrappers;
 namespace TestTemplate.WebApi.Controllers.v1
 {
     [ApiVersion("1")]
-    public class AccountController : BaseApiController
+    public class AccountController(IAccountServices accountServices) : BaseApiController
     {
-        private readonly IAccountServices accountServices;
-
-        public AccountController(IAccountServices accountServices)
-        {
-            this.accountServices = accountServices;
-        }
-
         [HttpPost]
         public async Task<BaseResult<AuthenticationResponse>> Authenticate(AuthenticationRequest request)
             => await accountServices.Authenticate(request);
@@ -37,7 +30,5 @@ namespace TestTemplate.WebApi.Controllers.v1
             var gostUsername = await accountServices.RegisterGostAccount();
             return await accountServices.AuthenticateByUserName(gostUsername.Data);
         }
-
     }
-
 }

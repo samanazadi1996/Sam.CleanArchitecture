@@ -18,24 +18,8 @@ using TestTemplate.Infrastructure.Identity.Models;
 
 namespace TestTemplate.Infrastructure.Identity.Services
 {
-    public class AccountServices : IAccountServices
+    public class AccountServices(UserManager<ApplicationUser> userManager, IAuthenticatedUserService authenticatedUser, SignInManager<ApplicationUser> signInManager, JWTSettings jwtSettings, ITranslator translator) : IAccountServices
     {
-        private readonly UserManager<ApplicationUser> userManager;
-        private readonly SignInManager<ApplicationUser> signInManager;
-        private readonly IAuthenticatedUserService authenticatedUser;
-        private readonly JWTSettings jwtSettings;
-        private readonly ITranslator translator;
-
-
-        public AccountServices(UserManager<ApplicationUser> userManager, IAuthenticatedUserService authenticatedUser, SignInManager<ApplicationUser> signInManager, IOptions<JWTSettings> jwtSettings, ITranslator translator)
-        {
-            this.userManager = userManager;
-            this.authenticatedUser = authenticatedUser;
-            this.signInManager = signInManager;
-            this.jwtSettings = jwtSettings.Value;
-            this.translator = translator;
-        }
-
         public async Task<BaseResult> ChangePassword(ChangePasswordRequest model)
         {
             var user = await userManager.FindByIdAsync(authenticatedUser.UserId);

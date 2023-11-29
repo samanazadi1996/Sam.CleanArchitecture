@@ -63,7 +63,7 @@ namespace TestTemplate.Infrastructure.Identity
 
             services.AddIdentity<ApplicationUser, ApplicationRole>().AddEntityFrameworkStores<IdentityContext>().AddDefaultTokenProviders();
 
-            services.Configure<JWTSettings>(configuration.GetSection("JWTSettings"));
+            services.AddSingleton(configuration.GetSection(nameof(JWTSettings)).Get<JWTSettings>());
 
 #pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
             services.AddAuthentication(options =>

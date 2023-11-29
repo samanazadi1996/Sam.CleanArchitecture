@@ -7,19 +7,8 @@ using TestTemplate.Application.Wrappers;
 
 namespace TestTemplate.Application.Features.Products.Commands.UpdateProduct
 {
-    public class UpdateProductCommandHandler : IRequestHandler<UpdateProductCommand, BaseResult>
+    public class UpdateProductCommandHandler(IProductRepository productRepository, IUnitOfWork unitOfWork, ITranslator translator) : IRequestHandler<UpdateProductCommand, BaseResult>
     {
-        private readonly IProductRepository productRepository;
-        private readonly IUnitOfWork unitOfWork;
-        private readonly ITranslator translator;
-
-        public UpdateProductCommandHandler(IProductRepository productRepository, IUnitOfWork unitOfWork, ITranslator translator)
-        {
-            this.productRepository = productRepository;
-            this.unitOfWork = unitOfWork;
-            this.translator = translator;
-        }
-
         public async Task<BaseResult> Handle(UpdateProductCommand request, CancellationToken cancellationToken)
         {
             var product = await productRepository.GetByIdAsync(request.Id);
