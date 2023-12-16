@@ -22,7 +22,6 @@ namespace TestTemplate.Infrastructure.Identity
 {
     public static class ServiceRegistration
     {
-
         public static void AddIdentityCookie(this IServiceCollection services, IConfiguration configuration)
         {
             var identitySettings = configuration.GetSection(nameof(IdentitySettings)).Get<IdentitySettings>();

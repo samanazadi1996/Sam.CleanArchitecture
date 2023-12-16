@@ -1,10 +1,15 @@
 # ASP Dotnet Core Clean Architecture
 
-An Implementation of Clean Architecture with ASP.NET Core 5 WebApi. With this Open-Source BoilerPlate Template, you will get access to the world of Loosely-Coupled and Inverted-Dependency Architecture in ASP.NET Core 5 WebApi with a lot of best practices.
+An Implementation of Clean Architecture with ASP.NET Core 8 WebApi. With this Open-Source BoilerPlate Template, you will get access to the world of Loosely-Coupled and Inverted-Dependency Architecture in ASP.NET Core 8 WebApi with a lot of best practices.
 
 # Getting Started
 
 [Download the Extension](https://marketplace.visualstudio.com/items?itemName=SamanAzadi1996.ASPDotnetCoreCleanArchitecture) and install it on your machine. Make sure Visual Studio 2022 is installed on your machine with the latest SDK.
+
+
+You can download the dotnet 5 version of this extension from the link below
+
+[Download ](https://samanazadi1996.gallerycdn.vsassets.io/extensions/samanazadi1996/aspdotnetcorecleanarchitecture/1.25/1700899430183/ASP_Dotnet_Core_Clean_Architecture.vsix)
 
 Follow these Steps to get started.
 
@@ -36,11 +41,11 @@ You can use these default credentials to generate valid JWTokens at the ../api/v
 # Purpose of this Project
 Does it really make sense to Setup your ASP.NET Core Solution everytime you start a new WebApi Project ? Aren't we wasting quite a lot of time in doing this over and over gain?
 
-This is the exact Problem that I intend to solve with this Full-Fledged ASP.NET Core 5 WebApi Solution Template, that also follows various principles of Clean Architecture.
+This is the exact Problem that I intend to solve with this Full-Fledged ASP.NET Core 8 WebApi Solution Template, that also follows various principles of Clean Architecture.
 
 The primary goal is to create a Full-Fledged implementation, that is well documented along with the steps taken to build this Solution from Scratch. This Solution Template will also be available within Visual Studio 2022 (by installing the required Nuget Package / Extension).
 
-Demonstrate Clean Monolith Architecture in ASP.NET Core 5
+Demonstrate Clean Monolith Architecture in ASP.NET Core 8
 - This is not a Proof of Concept
 - Implementation that is ready for Production
 - Integrate the most essential libraries and packages
@@ -51,7 +56,7 @@ If you found this Implementation helpful or used it in your Projects, do give it
 
 # Technologies
 
-- ASP.NET Core 5 WebApi
+- ASP.NET Core 8 WebApi
 - REST Standards
 
 # Features
@@ -80,7 +85,7 @@ If you found this Implementation helpful or used it in your Projects, do give it
 # Prerequisites
 
 - Visual Studio 2022 Community and above
-- .NET Core 5 SDK and above
+- .NET Core 8 SDK and above
 - Basic Understanding of Architectures and Clean Code Principles
 
 # Share it!
