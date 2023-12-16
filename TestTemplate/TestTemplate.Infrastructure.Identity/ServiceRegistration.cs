@@ -63,7 +63,8 @@ namespace TestTemplate.Infrastructure.Identity
 
             services.AddIdentity<ApplicationUser, ApplicationRole>().AddEntityFrameworkStores<IdentityContext>().AddDefaultTokenProviders();
 
-            services.AddSingleton(configuration.GetSection(nameof(JWTSettings)).Get<JWTSettings>());
+            var jwtSettings = configuration.GetSection(nameof(JWTSettings)).Get<JWTSettings>();
+            services.AddSingleton(jwtSettings);
 
 #pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
             services.AddAuthentication(options =>
@@ -82,9 +83,9 @@ namespace TestTemplate.Infrastructure.Identity
                         ValidateAudience = true,
                         ValidateLifetime = true,
                         ClockSkew = TimeSpan.Zero,
-                        ValidIssuer = configuration["JWTSettings:Issuer"],
-                        ValidAudience = configuration["JWTSettings:Audience"],
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JWTSettings:Key"]))
+                        ValidIssuer = jwtSettings.Issuer,
+                        ValidAudience = jwtSettings.Audience,
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.Key))
                     };
                     o.Events = new JwtBearerEvents()
                     {

@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
+using TestTemplate.Application.Behaviours;
 using TestTemplate.Application.Interfaces;
 using TestTemplate.Application.Interfaces.Repositories;
 using TestTemplate.Application.Wrappers;
@@ -15,7 +16,7 @@ namespace TestTemplate.Application.Features.Products.Commands.UpdateProduct
 
             if (product is null)
             {
-                return new BaseResult(new Error(ErrorCode.NotFound, translator.GetString(Messages.ProductMessages.Product_notfound_with_id(request.Id)), nameof(request.Id)));
+                return new BaseResult(new Error(ErrorCode.NotFound, translator.GetString(TranslatorMessages.ProductMessages.Product_notfound_with_id(request.Id)), nameof(request.Id)));
             }
 
             product.Update(request.Name, request.Price, request.BarCode);

@@ -10,15 +10,8 @@ using TestTemplate.Application.Wrappers;
 
 namespace TestTemplate.WebApi.Infrastracture.Middlewares
 {
-    public class ErrorHandlerMiddleware
+    public class ErrorHandlerMiddleware(RequestDelegate next)
     {
-        private readonly RequestDelegate next;
-
-        public ErrorHandlerMiddleware(RequestDelegate next)
-        {
-            this.next = next;
-        }
-
         public async Task Invoke(HttpContext context)
         {
             try

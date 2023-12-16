@@ -1,5 +1,6 @@
 ﻿using System.Globalization;
 using System.Resources;
+using TestTemplate.Application.Behaviours;
 using TestTemplate.Application.Interfaces;
 using TestTemplate.Infrastructure.Resources.ProjectResources;
 

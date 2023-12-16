@@ -8,6 +8,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using TestTemplate.Application.Behaviours;
 using TestTemplate.Application.DTOs.Account.Requests;
 using TestTemplate.Application.DTOs.Account.Responses;
 using TestTemplate.Application.Interfaces;
@@ -53,12 +54,12 @@ namespace TestTemplate.Infrastructure.Identity.Services
             var user = await userManager.FindByNameAsync(request.UserName);
             if (user == null)
             {
-                return new BaseResult<AuthenticationResponse>(new Error(ErrorCode.NotFound, translator.GetString(Messages.AccountMessages.Account_notfound_with_UserName(request.UserName)), nameof(request.UserName)));
+                return new BaseResult<AuthenticationResponse>(new Error(ErrorCode.NotFound, translator.GetString(TranslatorMessages.AccountMessages.Account_notfound_with_UserName(request.UserName)), nameof(request.UserName)));
             }
             var result = await signInManager.PasswordSignInAsync(user.UserName, request.Password, false, lockoutOnFailure: false);
             if (!result.Succeeded)
             {
-                return new BaseResult<AuthenticationResponse>(new Error(ErrorCode.FieldDataInvalid, translator.GetString(Messages.AccountMessages.Invalid_password()), nameof(request.Password)));
+                return new BaseResult<AuthenticationResponse>(new Error(ErrorCode.FieldDataInvalid, translator.GetString(TranslatorMessages.AccountMessages.Invalid_password()), nameof(request.Password)));
             }
 
             var rolesList = await userManager.GetRolesAsync(user).ConfigureAwait(false);
@@ -83,7 +84,7 @@ namespace TestTemplate.Infrastructure.Identity.Services
             var user = await userManager.FindByNameAsync(username);
             if (user == null)
             {
-                return new BaseResult<AuthenticationResponse>(new Error(ErrorCode.NotFound, translator.GetString(Messages.AccountMessages.Account_notfound_with_UserName(username)), nameof(username)));
+                return new BaseResult<AuthenticationResponse>(new Error(ErrorCode.NotFound, translator.GetString(TranslatorMessages.AccountMessages.Account_notfound_with_UserName(username)), nameof(username)));
             }
 
             var rolesList = await userManager.GetRolesAsync(user).ConfigureAwait(false);

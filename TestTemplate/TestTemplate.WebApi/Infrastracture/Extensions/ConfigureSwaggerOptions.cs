@@ -7,22 +7,15 @@ using System.Reflection;
 
 namespace TestTemplate.WebApi.Infrastracture.Extensions
 {
-    public class ConfigureSwaggerOptions : IConfigureNamedOptions<SwaggerGenOptions>
+    public class ConfigureSwaggerOptions(IApiVersionDescriptionProvider provider) : IConfigureNamedOptions<SwaggerGenOptions>
     {
-        private readonly IApiVersionDescriptionProvider provider;
-
-        public ConfigureSwaggerOptions(IApiVersionDescriptionProvider provider)
-        {
-            this.provider = provider;
-        }
-
         public void Configure(SwaggerGenOptions options)
         {
             foreach (var description in provider.ApiVersionDescriptions)
             {
                 var info = new OpenApiInfo()
                 {
-                    Title = $"{Assembly.GetCallingAssembly().GetName().Name} API",
+                    Title = Assembly.GetCallingAssembly().GetName().Name,
                     Version = description.ApiVersion.ToString()
                 };
 

@@ -9,7 +9,7 @@ namespace TestTemplate.Application
 {
     public static class ServiceRegistration
     {
-        public static void AddApplicationLayer(this IServiceCollection services, IConfiguration _config)
+        public static void AddApplicationLayer(this IServiceCollection services)
         {
             services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
             services.AddMediatR(Assembly.GetExecutingAssembly());

@@ -24,7 +24,7 @@ using TestTemplate.WebApi.Infrastracture.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddApplicationLayer(builder.Configuration);
+builder.Services.AddApplicationLayer();
 builder.Services.AddPersistenceInfrastructure(builder.Configuration);
 builder.Services.AddFileManagerInfrastructure(builder.Configuration);
 builder.Services.AddIdentityInfrastructure(builder.Configuration);
