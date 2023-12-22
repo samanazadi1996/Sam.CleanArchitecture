@@ -1,4 +1,4 @@
-﻿namespace TestTemplate.Application.Behaviours
+﻿namespace TestTemplate.Application.Helpers
 {
     public static class Regexs
     {

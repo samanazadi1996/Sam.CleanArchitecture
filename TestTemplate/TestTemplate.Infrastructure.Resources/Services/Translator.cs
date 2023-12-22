@@ -1,6 +1,6 @@
 ﻿using System.Globalization;
 using System.Resources;
-using TestTemplate.Application.Behaviours;
+using TestTemplate.Application.DTOs;
 using TestTemplate.Application.Interfaces;
 using TestTemplate.Infrastructure.Resources.ProjectResources;
 
@@ -24,7 +24,7 @@ namespace TestTemplate.Infrastructure.Resources.Services
             return resourceMessages.GetString(name, CultureInfo.CurrentCulture) ?? name;
         }
 
-        public string GetString(Message input)
+        public string GetString(TranslatorMessageDto input)
         {
             var value = resourceMessages.GetString(input.Text, CultureInfo.CurrentCulture) ?? input.Text.Replace("_", " ");
             return string.Format(value, input.Args);

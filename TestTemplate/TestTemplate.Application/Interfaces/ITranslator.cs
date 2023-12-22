@@ -1,4 +1,4 @@
-﻿using TestTemplate.Application.Behaviours;
+﻿using TestTemplate.Application.DTOs;
 
 namespace TestTemplate.Application.Interfaces
 {
@@ -10,6 +10,6 @@ namespace TestTemplate.Application.Interfaces
         }
 
         string GetString(string name);
-        string GetString(Message input);
+        string GetString(TranslatorMessageDto input);
     }
 }

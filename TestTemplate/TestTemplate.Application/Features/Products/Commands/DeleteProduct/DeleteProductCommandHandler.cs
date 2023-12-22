@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
-using TestTemplate.Application.Behaviours;
+using TestTemplate.Application.Helpers;
 using TestTemplate.Application.Interfaces;
 using TestTemplate.Application.Interfaces.Repositories;
 using TestTemplate.Application.Wrappers;

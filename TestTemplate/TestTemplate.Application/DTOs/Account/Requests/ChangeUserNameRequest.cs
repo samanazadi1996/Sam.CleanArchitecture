@@ -1,5 +1,5 @@
 ﻿using FluentValidation;
-using TestTemplate.Application.Behaviours;
+using TestTemplate.Application.Helpers;
 using TestTemplate.Application.Interfaces;
 
 namespace TestTemplate.Application.DTOs.Account.Requests
