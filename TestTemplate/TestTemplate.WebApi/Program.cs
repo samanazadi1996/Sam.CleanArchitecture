@@ -81,6 +81,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "TestTemplate.WebApi v1"));
 }
 
+app.UseCustomLocalization();
 app.UseCors("Any");
 app.UseRouting();
 app.UseAuthentication();
@@ -89,7 +90,6 @@ app.UseSwaggerWithVersioning();
 app.UseMiddleware<ErrorHandlerMiddleware>();
 app.UseHealthChecks("/health");
 
-app.UseCustomLocalization();
 app.MapControllers();
 app.UseSerilogRequestLogging();
 

@@ -2,6 +2,7 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using TestTemplate.Application.DTOs;
 using TestTemplate.Application.DTOs.Account.Requests;
 using TestTemplate.Application.DTOs.Account.Responses;
 using TestTemplate.Application.Interfaces;
@@ -30,7 +31,7 @@ namespace TestTemplate.Infrastructure.Identity.Services
                     Created = p.Created,
                 }).ToListAsync();
 
-            var result = Tuple.Create(users, await identityContext.Users.CountAsync());
+            var result = new PagenationResponseDto<UserDto>(users, await identityContext.Users.CountAsync());
 
             return new PagedResponse<UserDto>(result, model.PageNumber, model.PageSize);
         }

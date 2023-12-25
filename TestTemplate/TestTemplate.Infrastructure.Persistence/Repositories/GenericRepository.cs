@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using TestTemplate.Application.DTOs;
 using TestTemplate.Application.Interfaces.Repositories;
 using TestTemplate.Infrastructure.Persistence.Contexts;
 
@@ -45,7 +46,7 @@ namespace TestTemplate.Infrastructure.Persistence.Repositories
                  .ToListAsync();
         }
 
-        protected async Task<Tuple<List<TEntity>, int>> Paged<TEntity>(IQueryable<TEntity> query, int pageNumber, int pageSize)
+        protected async Task<PagenationResponseDto<TEntity>> Paged<TEntity>(IQueryable<TEntity> query, int pageNumber, int pageSize)
         {
             var count = await query.CountAsync();
 
@@ -54,7 +55,7 @@ namespace TestTemplate.Infrastructure.Persistence.Repositories
                 .Take(pageSize)
                 .ToListAsync();
 
-            return new Tuple<List<TEntity>, int>(pagedResult, count);
+            return new(pagedResult, count);
         }
     }
 }

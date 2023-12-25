@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using TestTemplate.Application.DTOs;
 using TestTemplate.Application.Interfaces.Repositories;
 using TestTemplate.Domain.Products.Dtos;
 using TestTemplate.Domain.Products.Entities;
@@ -20,7 +21,7 @@ namespace TestTemplate.Infrastructure.Persistence.Repositories
 
         }
 
-        public async Task<Tuple<List<ProductDto>, int>> GetPagedListAsync(int pageNumber, int pageSize, string name)
+        public async Task<PagenationResponseDto<ProductDto>> GetPagedListAsync(int pageNumber, int pageSize, string name)
         {
             var query = products.AsQueryable();
 

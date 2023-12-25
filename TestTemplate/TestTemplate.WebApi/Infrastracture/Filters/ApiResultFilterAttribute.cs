@@ -13,7 +13,7 @@ namespace TestTemplate.WebApi.Infrastracture.Filters
             if (context.Result is BadRequestObjectResult badRequestObjectResult)
             {
                 var responseModel = new BaseResult();
-
+                responseModel.Success = false;
                 foreach (var item in ((ValidationProblemDetails)badRequestObjectResult.Value).Errors)
                 {
                     foreach (var val in item.Value)

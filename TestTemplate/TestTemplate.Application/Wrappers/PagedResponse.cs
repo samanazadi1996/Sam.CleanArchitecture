@@ -1,5 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using TestTemplate.Application.DTOs;
 using TestTemplate.Application.Parameters;
 
 namespace TestTemplate.Application.Wrappers
@@ -20,27 +20,27 @@ namespace TestTemplate.Application.Wrappers
         {
         }
 
-        public PagedResponse(Tuple<List<T>, int> data, int pageNumber, int pageSize)
+        public PagedResponse(PagenationResponseDto<T> model, PagenationRequestParameter request)
+        {
+            PageNumber = request.PageNumber;
+            PageSize = request.PageSize;
+            TotalItems = model.Count;
+            TotalPages = TotalItems / PageSize;
+            if (TotalItems % PageSize > 0) TotalPages++;
+
+            this.Data = model.Data;
+            this.Success = true;
+        }
+        public PagedResponse(PagenationResponseDto<T> model, int pageNumber, int pageSize)
         {
             PageNumber = pageNumber;
             PageSize = pageSize;
-            TotalItems = data.Item2;
+            TotalItems = model.Count;
             TotalPages = TotalItems / PageSize;
             if (TotalItems % PageSize > 0) TotalPages++;
 
-            Data = data.Item1;
-            Success = true;
-        }
-        public PagedResponse(Tuple<List<T>, int> data, PagenationRequestParameter query)
-        {
-            PageNumber = query.PageNumber;
-            PageSize = query.PageSize;
-            TotalItems = data.Item2;
-            TotalPages = TotalItems / PageSize;
-            if (TotalItems % PageSize > 0) TotalPages++;
-
-            Data = data.Item1;
-            Success = true;
+            this.Data = model.Data;
+            this.Success = true;
         }
     }
 }
