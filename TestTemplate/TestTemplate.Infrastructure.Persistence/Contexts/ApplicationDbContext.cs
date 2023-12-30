@@ -21,22 +21,19 @@ namespace TestTemplate.Infrastructure.Persistence.Contexts
         public DbSet<Product> Products { get; set; }
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
         {
-            if (authenticatedUser.UserId is not null)
+            var userId = Guid.Parse(authenticatedUser.UserId ?? "00000000-0000-0000-0000-000000000000");
+            foreach (var entry in ChangeTracker.Entries<AuditableBaseEntity>())
             {
-                var userId = Guid.Parse(authenticatedUser.UserId);
-                foreach (var entry in ChangeTracker.Entries<AuditableBaseEntity>())
+                switch (entry.State)
                 {
-                    switch (entry.State)
-                    {
-                        case EntityState.Added:
-                            entry.Entity.Created = DateTime.Now;
-                            entry.Entity.CreatedBy = userId;
-                            break;
-                        case EntityState.Modified:
-                            entry.Entity.LastModified = DateTime.Now;
-                            entry.Entity.LastModifiedBy = userId;
-                            break;
-                    }
+                    case EntityState.Added:
+                        entry.Entity.Created = DateTime.Now;
+                        entry.Entity.CreatedBy = userId;
+                        break;
+                    case EntityState.Modified:
+                        entry.Entity.LastModified = DateTime.Now;
+                        entry.Entity.LastModifiedBy = userId;
+                        break;
                 }
             }
             return base.SaveChangesAsync(cancellationToken);
