@@ -1,0 +1,41 @@
+﻿@using TestTemplate.Application.Features.Products.Queries.GetPagedListProduct
+@model GetPagedListProductQuery
+@{
+    ViewData["Title"] = "Product Page";
+    var tableId = Guid.NewGuid().ToString();
+
+}
+<div class="mb-3">
+    <button class="btn btn-success w-md" onclick="LoadAddModal()">@localizer["Add"]</button>
+
+</div>
+<div id="@tableId">
+</div>
+@section Scripts {
+
+    <script>
+        function ReloadList() {
+            BaseReloadList('@Url.Action("_Index")', '@tableId')
+        }
+
+        ReloadList()
+        function LoadAddModal() {
+            LoadPageToModal('@Url.Action("_Create")', "BlankModal", "BlankModalBody")
+        }
+
+        function LoadEditModal(id) {
+            LoadPageToModal('@Url.Action("_Update")?Id=' + id, "BlankModal", "BlankModalBody")
+        }
+
+        function Delete(id) {
+            BaseDeleteItem('@Url.Action("DeleteProduct")', id, "ReloadList()")
+        }
+
+    </script>
+}
+<div id="BlankModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content" id="BlankModalBody">
+        </div>
+    </div>
+</div>

@@ -1,0 +1,47 @@
+﻿@using TestTemplate.Application.Features.Products.Queries.GetPagedListProduct;
+@using TestTemplate.Domain.Products.Dtos;
+@model PagentaionResult<GetPagedListProductQuery,PagedResponse<ProductDto>>
+
+<div class="table-rep-plugin table-responsive">
+    <table class="table table-striped table-hover text-nowrap">
+        <tr>
+            <th>
+                @localizer["Name"]
+            </th>
+            <th>
+                @localizer["Price"]
+            </th>
+            <th>
+                @localizer["BarCode"]
+            </th>
+            <th>
+                @localizer["Actions"]
+            </th>
+        </tr>
+        @foreach (var item in Model.Result.Data)
+        {
+            <tr>
+                <td>@item.Name</td>
+                <td>@item.Price</td>
+                <td>@item.BarCode</td>
+                <td>
+                    <button class="btn btn-info" onclick="LoadEditModal(@item.Id)">
+                        @localizer["Edit"]
+                    </button>
+                    <button class="btn btn-danger" onclick="Delete(@item.Id)">
+                        @localizer["Delete"]
+                    </button>
+
+                </td>
+            </tr>
+        }
+
+    </table>
+</div>
+<div class="col-md-12 form-group pt-2">
+    @Html.PagedListPager(Model.Result, PageNumber => Url.Action("Index", new
+        {
+            PageNumber,
+            Model.Query.Name,
+        }), localizer)
+</div>

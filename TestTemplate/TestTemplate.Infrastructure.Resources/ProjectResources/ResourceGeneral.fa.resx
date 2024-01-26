@@ -117,20 +117,68 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Actions" xml:space="preserve">
+    <value>عملیاتها</value>
+  </data>
+  <data name="Add" xml:space="preserve">
+    <value>اضافه کردن</value>
+  </data>
+  <data name="Back" xml:space="preserve">
+    <value>قبلی</value>
+  </data>
   <data name="BarCode" xml:space="preserve">
     <value>بارکد</value>
+  </data>
+  <data name="Close" xml:space="preserve">
+    <value>بستن</value>
   </data>
   <data name="ConfirmPassword" xml:space="preserve">
     <value>تکرار گذرواژه</value>
   </data>
+  <data name="Delete" xml:space="preserve">
+    <value>حذف</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>ویرایش</value>
+  </data>
+  <data name="End" xml:space="preserve">
+    <value>اخر</value>
+  </data>
+  <data name="First" xml:space="preserve">
+    <value>اول</value>
+  </data>
+  <data name="Home" xml:space="preserve">
+    <value>خانه</value>
+  </data>
   <data name="Id" xml:space="preserve">
     <value>شناسه</value>
+  </data>
+  <data name="Language" xml:space="preserve">
+    <value>زبان</value>
+  </data>
+  <data name="LogIn" xml:space="preserve">
+    <value>ورود</value>
+  </data>
+  <data name="LogOut" xml:space="preserve">
+    <value>خروج</value>
   </data>
   <data name="Name" xml:space="preserve">
     <value>نام</value>
   </data>
+  <data name="Next" xml:space="preserve">
+    <value>بعدی</value>
+  </data>
   <data name="Password" xml:space="preserve">
     <value>گذرواژه</value>
+  </data>
+  <data name="Price" xml:space="preserve">
+    <value>قیمت</value>
+  </data>
+  <data name="Products" xml:space="preserve">
+    <value>کالاها</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>ذخیره</value>
   </data>
   <data name="UserName" xml:space="preserve">
     <value>نام کاربری</value>

@@ -7,23 +7,25 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Src", "Src", "{5C7D5E38-D4B
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{E9398434-28A6-40CC-85AB-45EF57F6AE24}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestTemplate.WebApi", "TestTemplate\TestTemplate.WebApi\TestTemplate.WebApi.csproj", "{DF99504E-D00C-419F-B05B-2FACABD59607}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestTemplate.WebApi", "TestTemplate\TestTemplate.WebApi\TestTemplate.WebApi.csproj", "{DF99504E-D00C-419F-B05B-2FACABD59607}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{0F418846-610C-42B3-AABF-EDEDDA9E860A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestTemplate.Application", "TestTemplate\TestTemplate.Application\TestTemplate.Application.csproj", "{BD74211A-DE21-475D-94EC-9F4CB2CC69C5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestTemplate.Application", "TestTemplate\TestTemplate.Application\TestTemplate.Application.csproj", "{BD74211A-DE21-475D-94EC-9F4CB2CC69C5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestTemplate.Domain", "TestTemplate\TestTemplate.Domain\TestTemplate.Domain.csproj", "{341BCFCC-9E23-4A53-BDD5-D142DEC5C178}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestTemplate.Domain", "TestTemplate\TestTemplate.Domain\TestTemplate.Domain.csproj", "{341BCFCC-9E23-4A53-BDD5-D142DEC5C178}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{BD8B78CC-408B-4675-9285-D6DED0100A42}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestTemplate.Infrastructure.FileManager", "TestTemplate\TestTemplate.Infrastructure.FileManager\TestTemplate.Infrastructure.FileManager.csproj", "{30F8D2BE-F740-4CA9-8F10-38A2B3E3EECB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestTemplate.Infrastructure.FileManager", "TestTemplate\TestTemplate.Infrastructure.FileManager\TestTemplate.Infrastructure.FileManager.csproj", "{30F8D2BE-F740-4CA9-8F10-38A2B3E3EECB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestTemplate.Infrastructure.Identity", "TestTemplate\TestTemplate.Infrastructure.Identity\TestTemplate.Infrastructure.Identity.csproj", "{EBC46B7B-6E05-49F2-8119-F582EFCBA4A1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestTemplate.Infrastructure.Identity", "TestTemplate\TestTemplate.Infrastructure.Identity\TestTemplate.Infrastructure.Identity.csproj", "{EBC46B7B-6E05-49F2-8119-F582EFCBA4A1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestTemplate.Infrastructure.Persistence", "TestTemplate\TestTemplate.Infrastructure.Persistence\TestTemplate.Infrastructure.Persistence.csproj", "{478A599A-932D-4224-9F2B-5B787E0B6F90}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestTemplate.Infrastructure.Persistence", "TestTemplate\TestTemplate.Infrastructure.Persistence\TestTemplate.Infrastructure.Persistence.csproj", "{478A599A-932D-4224-9F2B-5B787E0B6F90}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestTemplate.Infrastructure.Resources", "TestTemplate\TestTemplate.Infrastructure.Resources\TestTemplate.Infrastructure.Resources.csproj", "{789E9AA5-3A88-4430-88FC-F77B023DF941}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestTemplate.Infrastructure.Resources", "TestTemplate\TestTemplate.Infrastructure.Resources\TestTemplate.Infrastructure.Resources.csproj", "{789E9AA5-3A88-4430-88FC-F77B023DF941}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestTemplate.WebUi", "TestTemplate\TestTemplate.WebUi\TestTemplate.WebUi.csproj", "{CC1CC630-45E2-414F-A2DC-76E9D728720D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -59,6 +61,10 @@ Global
 		{789E9AA5-3A88-4430-88FC-F77B023DF941}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{789E9AA5-3A88-4430-88FC-F77B023DF941}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{789E9AA5-3A88-4430-88FC-F77B023DF941}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CC1CC630-45E2-414F-A2DC-76E9D728720D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CC1CC630-45E2-414F-A2DC-76E9D728720D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CC1CC630-45E2-414F-A2DC-76E9D728720D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CC1CC630-45E2-414F-A2DC-76E9D728720D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -74,6 +80,7 @@ Global
 		{EBC46B7B-6E05-49F2-8119-F582EFCBA4A1} = {BD8B78CC-408B-4675-9285-D6DED0100A42}
 		{478A599A-932D-4224-9F2B-5B787E0B6F90} = {BD8B78CC-408B-4675-9285-D6DED0100A42}
 		{789E9AA5-3A88-4430-88FC-F77B023DF941} = {BD8B78CC-408B-4675-9285-D6DED0100A42}
+		{CC1CC630-45E2-414F-A2DC-76E9D728720D} = {E9398434-28A6-40CC-85AB-45EF57F6AE24}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {078A8918-711C-4AC8-A929-CEE072822F18}

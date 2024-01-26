@@ -1,0 +1,31 @@
+﻿@using TestTemplate.Application.DTOs.Account.Requests
+@model AuthenticationRequest
+@{
+    ViewBag.title = localizer["LogIn"];
+}
+<div class="col-md-5 m-auto">
+
+    <form method="post" class="form-horizontal">
+
+        <div class="mb-3">
+            <label for="username">@localizer["UserName"]</label>
+            <input class="form-control" type="text" asp-for="UserName">
+            <span asp-validation-for="UserName" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label for="userpassword">@localizer["Password"]</label>
+            <input class="form-control" type="password" asp-for="Password">
+            <span asp-validation-for="Password" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <button class="btn btn-primary w-100" type="submit">@localizer["LogIn"]</button>
+        </div>
+
+        <div class="mt-1 text-center">
+            <a href="/" class="text-muted"><i class="mdi mdi-lock mr-1"></i> @localizer["Forgot your password"]</a>
+        </div>
+    </form>
+
+</div>

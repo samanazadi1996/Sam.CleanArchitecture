@@ -19,7 +19,7 @@ using TestTemplate.Infrastructure.Identity.Models;
 
 namespace TestTemplate.Infrastructure.Identity.Services
 {
-    public class AccountServices(UserManager<ApplicationUser> userManager, IAuthenticatedUserService authenticatedUser, SignInManager<ApplicationUser> signInManager, JWTSettings jwtSettings, ITranslator translator) : IAccountServices
+    public class AccountServices(UserManager<ApplicationUser> userManager, IAuthenticatedUserService authenticatedUser, SignInManager<ApplicationUser> signInManager, IOptionsSnapshot<JWTSettings> jwtSettings, ITranslator translator) : IAccountServices
     {
         public async Task<BaseResult> ChangePassword(ChangePasswordRequest model)
         {
@@ -137,14 +137,14 @@ namespace TestTemplate.Infrastructure.Identity.Services
         {
             await userManager.UpdateSecurityStampAsync(user);
 
-            var symmetricSecurityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.Key));
+            var symmetricSecurityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.Value.Key));
             var signingCredentials = new SigningCredentials(symmetricSecurityKey, SecurityAlgorithms.HmacSha256);
 
             var jwtSecurityToken = new JwtSecurityToken(
-                issuer: jwtSettings.Issuer,
-                audience: jwtSettings.Audience,
+                issuer: jwtSettings.Value.Issuer,
+                audience: jwtSettings.Value.Audience,
                 claims: await GetClaimsAsync(),
-                expires: DateTime.UtcNow.AddMinutes(jwtSettings.DurationInMinutes),
+                expires: DateTime.UtcNow.AddMinutes(jwtSettings.Value.DurationInMinutes),
                 signingCredentials: signingCredentials);
             return jwtSecurityToken;
 
