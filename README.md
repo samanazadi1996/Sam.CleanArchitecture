@@ -8,11 +8,11 @@ An Implementation of Clean Architecture with ASP.NET Core 8 WebApi. With this Op
 
 Follow these Steps to get started.
 
-![1__1.png](https://samanazadi1996.gallerycdn.vsassets.io/extensions/samanazadi1996/aspdotnetcorecleanarchitecture/1.2/1693387066158/1__1.png)
+[![](https://samanazadi1996.gallerycdn.vsassets.io/extensions/samanazadi1996/aspdotnetcorecleanarchitecture/1.2/1693387066158/1__1.png)](#)
 
 You Solution Template is Ready!
 
-![2__1.png](https://samanazadi1996.gallerycdn.vsassets.io/extensions/samanazadi1996/aspdotnetcorecleanarchitecture/1.2/1693387066158/2__1.png)
+[![](https://samanazadi1996.gallerycdn.vsassets.io/extensions/samanazadi1996/aspdotnetcorecleanarchitecture/1.2/1693387066158/2__1.png)](#)
 
 Next, open up WebAPI/appsettings.json to change the connection strings. Here you can choose to have multiple DBs for a separation of the IdentityDB or have the same DB for Identity and Application and FileManager.
 
@@ -31,7 +31,7 @@ Here are the credentials for the default users.
 
 You can use these default credentials to generate valid JWTokens at the ../api/v1/Account/Authenticate endpoint.
 
-![3__2.png](https://samanazadi1996.gallerycdn.vsassets.io/extensions/samanazadi1996/aspdotnetcorecleanarchitecture/1.2/1693387066158/3__2.png)
+[![](https://samanazadi1996.gallerycdn.vsassets.io/extensions/samanazadi1996/aspdotnetcorecleanarchitecture/1.2/1693387066158/3__2.png)](#)
 
 # Purpose of this Project
 Does it really make sense to Setup your ASP.NET Core Solution everytime you start a new WebApi Project ? Aren't we wasting quite a lot of time in doing this over and over gain?
