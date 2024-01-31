@@ -23,7 +23,7 @@ namespace TestTemplate.Infrastructure.Persistence.Repositories
 
         public async Task<PagenationResponseDto<ProductDto>> GetPagedListAsync(int pageNumber, int pageSize, string name)
         {
-            var query = products.AsQueryable();
+            var query = products.OrderBy(p => p.Created).AsQueryable();
 
             if (!string.IsNullOrEmpty(name))
             {
