@@ -14,6 +14,9 @@
 		<ProjectReference Include="..\TestTemplate.Application\TestTemplate.Application.csproj" />
 	</ItemGroup>
 	<ItemGroup>
+		<EmbeddedResource Update="ProjectResources\ResourceGeneral.ar.resx">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</EmbeddedResource>
 		<EmbeddedResource Update="ProjectResources\ResourceGeneral.fa.resx">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</EmbeddedResource>
