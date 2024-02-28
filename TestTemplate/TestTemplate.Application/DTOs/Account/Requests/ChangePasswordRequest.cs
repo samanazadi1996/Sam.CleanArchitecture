@@ -14,15 +14,16 @@ namespace TestTemplate.Application.DTOs.Account.Requests
         public ChangePasswordRequestValidator(ITranslator translator)
         {
             RuleFor(x => x.Password)
-                .NotEmpty().NotNull()
+                .NotEmpty()
+                .NotNull()
                 .MinimumLength(6)
                 .Matches(Regexs.Password)
-                .WithName(translator["Password"]);
+                .WithName(p => translator[nameof(p.Password)]);
 
             RuleFor(x => x.ConfirmPassword)
                 .Equal(x => x.Password)
                 .Matches(Regexs.Password)
-                .WithName(translator["ConfirmPassword"]);
+                .WithName(p => translator[nameof(p.ConfirmPassword)]);
         }
     }
 

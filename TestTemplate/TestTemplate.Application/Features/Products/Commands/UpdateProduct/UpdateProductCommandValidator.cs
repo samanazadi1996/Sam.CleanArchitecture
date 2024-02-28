@@ -12,11 +12,11 @@ namespace TestTemplate.Application.Features.Products.Commands.UpdateProduct
                 .NotNull()
                 .NotEmpty()
                 .MaximumLength(100)
-                .WithName(p => translator["Name"]);
+                .WithName(p => translator[nameof(p.Name)]);
 
             RuleFor(x => x.BarCode)
                 .MaximumLength(50)
-                .WithName(translator["BarCode"]);
+                .WithName(p => translator[nameof(p.BarCode)]);
         }
     }
 

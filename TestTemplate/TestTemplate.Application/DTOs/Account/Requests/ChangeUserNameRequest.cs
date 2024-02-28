@@ -13,10 +13,11 @@ namespace TestTemplate.Application.DTOs.Account.Requests
         public ChangeUserNameRequestValidator(ITranslator translator)
         {
             RuleFor(x => x.UserName)
-                .NotEmpty().NotNull()
+                .NotEmpty()
+                .NotNull()
                 .MinimumLength(4)
                 .Matches(Regexs.UserName)
-                .WithName(translator["UserName"]);
+                .WithName(p => translator[nameof(p.UserName)]);
         }
     }
 }

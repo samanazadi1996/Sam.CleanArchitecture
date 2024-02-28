@@ -15,11 +15,15 @@ namespace TestTemplate.Application.DTOs.Account.Requests
         public AuthenticationRequestValidator(ITranslator translator)
         {
             RuleFor(x => x.UserName)
-                .NotEmpty().NotNull().WithName(translator["UserName"]);
+                .NotEmpty()
+                .NotNull()
+                .WithName(p => translator[nameof(p.UserName)]);
 
             RuleFor(x => x.Password)
-                .NotEmpty().NotNull()
-                .Matches(Regexs.Password).WithName(translator["Password"]);
+                .NotEmpty()
+                .NotNull()
+                .Matches(Regexs.Password)
+                .WithName(p => translator[nameof(p.Password)]);
         }
     }
 }
