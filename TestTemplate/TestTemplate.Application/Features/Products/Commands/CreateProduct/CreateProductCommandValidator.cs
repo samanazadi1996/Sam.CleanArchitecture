@@ -15,6 +15,8 @@ namespace TestTemplate.Application.Features.Products.Commands.CreateProduct
                 .WithName(p => translator[nameof(p.Name)]);
 
             RuleFor(x => x.BarCode)
+                .NotNull()
+                .NotEmpty()
                 .MaximumLength(50)
                 .WithName(p => translator[nameof(p.BarCode)]);
         }
