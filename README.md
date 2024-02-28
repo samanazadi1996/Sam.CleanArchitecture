@@ -31,7 +31,7 @@ Here are the credentials for the default users.
 
 You can use these default credentials to generate valid JWTokens at the ../api/v1/Account/Authenticate endpoint.
 
-[![](https://samanazadi1996.gallerycdn.vsassets.io/extensions/samanazadi1996/aspdotnetcorecleanarchitecture/1.2/1693387066158/3__2.png)](#)
+[![](https://samanazadi1996.gallerycdn.vsassets.io/extensions/samanazadi1996/aspdotnetcorecleanarchitecture/2.6/1709104301573/3__3.png)](#)
 
 # Purpose of this Project
 Does it really make sense to Setup your ASP.NET Core Solution everytime you start a new WebApi Project ? Aren't we wasting quite a lot of time in doing this over and over gain?
