@@ -12,7 +12,7 @@ Follow these Steps to get started.
 
 You Solution Template is Ready!
 
-[![](https://samanazadi1996.gallerycdn.vsassets.io/extensions/samanazadi1996/aspdotnetcorecleanarchitecture/1.2/1693387066158/2__1.png)](#)
+[![](https://samanazadi1996.gallerycdn.vsassets.io/extensions/samanazadi1996/aspdotnetcorecleanarchitecture/2.7/1709552831334/vs.png)](#)
 
 Next, open up WebAPI/appsettings.json to change the connection strings. Here you can choose to have multiple DBs for a separation of the IdentityDB or have the same DB for Identity and Application and FileManager.
 
@@ -31,7 +31,7 @@ Here are the credentials for the default users.
 
 You can use these default credentials to generate valid JWTokens at the ../api/v1/Account/Authenticate endpoint.
 
-[![](https://samanazadi1996.gallerycdn.vsassets.io/extensions/samanazadi1996/aspdotnetcorecleanarchitecture/2.6/1709104301573/3__3.png)](#)
+[![](https://samanazadi1996.gallerycdn.vsassets.io/extensions/samanazadi1996/aspdotnetcorecleanarchitecture/2.7/1709552831334/swagger.png)](#)
 
 # Purpose of this Project
 Does it really make sense to Setup your ASP.NET Core Solution everytime you start a new WebApi Project ? Aren't we wasting quite a lot of time in doing this over and over gain?
