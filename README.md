@@ -60,7 +60,6 @@ If you found this Implementation helpful or used it in your Projects, do give it
 - CQRS with MediatR Library
 - Entity Framework Core - Code First
 - Repository Pattern - Generic
-- MediatR Pipeline Logging & Validation
 - Serilog
 - Swagger UI
 - Response Wrappers
