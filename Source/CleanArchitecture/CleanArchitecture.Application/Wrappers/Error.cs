@@ -9,10 +9,6 @@
             FieldName = fieldName;
         }
 
-        public Error(ErrorCode errorCode, string message, string[] parameters)
-        {
-        }
-
         public ErrorCode ErrorCode { get; set; }
         public string FieldName { get; set; }
         public string Description { get; set; }

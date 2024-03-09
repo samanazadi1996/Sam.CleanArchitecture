@@ -62,7 +62,7 @@ If you found this Implementation helpful or used it in your Projects, do give it
 - Repository Pattern - Generic
 - Serilog
 - Swagger UI
-- Response Wrappers
+- [Response Wrappers](./Documents/ResponseWrappers.md)
 - Healthchecks
 - Pagination
 - Microsoft Identity with JWT Authentication
@@ -71,7 +71,7 @@ If you found this Implementation helpful or used it in your Projects, do give it
 - Database Seeding
 - Custom Exception Handling Middlewares
 - API Versioning
-- Localization (fa / en)
+- [Localization (fa / en)](./Documents/Localization.md)
 - Fluent Validation
 - Complete User Management Module (Register / Authenticate / Change UserName / Change Password)
 - User Auditing
