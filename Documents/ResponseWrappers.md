@@ -158,5 +158,86 @@ public enum ErrorCode : short
 ## Conclusion
 In conclusion, the use of result wrappers and effective error handling is crucial for building resilient and maintainable C# applications. The presented 'BaseResult' and 'BaseResult<TData>' classes, along with the 'Error' class and 'ErrorCode' enumeration, provide a robust framework for handling operation outcomes and reporting errors consistently. By adopting these practices, developers can enhance the reliability and maintainability of their applications while promoting a standardized approach to error management.
 
+## The PagedResponse Class
+
+The 'PagedResponse<T>' class serves as an extension of the 'BaseResult<List<T>>', introducing properties specifically tailored for paginated responses:
+
+``` c#
+public class PagedResponse<T> : BaseResult<List<T>>
+{
+    public int PageNumber { get; }
+    public int PageSize { get; }
+    public int TotalPages { get; set; }
+    public int TotalItems { get; set; }
+    public bool HasPreviousPage => PageNumber > 1;
+    public bool HasNextPage => PageNumber < TotalPages;
+    public PagedResponse()
+    {
+    }
+    public PagedResponse(Error error) : base(error)
+    {
+    }
+    public PagedResponse(PagenationResponseDto<T> model, PagenationRequestParameter request)
+    {
+        PageNumber = request.PageNumber;
+        PageSize = request.PageSize;
+        TotalItems = model.Count;
+        TotalPages = TotalItems / PageSize;
+        if (TotalItems % PageSize > 0) TotalPages++;
+        this.Data = model.Data;
+        this.Success = true;
+    }
+    public PagedResponse(PagenationResponseDto<T> model, int pageNumber, int pageSize)
+    {
+        PageNumber = pageNumber;
+        PageSize = pageSize;
+        TotalItems = model.Count;
+        TotalPages = TotalItems / PageSize;
+        if (TotalItems % PageSize > 0) TotalPages++;
+        this.Data = model.Data;
+        this.Success = true;
+    }
+}
+```
+
+1. Pagination Properties
+    * 'PageNumber', 'PageSize', 'TotalPages', and 'TotalItems' provide a comprehensive overview of the pagination state.
+
+    * 'HasPreviousPage' and 'HasNextPage' properties offer convenient checks for navigating between pages.
+
+2. Constructors
+
+    * The default constructor initializes the class.
+    * A constructor handling errors is available for scenarios where an operation encounters issues.
+    * Constructors based on response models, coupled with pagination parameters or specific page number and size, offer flexibility in constructing responses.
 
 
+### Utilizing Generics in Pagination
+
+The use of C# generics in the 'PagedResponse<T>' class enables the handling of diverse data types, making it a versatile solution for paginated responses. The generic type 'T' represents the data type of the elements in the response list.
+
+### Examples of Usage
+
+1. Basic Usage
+    ``` c#
+    var response = new PagedResponse<int>();
+    // Initializes a basic paginated response for integers
+    ```
+
+1. Handling Errors
+    ``` c#
+    var errorResponse = new PagedResponse<int>(new Error    (ErrorCode.NotFound, "Requested page not found"));
+    // Constructs a paginated response with a specified error
+    ```
+
+1. Handling Successful Paginated Responses
+    ``` c#
+    var paginatedModel = GetPagedData(); // Assume a method to  retrieve paginated data
+    var paginationRequest = new PagenationRequestParameter  (pageNumber: 2, pageSize: 10);
+
+    var successResponse = new PagedResponse<int>(paginatedModel,    paginationRequest);
+    // Creates a paginated response with success status,    including the paginated data and relevant pagination details
+    ```
+
+## Conclusion
+In conclusion, the PagedResponse<T> class, built upon the foundations of the BaseResult wrapper and enriched with C# generics, provides a comprehensive solution for handling paginated responses in C# applications. By employing this approach, developers can streamline result communication, manage errors effectively, and seamlessly navigate paginated data. The utilization of generics adds a layer of flexibility, making the solution adaptable to various data types and scenarios, contributing to the overall maintainability and scalability of C# applications.
