@@ -56,7 +56,7 @@ If you found this Implementation helpful or used it in your Projects, do give it
 
 # Features
 
-- Clean Architecture
+- [Clean Architecture](./Documents/CleanArchitecture.md)
 - CQRS with MediatR Library
 - Entity Framework Core - Code First
 - Repository Pattern - Generic

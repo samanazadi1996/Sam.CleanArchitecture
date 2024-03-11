@@ -32,7 +32,7 @@ public static class LocalizationExtentions
 
 Execution Steps:
 
-1. Read Configuration Settings
+1. **Read Configuration Settings**
 
    - Localization settings are read from the `appsettings.json` file.
      ```json
@@ -42,9 +42,10 @@ Execution Steps:
      }
      ```
 
-2. Configure RequestLocalization
+2. **Configure RequestLocalization**
    - Using `Configure<RequestLocalizationOptions>` settings for default language and supported languages are applied.
-3. Return IServiceCollection
+   - 
+3. **Return IServiceCollection**
    - The method returns `IServiceCollection` with the applied localization settings as an extension.
 
 ## UseCustomLocalization - Applying Localization Settings
@@ -67,11 +68,11 @@ public static class LocalizationExtentions
 
 Execution Steps:
 
-1. Use Localization Settings
+1. **Use Localization Settings**
 
    - The localization settings are applied to the `RequestLocalizationMiddleware`.
 
-2. Return IApplicationBuilder
+2. **Return IApplicationBuilder**
    - The method returns `IApplicationBuilder`, enabling the use of localization settings at the application level.
 
 ## Usage in `Program.cs`

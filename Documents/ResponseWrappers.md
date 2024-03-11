@@ -33,17 +33,17 @@ public class BaseResult
 }
 ```
 
-1. Success Property
+1. **Success Property**
 
    - A boolean property, Success, is employed to indicate whether the operation was successful (true) or encountered an issue (false).
 
-2. Errors Property
+2. **Errors Property**
 
    - The Errors property is a list of Error objects that capture details about any errors that occurred during the operation. This standardized approach allows for consistent error reporting.
 
-3. Constructors
+3. **Constructors**
    - The class provides various constructors to handle different scenarios
-     1. A default constructor initializes a successful result.
+     1. **A default constructor initializes a successful** result.
      ```c#
          public BaseResult()
          {
@@ -51,7 +51,8 @@ public class BaseResult
              Errors = null;
          }
      ```
-     2. Constructors accepting a single Error object or multiple Error objects enable effective error reporting
+
+     2. **Constructors accepting a single Error object or multiple Error objects enable effective error reporting**
      ```c#
          public BaseResult(Error error)
          {
@@ -93,11 +94,11 @@ public class BaseResult<TData> : BaseResult
 }
 ```
 
-1. Data Property
+1. **Data Property**
 
    - The Data property, of type TData, stores the actual data produced by a successful operation. This allows for flexible handling of different data types.
 
-2. Constructors
+2. **Constructors**
    - Similar to the base class, constructors are provided for handling successful operations with or without associated data, as well as for reporting errors.
 
 ## The Error Class
@@ -120,11 +121,11 @@ public class Error
 }
 ```
 
-1. ErrorCode Property
-
+1. **ErrorCode Property
+**
    - An enumeration, 'ErrorCode', categorizes errors into predefined types. This enables developers to identify and handle specific error scenarios systematically.
 
-2. FieldName and Description Properties
+2. **FieldName and Description Properties**
    - These properties allow for additional context about the error, specifying the field or area where the error occurred and providing a human-readable description.
 
 ## The ErrorCode Enumeration
@@ -210,12 +211,12 @@ public class PagedResponse<T> : BaseResult<List<T>>
 }
 ```
 
-1. Pagination Properties
+1. **Pagination Properties**
 
    - 'PageNumber', 'PageSize', 'TotalPages', and 'TotalItems' provide a comprehensive overview of the pagination state.
    - 'HasPreviousPage' and 'HasNextPage' properties offer convenient checks for navigating between pages.
 
-2. Constructors
+2. **Constructors**
 
    - The default constructor initializes the class.
    - A constructor handling errors is available for scenarios where an operation encounters issues.
@@ -227,21 +228,21 @@ The use of C# generics in the 'PagedResponse<T>' class enables the handling of d
 
 ### Examples of Usage
 
-1. Basic Usage
+1. **Basic Usage**
 
    ```c#
    var response = new PagedResponse<int>();
    // Initializes a basic paginated response for integers
    ```
 
-1. Handling Errors
+1. **Handling Errors**
 
    ```c#
    var errorResponse = new PagedResponse<int>(new Error(ErrorCode.NotFound, "Requested page not found"));
    // Constructs a paginated response with a specified error
    ```
 
-1. Handling Successful Paginated Responses
+1. **Handling Successful Paginated Responses**
 
    ```c#
    var paginationRequest = new PagenationRequestParameter()
