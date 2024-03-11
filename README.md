@@ -12,7 +12,7 @@ Follow these Steps to get started.
 
 You Solution Template is Ready!
 
-[![](https://samanazadi1996.gallerycdn.vsassets.io/extensions/samanazadi1996/aspdotnetcorecleanarchitecture/2.7/1709552831334/vs.png)](#)
+[![](https://s8.uupload.ir/files/vs_97yl.png)](#)
 
 Next, open up WebAPI/appsettings.json to change the connection strings. Here you can choose to have multiple DBs for a separation of the IdentityDB or have the same DB for Identity and Application and FileManager.
 
