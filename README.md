@@ -47,7 +47,7 @@ Demonstrate Clean Monolith Architecture in ASP.NET Core 8
 
 # Give a Star ⭐️
 
-If you found this Implementation helpful or used it in your Projects, do give it a star. Thanks! Or, If you are feeling really generous, Support the Project with a small contribution!
+If you found this Implementation helpful or used it in your Projects, do give it a star. Thanks!
 
 # Technologies
 
