@@ -72,35 +72,35 @@ Adhering to these principles transforms the software into a well-organized, main
 
 ### Advantages
 
-1. **Separation of Concerns:**    
+1. **Separation of Concerns**    
     - Clean Architecture ensures that each layer of the application has distinct responsibilities, facilitating code maintenance and development.
 
-2. **High Testability:**    
+2. **High Testability**    
     - By separating concerns and utilizing testable units, Clean Architecture streamlines the testing process, allowing independent testing of each layer.
 
-3. **High Flexibility:**    
+3. **High Flexibility**    
     - The modularity and flexibility of Clean Architecture empower developers to independently develop different parts of the application.
 
-4. **Ability to Use Various Technologies and Frameworks:**
+4. **Ability to Use Various Technologies and Frameworks**
     
     - Each layer can leverage different technologies and frameworks without significant impacts on other layers.
 
-1. **Ease of Maintenance and Refactoring:**
+5. **Ease of Maintenance and Refactoring**
     
     - Due to the separation of concerns and adherence to SOLID principles, changes and improvements in one layer have minimal impact on other parts.
 
 ### Disadvantages
 
-1. **Additional Complexity in Small Projects:**
+1. **Additional Complexity in Small Projects**
     - In smaller projects, implementing Clean Architecture may seem like overkill and introduce unnecessary complexity.
 
-2. **Learning Curve:**
+2. **Learning Curve**
     - Developers unfamiliar with Clean Architecture may require additional time to learn and adapt to its concepts.
 
-3. **Potential for Increased Project Structure Complexity:**
+3. **Potential for Increased Project Structure Complexity**
     - The modular structure and separation of layers may introduce extra complexity, especially for developers in smaller projects.
 
-4. **Potential for Lower Productivity in Some Cases:**    
+4. **Potential for Lower Productivity in Some Cases**    
     - In certain situations, Clean Architecture may lead to an increased number of layers and documentation, potentially reducing overall productivity.
 
 Ultimately, the decision to adopt Clean Architecture depends on the nature and size of the project, the development team, and its specific requirements.
