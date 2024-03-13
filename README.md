@@ -63,7 +63,7 @@ If you found this Implementation helpful or used it in your Projects, do give it
 - Serilog
 - Swagger UI
 - [Response Wrappers](./Documents/ResponseWrappers.md)
-- Healthchecks
+- [Healthchecks](./Documents/Healthchecks.md)
 - Pagination
 - Microsoft Identity with JWT Authentication
 - Role based Authorization
