@@ -19,7 +19,7 @@ namespace CleanArchitecture.WebApi.Infrastracture.Extensions
                     Version = description.ApiVersion.ToString()
                 };
 
-                if (description.IsDeprecated) info.Description += " This API version has been deprecated.";
+                if (description.IsDeprecated) info.Description += "This API version has been deprecated.";
 
                 options.SwaggerDoc(description.GroupName, info);
             }

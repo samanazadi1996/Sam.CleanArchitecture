@@ -71,7 +71,6 @@ namespace CleanArchitecture.WebApi.Infrastracture.Extensions
                         }, new List<string>()
                     },
                 });
-                // setup.OperationFilter<AddRequiredHeaderParameter>();
 
             });
             services.ConfigureOptions<ConfigureSwaggerOptions>();
