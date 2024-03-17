@@ -4,8 +4,6 @@ using CleanArchitecture.Domain.Products.Dtos;
 using CleanArchitecture.Domain.Products.Entities;
 using CleanArchitecture.Infrastructure.Persistence.Contexts;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 

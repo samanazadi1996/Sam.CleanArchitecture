@@ -1,6 +1,4 @@
-﻿using CleanArchitecture.Application.Interfaces;
-using CleanArchitecture.Application.Interfaces.UserInterfaces;
-using CleanArchitecture.Infrastructure.Identity.Contexts;
+﻿using CleanArchitecture.Application.Interfaces.UserInterfaces;
 
 namespace CleanArchitecture.Infrastructure.Identity.Services
 {

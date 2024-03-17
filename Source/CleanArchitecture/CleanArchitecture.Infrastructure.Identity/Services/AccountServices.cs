@@ -7,7 +7,6 @@ using CleanArchitecture.Application.Wrappers;
 using CleanArchitecture.Domain.Settings;
 using CleanArchitecture.Infrastructure.Identity.Models;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
