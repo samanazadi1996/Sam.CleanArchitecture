@@ -28,7 +28,7 @@ builder.Services.AddApplicationLayer();
 builder.Services.AddPersistenceInfrastructure(builder.Configuration);
 builder.Services.AddFileManagerInfrastructure(builder.Configuration);
 builder.Services.AddIdentityInfrastructure(builder.Configuration);
-builder.Services.AddResourcesInfrastructure(builder.Configuration);
+builder.Services.AddResourcesInfrastructure();
 
 builder.Services.AddScoped<IAuthenticatedUserService, AuthenticatedUserService>();
 builder.Services.AddDistributedMemoryCache();
