@@ -69,7 +69,7 @@ If you found this Implementation helpful or used it in your Projects, do give it
 - Role based Authorization
 - Identity Seeding
 - Database Seeding
-- Custom Exception Handling Middlewares
+- [Custom Exception Handling Middlewares](./Documents/ExceptionHandlingMiddlewares.md)
 - API Versioning
 - [Localization (fa / en)](./Documents/Localization.md)
 - Fluent Validation
