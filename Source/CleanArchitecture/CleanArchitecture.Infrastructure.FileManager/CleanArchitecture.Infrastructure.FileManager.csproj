@@ -11,5 +11,4 @@
 		<ProjectReference Include="..\CleanArchitecture.Application\CleanArchitecture.Application.csproj" />
 	</ItemGroup>
 
-
 </Project>
