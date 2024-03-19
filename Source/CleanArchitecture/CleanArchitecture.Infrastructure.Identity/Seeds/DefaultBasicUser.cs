@@ -19,7 +19,8 @@ namespace CleanArchitecture.Infrastructure.Identity.Seeds
                 EmailConfirmed = true,
                 PhoneNumberConfirmed = true
             };
-            if (userManager.Users.All(u => u.Id != defaultUser.Id))
+
+            if (!userManager.Users.Any())
             {
                 var user = await userManager.FindByEmailAsync(defaultUser.Email);
                 if (user == null)
