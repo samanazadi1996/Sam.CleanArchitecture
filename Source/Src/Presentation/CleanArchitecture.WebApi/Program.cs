@@ -8,6 +8,7 @@ using CleanArchitecture.Infrastructure.Identity.Models;
 using CleanArchitecture.Infrastructure.Identity.Seeds;
 using CleanArchitecture.Infrastructure.Persistence;
 using CleanArchitecture.Infrastructure.Persistence.Contexts;
+using CleanArchitecture.Infrastructure.Persistence.Seeds;
 using CleanArchitecture.Infrastructure.Resources;
 using CleanArchitecture.WebApi.Infrastracture.Extensions;
 using CleanArchitecture.WebApi.Infrastracture.Middlewares;
@@ -72,6 +73,7 @@ using (var scope = app.Services.CreateScope())
     //Seed Data
     await DefaultRoles.SeedAsync(services.GetRequiredService<RoleManager<ApplicationRole>>());
     await DefaultBasicUser.SeedAsync(services.GetRequiredService<UserManager<ApplicationUser>>());
+    await DefaultData.SeedAsync(services.GetRequiredService<ApplicationDbContext>());
 }
 
 if (app.Environment.IsDevelopment())

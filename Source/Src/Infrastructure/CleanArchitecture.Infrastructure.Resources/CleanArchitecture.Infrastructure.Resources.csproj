@@ -4,7 +4,7 @@
 		<TargetFramework>net8.0</TargetFramework>
 	</PropertyGroup>
 	<ItemGroup>
-		<ProjectReference Include="..\CleanArchitecture.Application\CleanArchitecture.Application.csproj" />
+		<ProjectReference Include="..\..\Core\CleanArchitecture.Application\CleanArchitecture.Application.csproj" />
 	</ItemGroup>
 	<ItemGroup>
 		<EmbeddedResource Update="ProjectResources\ResourceGeneral.fa.resx">

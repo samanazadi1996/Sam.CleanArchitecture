@@ -25,11 +25,11 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\CleanArchitecture.Application\CleanArchitecture.Application.csproj" />
-		<ProjectReference Include="..\CleanArchitecture.Infrastructure.FileManager\CleanArchitecture.Infrastructure.FileManager.csproj" />
-		<ProjectReference Include="..\CleanArchitecture.Infrastructure.Identity\CleanArchitecture.Infrastructure.Identity.csproj" />
-		<ProjectReference Include="..\CleanArchitecture.Infrastructure.Persistence\CleanArchitecture.Infrastructure.Persistence.csproj" />
-		<ProjectReference Include="..\CleanArchitecture.Infrastructure.Resources\CleanArchitecture.Infrastructure.Resources.csproj" />
+		<ProjectReference Include="..\..\Core\CleanArchitecture.Application\CleanArchitecture.Application.csproj" />
+		<ProjectReference Include="..\..\Infrastructure\CleanArchitecture.Infrastructure.FileManager\CleanArchitecture.Infrastructure.FileManager.csproj" />
+		<ProjectReference Include="..\..\Infrastructure\CleanArchitecture.Infrastructure.Identity\CleanArchitecture.Infrastructure.Identity.csproj" />
+		<ProjectReference Include="..\..\Infrastructure\CleanArchitecture.Infrastructure.Persistence\CleanArchitecture.Infrastructure.Persistence.csproj" />
+		<ProjectReference Include="..\..\Infrastructure\CleanArchitecture.Infrastructure.Resources\CleanArchitecture.Infrastructure.Resources.csproj" />
 	</ItemGroup>
 
 </Project>
