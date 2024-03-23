@@ -14,7 +14,7 @@ You Solution Template is Ready!
 
 [![](https://raw.githubusercontent.com/samanazadi1996/Sam.CleanArchitecture/master/Documents/Images/ProjectCreated.png)](#)
 
-Next, open up WebAPI/appsettings.json to change the connection strings. Here you can choose to have multiple DBs for a separation of the IdentityDB or have the same DB for Identity and Application and FileManager.
+Please open the appsettings.json file in WebAPI to modify the connection strings if necessary.
 
 Finally, build and run the Application.
 
