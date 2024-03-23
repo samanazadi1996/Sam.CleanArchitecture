@@ -14,7 +14,7 @@ You Solution Template is Ready!
 
 [![](https://raw.githubusercontent.com/samanazadi1996/Sam.CleanArchitecture/master/Documents/Images/ProjectCreated.png)](#)
 
-Please open the appsettings.json file in WebAPI to modify the connection strings if necessary.
+Next, open the appsettings.json file in WebAPI to modify the ConnectionStrings if necessary.
 
 Finally, build and run the Application.
 
