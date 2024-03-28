@@ -74,7 +74,7 @@ If you found this Implementation helpful or used it in your Projects, do give it
 - [Localization (fa / en)](./Documents/Localization.md)
 - Fluent Validation
 - Complete User Management Module (Register / Authenticate / Change UserName / Change Password)
-- User Auditing
+- [User Auditing](./Documents/UserAuditing.md)
 
 # Prerequisites
 
