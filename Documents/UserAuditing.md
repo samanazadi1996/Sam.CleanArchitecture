@@ -9,12 +9,30 @@ In web applications, tracking and logging user activities is crucial. User Audit
 First, we create a base class called 'AuditableBaseEntity', inheriting from the 'BaseEntity' class. This class includes properties necessary for logging User Auditing information, such as:
 
 ``` c#
-public abstract class AuditableBaseEntity : BaseEntity
+public abstract class AuditableBaseEntity : BaseEntity, IAuditableEntity
 {
-    public Guid CreatedBy { get; set; }
-    public DateTime Created { get; set; }
-    public Guid? LastModifiedBy { get; set; }
-    public DateTime? LastModified { get; set; }
+    public Guid CreatedBy { get; private set; }
+    public DateTime Created { get; private set; }
+    public Guid? LastModifiedBy { get; private set; }
+    public DateTime? LastModified { get; private set; }
+
+    void IAuditableEntity.SetCreationDetails(Guid createdBy, DateTime created)
+    {
+        Created = created;
+        CreatedBy = createdBy;
+    }
+
+    void IAuditableEntity.SetModificationDetails(Guid? lastModifiedBy, DateTime? lastModified)
+    {
+        LastModified = lastModified;
+        LastModifiedBy = lastModifiedBy;
+    }
+}
+
+public interface IAuditableEntity
+{
+    void SetCreationDetails(Guid createdBy, DateTime created);
+    void SetModificationDetails(Guid? lastModifiedBy, DateTime? lastModified);
 }
 ```
 
@@ -33,23 +51,23 @@ In the 'ApplicationDbContext' class, which serves as a DbContext for Entity Fram
 public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
 {
     var userId = Guid.Parse(authenticatedUser.UserId ?? "00000000-0000-0000-0000-000000000000");
-    foreach (var entry in ChangeTracker.Entries<AuditableBaseEntity>())
+    foreach (var entry in ChangeTracker.Entries())
     {
-        switch (entry.State)
+        if (entry.Entity is IAuditableEntity auditableEntity)
         {
-            case EntityState.Added:
-                entry.Entity.Created = DateTime.Now;
-                entry.Entity.CreatedBy = userId;
-                break;
-            case EntityState.Modified:
-                entry.Entity.LastModified = DateTime.Now;
-                entry.Entity.LastModifiedBy = userId;
-                break;
+            switch (entry.State)
+            {
+                case EntityState.Added:
+                    auditableEntity.SetCreationDetails(userId, DateTime.Now);
+                    break;
+                case EntityState.Modified:
+                    auditableEntity.SetModificationDetails(userId, DateTime.Now);
+                    break;
+            }
         }
     }
     return base.SaveChangesAsync(cancellationToken);
-}
-```
+}```
 
 ## Implementation of the AuthenticatedUserService Service
 In the 'AuthenticatedUserService' service, we use 'IHttpContextAccessor' to access information about the current user in ASP.NET Core. This information includes the user's ID and name, retrieved from the 'HttpContext' of the current request. Then, this information is sent as output from the service.
