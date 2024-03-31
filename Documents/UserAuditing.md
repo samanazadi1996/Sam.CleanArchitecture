@@ -67,7 +67,8 @@ public override Task<int> SaveChangesAsync(CancellationToken cancellationToken =
         }
     }
     return base.SaveChangesAsync(cancellationToken);
-}```
+}
+```
 
 ## Implementation of the AuthenticatedUserService Service
 In the 'AuthenticatedUserService' service, we use 'IHttpContextAccessor' to access information about the current user in ASP.NET Core. This information includes the user's ID and name, retrieved from the 'HttpContext' of the current request. Then, this information is sent as output from the service.
