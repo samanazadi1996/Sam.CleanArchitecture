@@ -67,7 +67,7 @@ If you found this Implementation helpful or used it in your Projects, do give it
 - Pagination
 - Microsoft Identity with JWT Authentication
 - Role based Authorization
-- Identity Seeding
+- [Identity Seeding](./Documents/IdentitySeeding.md)
 - Database Seeding
 - [Custom Exception Handling Middlewares](./Documents/ExceptionHandlingMiddlewares.md)
 - API Versioning
