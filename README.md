@@ -8,11 +8,11 @@ An Implementation of Clean Architecture with ASP.NET Core 8 WebApi. With this Op
 
 Follow these Steps to get started.
 
-[![](https://raw.githubusercontent.com/samanazadi1996/Sam.CleanArchitecture/master/Documents/Images/NewProject.png)](#)
+[![](./Documents/Images/NewProject.png)](#)
 
 You Solution Template is Ready!
 
-[![](https://raw.githubusercontent.com/samanazadi1996/Sam.CleanArchitecture/master/Documents/Images/ProjectCreated.png)](#)
+[![](./Documents/Images/ProjectCreated.png)](#)
 
 Next, open the appsettings.json file in WebAPI to modify the ConnectionStrings if necessary.
 
@@ -31,7 +31,7 @@ Here are the credentials for the default users.
 
 You can use these default credentials to generate valid JWTokens at the ../api/v1/Account/Authenticate endpoint.
 
-[![](https://raw.githubusercontent.com/samanazadi1996/Sam.CleanArchitecture/master/Documents/Images/Swagger.png)](#)
+[![](./Documents/Images/Swagger.png)](#)
 
 # Purpose of this Project
 Does it really make sense to Setup your ASP.NET Core Solution everytime you start a new WebApi Project ? Aren't we wasting quite a lot of time in doing this over and over gain?
