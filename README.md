@@ -68,7 +68,7 @@ If you found this Implementation helpful or used it in your Projects, do give it
 - Microsoft Identity with JWT Authentication
 - Role based Authorization
 - [Identity Seeding](./Documents/IdentitySeeding.md)
-- Database Seeding
+- [Database Seeding](./Documents/DatabaseSeeding.md)
 - [Custom Exception Handling Middlewares](./Documents/ExceptionHandlingMiddlewares.md)
 - API Versioning
 - [Localization (fa / en)](./Documents/Localization.md)
