@@ -1,0 +1,34 @@
+version: '3.9'
+
+services:
+  cleanarchitecture.webapi:
+    image: ${DOCKER_REGISTRY-}cleanarchitecturewebapi
+    build:
+      context: ../Source/
+      dockerfile: ../Source/Src/Presentation/CleanArchitecture.WebApi/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=${ENVIRONMENT}
+      - ConnectionStrings__DefaultConnection=Data Source=sqlserver;Initial Catalog=CleanArchitecture;user id=sa;password=${SqlServerSaPassword};MultipleActiveResultSets=True;TrustServerCertificate=True
+      - ConnectionStrings__IdentityConnection=Data Source=sqlserver;Initial Catalog=CleanArchitectureIdentity;user id=sa;password=${SqlServerSaPassword};MultipleActiveResultSets=True;TrustServerCertificate=True
+      - ConnectionStrings__FileManagerConnection=Data Source=sqlserver;Initial Catalog=CleanArchitectureFileManager;user id=sa;password=${SqlServerSaPassword};MultipleActiveResultSets=True;TrustServerCertificate=True
+    ports:
+      - "8080:8080"
+    depends_on:
+      - sqlserver
+    restart: unless-stopped
+
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server
+    hostname: SqlServerHost
+    ports:
+      - "9433:1433"
+    volumes:
+      - sqlserver_data:/var/opt/mssql
+    environment:
+      ACCEPT_EULA: Y
+      SA_PASSWORD: ${SqlServerSaPassword}
+    restart: unless-stopped
+
+volumes:
+  sqlserver_data:
+    external: true
