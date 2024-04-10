@@ -2,29 +2,11 @@
 
 namespace CleanArchitecture.Domain.Common
 {
-    public abstract class AuditableBaseEntity : BaseEntity, IAuditableEntity
+    public abstract class AuditableBaseEntity : BaseEntity
     {
-        public Guid CreatedBy { get; private set; }
-        public DateTime Created { get; private set; }
-        public Guid? LastModifiedBy { get; private set; }
-        public DateTime? LastModified { get; private set; }
-
-        void IAuditableEntity.SetCreationDetails(Guid createdBy, DateTime created)
-        {
-            Created = created;
-            CreatedBy = createdBy;
-        }
-
-        void IAuditableEntity.SetModificationDetails(Guid? lastModifiedBy, DateTime? lastModified)
-        {
-            LastModified = lastModified;
-            LastModifiedBy = lastModifiedBy;
-        }
-    }
-
-    public interface IAuditableEntity
-    {
-        void SetCreationDetails(Guid createdBy, DateTime created);
-        void SetModificationDetails(Guid? lastModifiedBy, DateTime? lastModified);
+        public Guid CreatedBy { get; set; }
+        public DateTime Created { get; set; }
+        public Guid? LastModifiedBy { get; set; }
+        public DateTime? LastModified { get; set; }
     }
 }

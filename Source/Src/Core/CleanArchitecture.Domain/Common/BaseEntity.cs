@@ -2,6 +2,6 @@
 {
     public abstract class BaseEntity
     {
-        public virtual long Id { get; private set; }
+        public long Id { get; set; }
     }
 }

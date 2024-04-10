@@ -22,19 +22,18 @@ namespace CleanArchitecture.Infrastructure.Persistence.Contexts
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
         {
             var userId = Guid.Parse(authenticatedUser.UserId ?? "00000000-0000-0000-0000-000000000000");
-            foreach (var entry in ChangeTracker.Entries())
+            foreach (var entry in ChangeTracker.Entries<AuditableBaseEntity>())
             {
-                if (entry.Entity is IAuditableEntity auditableEntity)
+                switch (entry.State)
                 {
-                    switch (entry.State)
-                    {
-                        case EntityState.Added:
-                            auditableEntity.SetCreationDetails(userId, DateTime.Now);
-                            break;
-                        case EntityState.Modified:
-                            auditableEntity.SetModificationDetails(userId, DateTime.Now);
-                            break;
-                    }
+                    case EntityState.Added:
+                        entry.Entity.Created = DateTime.Now;
+                        entry.Entity.CreatedBy = userId;
+                        break;
+                    case EntityState.Modified:
+                        entry.Entity.LastModified = DateTime.Now;
+                        entry.Entity.LastModifiedBy = userId;
+                        break;
                 }
             }
             return base.SaveChangesAsync(cancellationToken);
