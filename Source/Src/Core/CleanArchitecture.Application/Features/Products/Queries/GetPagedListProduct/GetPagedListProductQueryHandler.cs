@@ -13,7 +13,7 @@ namespace CleanArchitecture.Application.Features.Products.Queries.GetPagedListPr
         {
             var result = await productRepository.GetPagedListAsync(request.PageNumber, request.PageSize, request.Name);
 
-            return new PagedResponse<ProductDto>(result, request);
+            return new PagedResponse<ProductDto>(result);
         }
     }
 }

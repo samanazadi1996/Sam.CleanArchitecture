@@ -29,9 +29,9 @@ namespace CleanArchitecture.Infrastructure.Identity.Services
                     Created = p.Created,
                 }).ToListAsync();
 
-            var result = new PagenationResponseDto<UserDto>(users, await identityContext.Users.CountAsync());
+            var result = new PagenationResponseDto<UserDto>(users, await identityContext.Users.CountAsync(), model.PageNumber, model.PageSize);
 
-            return new PagedResponse<UserDto>(result, model.PageNumber, model.PageSize);
+            return new PagedResponse<UserDto>(result);
         }
     }
 }

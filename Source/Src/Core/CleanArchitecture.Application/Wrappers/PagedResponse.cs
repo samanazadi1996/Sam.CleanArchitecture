@@ -1,5 +1,4 @@
 ﻿using CleanArchitecture.Application.DTOs;
-using CleanArchitecture.Application.Parameters;
 using System.Collections.Generic;
 
 namespace CleanArchitecture.Application.Wrappers
@@ -20,21 +19,10 @@ namespace CleanArchitecture.Application.Wrappers
         {
         }
 
-        public PagedResponse(PagenationResponseDto<T> model, PagenationRequestParameter request)
+        public PagedResponse(PagenationResponseDto<T> model)
         {
-            PageNumber = request.PageNumber;
-            PageSize = request.PageSize;
-            TotalItems = model.Count;
-            TotalPages = TotalItems / PageSize;
-            if (TotalItems % PageSize > 0) TotalPages++;
-
-            this.Data = model.Data;
-            this.Success = true;
-        }
-        public PagedResponse(PagenationResponseDto<T> model, int pageNumber, int pageSize)
-        {
-            PageNumber = pageNumber;
-            PageSize = pageSize;
+            PageNumber = model.PageNumber;
+            PageSize = model.PageSize;
             TotalItems = model.Count;
             TotalPages = TotalItems / PageSize;
             if (TotalItems % PageSize > 0) TotalPages++;

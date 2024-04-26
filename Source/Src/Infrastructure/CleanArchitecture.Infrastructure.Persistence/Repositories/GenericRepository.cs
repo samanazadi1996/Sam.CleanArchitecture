@@ -54,7 +54,7 @@ namespace CleanArchitecture.Infrastructure.Persistence.Repositories
                 .Take(pageSize)
                 .ToListAsync();
 
-            return new(pagedResult, count);
+            return new(pagedResult, count, pageNumber, pageSize);
         }
     }
 }
