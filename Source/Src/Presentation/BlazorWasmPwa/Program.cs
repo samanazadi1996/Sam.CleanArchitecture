@@ -15,6 +15,8 @@ namespace BlazorWasmPwa
 
             builder.Services.AddOidcAuthentication(options =>
             {
+                //https://learn.microsoft.com/en-us/aspnet/core/blazor/security/webassembly/standalone-with-authentication-library?view=aspnetcore-8.0&tabs=visual-studio
+
                 // Configure your authentication provider options here.
                 // For more information, see https://aka.ms/blazor-standalone-auth
                 builder.Configuration.Bind("Local", options.ProviderOptions);
