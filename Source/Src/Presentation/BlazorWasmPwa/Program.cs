@@ -22,6 +22,15 @@ namespace BlazorWasmPwa
                 builder.Configuration.Bind("Local", options.ProviderOptions);
             });
 
+            /* Configure Facebook authentication
+           builder.Services.AddOidcAuthentication(options =>
+           {
+               options.ProviderOptions.Authority = "https://www.facebook.com/";
+               options.ProviderOptions.ClientId = "YOUR_FACEBOOK_APP_ID"; // Replace with your actual Facebook app ID
+               options.ProviderOptions.RedirectUri = "https://localhost:5001/authentication/login-callback";
+               // Other options (scopes, post-logout redirect, etc.)
+           });
+           */
             await builder.Build().RunAsync();
             }
         }

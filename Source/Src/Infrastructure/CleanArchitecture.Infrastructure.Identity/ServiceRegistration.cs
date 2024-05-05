@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
@@ -90,6 +91,21 @@ namespace CleanArchitecture.Infrastructure.Identity
                         ValidateLifetime = true
                         };
 
+                    /* Facebook configuration
+                    o.Authority = "https://graph.facebook.com/";
+                    o.TokenValidationParameters = new TokenValidationParameters
+                        {
+                        ValidateIssuer = true,
+                        ValidIssuer = "https://graph.facebook.com/",
+                        ValidateAudience = true,
+                        ValidAudiences = new List<string>
+            {
+                "YOUR_FACEBOOK_APP_ID", // Replace with your actual Facebook app ID of client wasm
+                // Add more audiences as needed
+            },
+                        ValidateLifetime = true
+                        };
+                    */
                     /*
                     o.RequireHttpsMetadata = false;
                     o.SaveToken = false;
@@ -139,6 +155,7 @@ namespace CleanArchitecture.Infrastructure.Identity
 
                         };
                     */
+
                 });
 #pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
 
