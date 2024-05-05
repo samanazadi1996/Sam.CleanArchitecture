@@ -77,15 +77,15 @@ namespace CleanArchitecture.Infrastructure.Identity
                 .AddJwtBearer(async o =>
                 {
 
-                    o.Authority = "https://accounts.google.com/";
+                    o.Authority = configuration["Google:Authority"];   //"https://accounts.google.com/";
                     o.TokenValidationParameters = new TokenValidationParameters
                         {
                         ValidateIssuer = true,
-                        ValidIssuer = "https://accounts.google.com/",
+                        ValidIssuer = configuration["Google:ValidIssuer"],   // "https://accounts.google.com/",
                         ValidateAudience = true,
                         ValidAudiences = new List<string>
             {
-                "283580482176-v7o7a3vs9sd269i8qtknjua8kddmine1.apps.googleusercontent.com", // Replace with your actual Google client ID
+                            configuration["Google:ClientId"] //as like "28123123176-v7o7a3vs9sd269i8qtknjua8kddmine1.apps.googleusercontent.com", // Replace with your actual Google client ID
                 // Add more audiences as needed (e.g., Facebook client ID)
             },
                         ValidateLifetime = true

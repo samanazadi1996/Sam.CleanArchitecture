@@ -1,11 +1,145 @@
 ﻿@page "/"
+@using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
+@using System.Text.Json
+@using System.Security.Claims
+@using Microsoft.AspNetCore.Authorization
+@inject IAccessTokenProvider TokenProvider
+@inject HttpClient HttpClient
+@inject IJSRuntime JSRuntime
+@inject NavigationManager Navigation
 
-<PageTitle>Home</PageTitle>
+<p>@output</p>
 
-<h1>Hello, world!</h1>
+<button @onclick="DisplayToken">Display Access Token </button>
+<p>@resultAnon</p>
+<p>@result</p>
+@if (output != null)
+    {
+    @*     <h1>@AuthenticatedUser?.Identity?.Name</h1>
 
-<div class="alert alert-warning" role="alert">
-    Before authentication will function correctly, you must configure your provider details in <code>Program.cs</code>
-</div>
+    <h2>Claims</h2>
 
-Welcome to your new app.
+    @foreach (var claim in AuthenticatedUser?.Claims ?? Array.Empty<Claim>())
+        {
+        <p class="claim">@(claim.Type): @claim.Value</p>
+        } *@
+
+    @if (AccessToken != null)
+        {
+        <h2>Access token expires</h2>
+
+        <p>Current time: <span id="current-time">@DateTimeOffset.Now</span></p>
+        <p id="access-token-expires">@AccessToken.Expires</p>
+
+        <h2>Access token granted scopes (as reported by the API)</h2>
+
+        @foreach (var scope in AccessToken.GrantedScopes)
+            {
+            <p>Scope: @scope</p>
+            }
+        }
+
+    }
+
+@code
+{
+    private string output;
+    public ClaimsPrincipal AuthenticatedUser { get; set; }
+    public AccessToken AccessToken { get; set; }
+    public IList<string> scopes;
+    string result = "";
+    string resultAnon = "";
+
+
+
+    private async Task DisplayToken()
+        {
+        // var tokenResult = await TokenProvider.RequestAccessToken();
+        var token = await GetIdTokenAsync();
+        if (!string.IsNullOrEmpty(token))
+            {
+            // Console.WriteLine(token);
+
+            HttpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
+
+            var response2 = await HttpClient.GetAsync("https://localhost:5001/api/values");
+            if (response2.IsSuccessStatusCode)
+                {
+                resultAnon = await response2.Content.ReadAsStringAsync();
+                resultAnon ??= "nothing";
+                }
+
+            var response = await HttpClient.GetAsync("https://localhost:5001/api/WeatherForecast");
+            if (response.IsSuccessStatusCode)
+                {
+                result = await response.Content.ReadAsStringAsync();
+                result ??= "nothing";
+                }
+            else
+
+                {
+                result = response.StatusCode.ToString();
+
+
+                }
+            }
+        }
+
+    private async Task<string> GetIdTokenAsync()
+        {
+        const string clientId = "283580482176-v7o7a3vs9sd269i8qtknjua8kddmine1.apps.googleusercontent.com"; // Replace with your client ID
+        var userDataKey = $"oidc.user:https://accounts.google.com/:{clientId}";
+        // Console.WriteLine("key:"+userDataKey);
+        //oidc.user:https://accounts.google.com/:283580482176-v7o7a3vs9sd269i8qtknjua8kddmine1.apps.googleusercontent.com
+
+        // var userData0 = await JSRuntime.InvokeAsync<UserData>("sessionStorage.getItem", userDataKey);
+        // Console.WriteLine("tok:"+userData0.id_token);//this wont work,so get string first then parse as below
+
+        var userDataString = await JSRuntime.InvokeAsync<string>("sessionStorage.getItem", userDataKey);
+        // Console.WriteLine("val:" + userDataString);
+        if (userDataString != null)
+            {
+            try
+                {
+                var userData = JsonSerializer.Deserialize<UserData>(userDataString);
+                // Console.WriteLine("val2:" + userData.id_token);
+                return userData.id_token;
+                }
+            catch (Exception ex)
+                {
+                Console.WriteLine("Error parsing user data:", ex);
+                return null; // Or throw an exception
+                }
+            }
+        else
+            {
+            Console.WriteLine("Failed to retrieve user data from session storage");
+            return null; // Or throw an exception
+            }
+
+
+
+
+        }
+
+    public class Profile
+        {
+        public string azp { get; set; }
+        public string sub { get; set; }
+        public string email { get; set; }
+        public bool email_verified { get; set; }
+        public string name { get; set; }
+        public string picture { get; set; }
+        public string given_name { get; set; }
+        public string family_name { get; set; }
+        public string jti { get; set; }
+        }
+
+    public class UserData
+        {
+        public string id_token { get; set; }
+        public string scope { get; set; }
+        public Profile profile { get; set; }
+        }
+
+}

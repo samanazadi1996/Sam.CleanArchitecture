@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace CleanArchitecture.WebApi.Controllers.v1
 {
+    /*
     [ApiVersion("1")]
     public class AccountController(IAccountServices accountServices) : BaseApiController
     {
@@ -31,4 +32,5 @@ namespace CleanArchitecture.WebApi.Controllers.v1
             return await accountServices.AuthenticateByUserName(gostUsername.Data);
         }
     }
+    */
 }

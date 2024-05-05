@@ -19,7 +19,10 @@ namespace BlazorWasmPwa
 
                 // Configure your authentication provider options here.
                 // For more information, see https://aka.ms/blazor-standalone-auth
-                builder.Configuration.Bind("Local", options.ProviderOptions);
+                builder.Configuration.Bind("Google", options.ProviderOptions);
+                // Request specific Google claims (optional)
+                options.ProviderOptions.DefaultScopes.Add("email");//this is must for identity management in backend
+                options.ProviderOptions.DefaultScopes.Add("profile");
             });
 
             /* Configure Facebook authentication
