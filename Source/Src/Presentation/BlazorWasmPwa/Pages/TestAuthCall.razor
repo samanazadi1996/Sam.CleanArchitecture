@@ -1,0 +1,132 @@
+﻿@page "/testauth"
+@using System.Net.Http
+@using Microsoft.Extensions.DependencyInjection
+@using System.Net.Http.Headers
+@using System.Text.Json
+
+
+@inject IJSRuntime JSRuntime
+@* @inject IHttpClientFactory httpClientFactory *@
+@inject HttpClient httpClient
+@inject AuthenticationStateProvider authenticationStateProvider
+<button @onclick="TestApiCalls">Display Access Token </button>
+<p></p>
+<b>anonymousEndpointResponse: @(anonymousEndpointResponse ?? "")</b>
+<p></p>
+<b>validatedEndpointResponse: @(validatedEndpointResponse ?? "")</b>
+@code {
+    string anonymousEndpointResponse = "";
+    string validatedEndpointResponse = "";
+
+    private async Task TestApiCalls()
+        {
+        var authState = await authenticationStateProvider.GetAuthenticationStateAsync();
+        var user = authState.User;
+        Console.WriteLine(user == null);
+        if (user != null && user.Identity != null && user.Identity.IsAuthenticated)
+            {
+            //var accessToken = authState.User.FindFirst("access_token")?.Value;
+            var accessToken = await GetIdTokenAsync();
+            Console.WriteLine($"[{accessToken}]");
+            // var httpClient = httpClientFactory.CreateClient();
+            httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
+
+            // Make an API request (replace with your API endpoint)
+            var apiResponseAnon = await httpClient.GetAsync("https://localhost:5001/api/values");
+            if (apiResponseAnon.IsSuccessStatusCode)
+                {
+                validatedEndpointResponse = await apiResponseAnon.Content.ReadAsStringAsync();
+                if (validatedEndpointResponse != null)
+                    Console.WriteLine(validatedEndpointResponse);
+                else
+                    Console.WriteLine("failed anonymous");
+                // Process the API response (e.g., deserialize JSON)
+                // var orders = await apiResponse.Content.ReadFromJsonAsync<List<Order>>();
+                // Display orders or perform other actions
+                }
+            else
+                {
+                // Handle error (e.g., unauthorized, server error)
+                }
+            var apiResponse = await httpClient.GetAsync("https://localhost:5001/api/WeatherForecast");
+            if (apiResponse.IsSuccessStatusCode)
+                {
+                anonymousEndpointResponse = await apiResponse.Content.ReadAsStringAsync();
+                if (anonymousEndpointResponse != null)
+                    Console.WriteLine(anonymousEndpointResponse);
+                else
+                    Console.WriteLine("failed authentication");
+                // Process the API response (e.g., deserialize JSON)
+                // var orders = await apiResponse.Content.ReadFromJsonAsync<List<Order>>();
+                // Display orders or perform other actions
+                }
+            else
+                {
+                // Handle error (e.g., unauthorized, server error)
+                }
+            }
+        else
+            {
+            Console.WriteLine("User is not authenticated; handle accordingly");
+            }
+        }
+
+   
+
+    private async Task<string> GetIdTokenAsync()
+        {
+        const string clientId = "283580482176-v7o7a3vs9sd269i8qtknjua8kddmine1.apps.googleusercontent.com"; // Replace with your client ID
+        var userDataKey = $"oidc.user:https://accounts.google.com/:{clientId}";
+        // Console.WriteLine("key:"+userDataKey);
+        //oidc.user:https://accounts.google.com/:283580482176-v7o7a3vs9sd269i8qtknjua8kddmine1.apps.googleusercontent.com
+
+        // var userData0 = await JSRuntime.InvokeAsync<UserData>("sessionStorage.getItem", userDataKey);
+        // Console.WriteLine("tok:"+userData0.id_token);//this wont work,so get string first then parse as below
+
+        var userDataString = await JSRuntime.InvokeAsync<string>("sessionStorage.getItem", userDataKey);
+        // Console.WriteLine("val:" + userDataString);
+        if (userDataString != null)
+            {
+            try
+                {
+                var userData = JsonSerializer.Deserialize<UserData>(userDataString);
+                // Console.WriteLine("val2:" + userData.id_token);
+                return userData.id_token;
+                }
+            catch (Exception ex)
+                {
+                Console.WriteLine("Error parsing user data:", ex);
+                return null; // Or throw an exception
+                }
+            }
+        else
+            {
+            Console.WriteLine("Failed to retrieve user data from session storage");
+            return null; // Or throw an exception
+            }
+
+
+
+
+        }
+
+    public class Profile
+        {
+        public string azp { get; set; }
+        public string sub { get; set; }
+        public string email { get; set; }
+        public bool email_verified { get; set; }
+        public string name { get; set; }
+        public string picture { get; set; }
+        public string given_name { get; set; }
+        public string family_name { get; set; }
+        public string jti { get; set; }
+        }
+
+    public class UserData
+        {
+        public string id_token { get; set; }
+        public string scope { get; set; }
+        public Profile profile { get; set; }
+        }
+}

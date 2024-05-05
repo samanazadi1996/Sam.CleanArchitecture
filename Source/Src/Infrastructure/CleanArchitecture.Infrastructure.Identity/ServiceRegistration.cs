@@ -14,17 +14,18 @@ using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Text;
 
 namespace CleanArchitecture.Infrastructure.Identity
-{
-    public static class ServiceRegistration
     {
+    public static class ServiceRegistration
+        {
 
         public static void AddIdentityCookie(this IServiceCollection services, IConfiguration configuration)
-        {
+            {
             var identitySettings = configuration.GetSection(nameof(IdentitySettings)).Get<IdentitySettings>();
             services.AddSingleton(identitySettings);
             services.AddIdentity<ApplicationUser, ApplicationRole>(options =>
@@ -42,9 +43,9 @@ namespace CleanArchitecture.Infrastructure.Identity
             })
                 .AddEntityFrameworkStores<IdentityContext>()
                 .AddDefaultTokenProviders();
-        }
+            }
         public static void AddIdentityInfrastructure(this IServiceCollection services, IConfiguration configuration)
-        {
+            {
             services.AddDbContext<IdentityContext>(options =>
             options.UseSqlServer(
                 configuration.GetConnectionString("IdentityConnection"),
@@ -53,13 +54,13 @@ namespace CleanArchitecture.Infrastructure.Identity
             services.AddTransient<IGetUserServices, GetUserServices>();
             services.AddTransient<IUpdateUserServices, UpdateUserServices>();
             services.AddTransient<IAccountServices, AccountServices>();
-        }
+            }
         public static void AddJwt(this IServiceCollection services, IConfiguration configuration)
-        {
-            var serializerSettings = new JsonSerializerSettings()
             {
+            var serializerSettings = new JsonSerializerSettings()
+                {
                 ContractResolver = new CamelCasePropertyNamesContractResolver()
-            };
+                };
 
             services.AddIdentity<ApplicationUser, ApplicationRole>().AddEntityFrameworkStores<IdentityContext>().AddDefaultTokenProviders();
 
@@ -70,14 +71,30 @@ namespace CleanArchitecture.Infrastructure.Identity
             services.AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                //options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
             })
                 .AddJwtBearer(async o =>
                 {
+
+                    o.Authority = "https://accounts.google.com/";
+                    o.TokenValidationParameters = new TokenValidationParameters
+                        {
+                        ValidateIssuer = true,
+                        ValidIssuer = "https://accounts.google.com/",
+                        ValidateAudience = true,
+                        ValidAudiences = new List<string>
+            {
+                "283580482176-v7o7a3vs9sd269i8qtknjua8kddmine1.apps.googleusercontent.com", // Replace with your actual Google client ID
+                // Add more audiences as needed (e.g., Facebook client ID)
+            },
+                        ValidateLifetime = true
+                        };
+
+                    /*
                     o.RequireHttpsMetadata = false;
                     o.SaveToken = false;
                     o.TokenValidationParameters = new TokenValidationParameters
-                    {
+                        {
                         ValidateIssuerSigningKey = true,
                         ValidateIssuer = true,
                         ValidateAudience = true,
@@ -86,9 +103,9 @@ namespace CleanArchitecture.Infrastructure.Identity
                         ValidIssuer = jwtSettings.Issuer,
                         ValidAudience = jwtSettings.Audience,
                         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.Key))
-                    };
+                        };
                     o.Events = new JwtBearerEvents()
-                    {
+                        {
                         OnChallenge = context =>
                         {
                             context.HandleResponse();
@@ -120,11 +137,12 @@ namespace CleanArchitecture.Infrastructure.Identity
                                 context.Fail("Token secuirty stamp is not valid.");
                         },
 
-                    };
+                        };
+                    */
                 });
 #pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
 
-        }
+            }
 
+        }
     }
-}
