@@ -41,6 +41,10 @@
         {
           "choice": "query",
           "description": "Create a new query"
+        },
+        {
+          "choice": "queryPagedList",
+          "description": "Create a new queryPagedList"
         }
       ],
       "description": "The type of use case to create"
@@ -54,11 +58,15 @@
     },
     "createCommand": {
       "type": "computed",
-      "value": "(useCaseType == \"command\")"
+      "value": "(useCaseType != \"command\")"
     },
     "createQuery": {
       "type": "computed",
-      "value": "(useCaseType == \"query\")"
+      "value": "(useCaseType != \"query\")"
+    },
+    "createQueryPagedList": {
+      "type": "computed",
+      "value": "(useCaseType != \"queryPagedList\")"
     },
     "returnType": {
       "type": "parameter",
@@ -74,13 +82,19 @@
         {
           "condition": "(createCommand)",
           "exclude": [
-            "DomainName/Queries/**"
+            "Features/DomainName/Commands/**"
           ]
         },
         {
           "condition": "(createQuery)",
           "exclude": [
-            "DomainName/Commands/**"
+            "Features/DomainName/Queries/UseCaseName/**"
+          ]
+        },
+        {
+          "condition": "(createQueryPagedList)",
+          "exclude": [
+            "Features/DomainName/Queries/UseCaseNamePagedList/**"
           ]
         }
       ]

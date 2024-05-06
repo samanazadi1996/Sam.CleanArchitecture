@@ -3,9 +3,8 @@ using MediatR;
 
 namespace CleanArchitecture.Application.Features.DomainName.Queries.UseCaseName
 {
-    public class UseCaseNameQuery : IRequest<BaseResult>
+    public class UseCaseNameQuery : IRequest<BaseResult<string>>
     {
-        // public long Id { get; set; }
+        public string Str { get; set; }
     }
-
 }

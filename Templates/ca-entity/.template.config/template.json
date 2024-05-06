@@ -19,8 +19,8 @@
     "DefaultNamespace": {
       "type": "bind",
       "binding": "msbuild:RootNamespace",
-      "replaces": "CleanArchitecture.Application",
-      "defaultValue": "CleanArchitecture.Application"
+      "replaces": "CleanArchitecture.Domain",
+      "defaultValue": "CleanArchitecture.Domain"
     },
     "domainName": {
       "type": "parameter",
@@ -36,10 +36,6 @@
       "replaces": "EntityName",
       "fileRename": "EntityName"
     },
-    "createEntity": {
-      "type": "computed",
-      "value": "true"
-    },
     "returnType": {
       "type": "parameter",
       "datatype": "string",
@@ -52,7 +48,6 @@
     {
       "modifiers": [
         {
-          "condition": "(createEntity)",
           "exclude": [
             "./**"
           ]
