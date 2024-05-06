@@ -20,6 +20,7 @@
   
   <ItemGroup>
     <Content Include="Source\**\*" Exclude="**\bin\**\*;**\obj\**\*;**\.vs\**\*;**\.vscode\**\*" />
+    <Content Include="Templates\**\*" Exclude="**\bin\**\*;**\obj\**\*;**\.vs\**\*;**\.vscode\**\*" />
     <Compile Remove="**\*" />
   </ItemGroup>
 
