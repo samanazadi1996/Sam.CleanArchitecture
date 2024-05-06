@@ -45,12 +45,12 @@
       ],
       "description": "The type of use case to create"
     },
-    "serviceName": {
+    "useCaseName": {
       "type": "parameter",
       "datatype": "string",
       "isRequired": true,
-      "replaces": "ServiceName",
-      "fileRename": "ServiceName"
+      "replaces": "UseCaseName",
+      "fileRename": "UseCaseName"
     },
     "createCommand": {
       "type": "computed",
@@ -74,13 +74,13 @@
         {
           "condition": "(createCommand)",
           "exclude": [
-            "DomainName/Queries/**/*"
+            "DomainName/Queries/**"
           ]
         },
         {
           "condition": "(createQuery)",
           "exclude": [
-            "DomainName/Commands/**/*"
+            "DomainName/Commands/**"
           ]
         }
       ]

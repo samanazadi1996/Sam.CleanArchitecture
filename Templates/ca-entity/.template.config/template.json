@@ -1,0 +1,63 @@
+{
+  "$schema": "http://json.schemastore.org/template",
+  "author": "Saman Azadi",
+  "classifications": [
+    "Clean Architecture"
+  ],
+  "name": "Clean Architecture Entity",
+  "description": "Create a new Entity",
+  "identity": "Clean.Architecture.Entity.CSharp",
+  "groupIdentity": "Clean.Architecture.Entity",
+  "shortName": "ca-entity",
+  "tags": {
+    "language": "C#",
+    "type": "item"
+  },
+  "sourceName": "CleanArchitectureEntity",
+  "preferNameDirectory": false,
+  "symbols": {
+    "DefaultNamespace": {
+      "type": "bind",
+      "binding": "msbuild:RootNamespace",
+      "replaces": "CleanArchitecture.Application",
+      "defaultValue": "CleanArchitecture.Application"
+    },
+    "domainName": {
+      "type": "parameter",
+      "datatype": "string",
+      "isRequired": true,
+      "replaces": "DomainName",
+      "fileRename": "DomainName"
+    },
+    "entityName": {
+      "type": "parameter",
+      "datatype": "string",
+      "isRequired": true,
+      "replaces": "EntityName",
+      "fileRename": "EntityName"
+    },
+    "createEntity": {
+      "type": "computed",
+      "value": "true"
+    },
+    "returnType": {
+      "type": "parameter",
+      "datatype": "string",
+      "isRequired": false,
+      "replaces": "object",
+      "defaultValue": "object"
+    }
+  },
+  "sources": [
+    {
+      "modifiers": [
+        {
+          "condition": "(createEntity)",
+          "exclude": [
+            "./**"
+          ]
+        }
+      ]
+    }
+  ]
+}
