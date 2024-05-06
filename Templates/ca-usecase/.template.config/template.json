@@ -13,7 +13,7 @@
     "language": "C#",
     "type": "item"
   },
-  "sourceName": "CleanArchitectureUseCase",
+  "sourceName": "UseCaseName",
   "preferNameDirectory": false,
   "symbols": {
     "DefaultNamespace": {
@@ -67,13 +67,6 @@
     "createQueryPagedList": {
       "type": "computed",
       "value": "(useCaseType != \"queryPagedList\")"
-    },
-    "returnType": {
-      "type": "parameter",
-      "datatype": "string",
-      "isRequired": false,
-      "replaces": "object",
-      "defaultValue": "object"
     }
   },
   "sources": [

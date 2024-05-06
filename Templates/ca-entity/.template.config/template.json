@@ -13,7 +13,7 @@
     "language": "C#",
     "type": "item"
   },
-  "sourceName": "CleanArchitectureEntity",
+  "sourceName": "EntityName",
   "preferNameDirectory": false,
   "symbols": {
     "DefaultNamespace": {
@@ -35,13 +35,6 @@
       "isRequired": true,
       "replaces": "EntityName",
       "fileRename": "EntityName"
-    },
-    "returnType": {
-      "type": "parameter",
-      "datatype": "string",
-      "isRequired": false,
-      "replaces": "object",
-      "defaultValue": "object"
     }
   },
   "sources": [
