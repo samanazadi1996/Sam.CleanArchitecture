@@ -1,0 +1,16 @@
+{
+    "symbolInfo": {
+        "domainName": {
+            "longName": "domainName",
+            "shortName": "dn"
+        },
+        "useCaseType": {
+            "longName": "useCaseType",
+            "shortName": "ut"
+        },
+        "useCaseName": {
+            "longName": "useCaseName",
+            "shortName": "un"
+        }
+    }
+}
