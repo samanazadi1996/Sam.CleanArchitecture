@@ -5,13 +5,13 @@ using System.Threading.Tasks;
 
 namespace CleanArchitecture.Application.Features.FeatureName.Commands.UseCaseName
 {
-    public class UseCaseNameCommandHandler : IRequestHandler<UseCaseNameCommand, BaseResult<long>>
+    public class UseCaseNameCommandHandler : IRequestHandler<UseCaseNameCommand, BaseResult<object>>
     {
-        public async Task<BaseResult<long>> Handle(UseCaseNameCommand request, CancellationToken cancellationToken)
+        public async Task<BaseResult<object>> Handle(UseCaseNameCommand request, CancellationToken cancellationToken)
         {
             // Handler
 
-            return new BaseResult<long>(1);
+            return new BaseResult<object>(request.MyProperty);
         }
     }
 }

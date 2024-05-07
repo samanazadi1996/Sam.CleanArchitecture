@@ -7,7 +7,9 @@ namespace CleanArchitecture.Application.Features.FeatureName.Commands.UseCaseNam
     {
         public UseCaseNameCommandValidator(ITranslator translator)
         {
-            // FluentValidation
+            RuleFor(p => p.MyProperty)
+                .NotNull()
+                .WithName(p => translator[nameof(p.MyProperty)]);
         }
     }
 }

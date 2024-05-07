@@ -7,17 +7,17 @@ using CleanArchitecture.Application.Wrappers;
 
 namespace CleanArchitecture.Application.Features.FeatureName.Queries.UseCaseNamePagedList
 {
-    public class UseCaseNamePagedListQueryHandler : IRequestHandler<UseCaseNamePagedListQuery, PagedResponse<string>>
+    public class UseCaseNamePagedListQueryHandler : IRequestHandler<UseCaseNamePagedListQuery, PagedResponse<object>>
     {
-        public async Task<PagedResponse<string>> Handle(UseCaseNamePagedListQuery request, CancellationToken cancellationToken)
+        public async Task<PagedResponse<object>> Handle(UseCaseNamePagedListQuery request, CancellationToken cancellationToken)
         {
             // Handler
 
-            List<string> data = ["data 1", "data 2", "data 3"];
+            List<object> data = ["data 1", "data 2", "data 3"];
             int totalCount = 100;
 
-            var result = new PagenationResponseDto<string>(data, totalCount, request.PageNumber, request.PageSize);
-            return new PagedResponse<string>(result);
+            var result = new PagenationResponseDto<object>(data, totalCount, request.PageNumber, request.PageSize);
+            return new PagedResponse<object>(result);
         }
     }
 }

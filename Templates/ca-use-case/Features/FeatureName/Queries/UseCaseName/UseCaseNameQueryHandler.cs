@@ -5,13 +5,13 @@ using System.Threading.Tasks;
 
 namespace CleanArchitecture.Application.Features.FeatureName.Queries.UseCaseName
 {
-    public class UseCaseNameQueryHandler : IRequestHandler<UseCaseNameQuery, BaseResult<string>>
+    public class UseCaseNameQueryHandler : IRequestHandler<UseCaseNameQuery, BaseResult<object>>
     {
-        public async Task<BaseResult<string>> Handle(UseCaseNameQuery request, CancellationToken cancellationToken)
+        public async Task<BaseResult<object>> Handle(UseCaseNameQuery request, CancellationToken cancellationToken)
         {
             // Handler
 
-            return new BaseResult<string>(request.Str);
+            return new BaseResult<object>(request.MyProperty);
         }
     }
 }

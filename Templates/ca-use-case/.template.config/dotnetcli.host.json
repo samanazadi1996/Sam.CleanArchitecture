@@ -11,6 +11,10 @@
         "usecase-name": {
             "longName": "usecase-name",
             "shortName": "un"
+        },
+        "return-type": {
+            "longName": "return-type",
+            "shortName": "rt"
         }
     }
 }

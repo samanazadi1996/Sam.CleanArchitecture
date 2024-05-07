@@ -56,6 +56,13 @@
       "replaces": "UseCaseName",
       "fileRename": "UseCaseName"
     },
+    "return-type": {
+      "type": "parameter",
+      "datatype": "string",
+      "isRequired": false,
+      "replaces": "object",
+      "defaultValue": "object"
+    },
     "createCommand": {
       "type": "computed",
       "value": "(usecase-type != \"command\")"

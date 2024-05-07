@@ -3,8 +3,8 @@ using MediatR;
 
 namespace CleanArchitecture.Application.Features.FeatureName.Commands.UseCaseName
 {
-    public class UseCaseNameCommand : IRequest<BaseResult<long>>
+    public class UseCaseNameCommand : IRequest<BaseResult<object>>
     {
-        // public string Name { get; set; }
+        public object MyProperty { get; set; }
     }
 }
