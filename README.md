@@ -2,7 +2,31 @@
 
 An Implementation of Clean Architecture with ASP.NET Core 8 WebApi. With this Open-Source BoilerPlate Template, you will get access to the world of Loosely-Coupled and Inverted-Dependency Architecture in ASP.NET Core 8 WebApi with a lot of best practices.
 
-# Getting Started
+# Getting Started with Dotnet cli
+
+The following prerequisites are required to build and run the solution:
+
+- [.NET 8.0 SDK](https://dotnet.microsoft.com/download/dotnet/8.0) (latest version)
+
+The easiest way to get started is to install the [.NET template](https://www.nuget.org/packages/Sam.CleanArchitecture.Template):
+```
+dotnet new install Sam.CleanArchitecture.Template
+```
+
+You should see the template in the list of templates from dotnet new list after this installs successfully. Look for "ASP.NET Clean Architecture Solution" with Short Name of "ca-api".
+
+Navigate to the parent directory in which you'd like the solution's folder to be created.
+
+Run this command to create the CleanArchitecture project
+##### "-n MyProjectName" can be our desired name for the project
+
+``` sh
+dotnet new ca-api -n MyProjectName
+```
+
+The MyProjectName directory and solution file will be created, and inside that will be all of your new solution contents, properly namespaced and ready to run/test!
+
+# Getting Started with Visual Studio
 
 [Download the Extension](https://marketplace.visualstudio.com/items?itemName=SamanAzadi1996.ASPDotnetCoreCleanArchitecture) and install it on your machine. Make sure Visual Studio 2022 is installed on your machine with the latest SDK.
 

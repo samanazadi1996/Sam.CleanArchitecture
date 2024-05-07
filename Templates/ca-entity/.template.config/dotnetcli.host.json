@@ -1,0 +1,12 @@
+{
+    "symbolInfo": {
+        "domainName": {
+            "longName": "domainName",
+            "shortName": "dn"
+        },
+        "entityName": {
+            "longName": "entityName",
+            "shortName": "en"
+        }
+    }
+}

@@ -1,0 +1,96 @@
+{
+  "$schema": "http://json.schemastore.org/template",
+  "author": "Saman Azadi",
+  "classifications": [
+    "Clean Architecture"
+  ],
+  "name": "Clean Architecture Use Case",
+  "description": "Create a new use case (query or command)",
+  "identity": "Clean.Architecture.UseCase.CSharp",
+  "groupIdentity": "Clean.Architecture.UseCase",
+  "shortName": "ca-usecase",
+  "tags": {
+    "language": "C#",
+    "type": "item"
+  },
+  "sourceName": "UseCaseName",
+  "preferNameDirectory": false,
+  "symbols": {
+    "DefaultNamespace": {
+      "type": "bind",
+      "binding": "msbuild:RootNamespace",
+      "replaces": "CleanArchitecture.Application",
+      "defaultValue": "CleanArchitecture.Application"
+    },
+    "domainName": {
+      "type": "parameter",
+      "datatype": "string",
+      "isRequired": true,
+      "replaces": "DomainName",
+      "fileRename": "DomainName"
+    },
+    "useCaseType": {
+      "type": "parameter",
+      "datatype": "choice",
+      "isRequired": true,
+      "choices": [
+        {
+          "choice": "command",
+          "description": "Create a new command"
+        },
+        {
+          "choice": "query",
+          "description": "Create a new query"
+        },
+        {
+          "choice": "queryPagedList",
+          "description": "Create a new queryPagedList"
+        }
+      ],
+      "description": "The type of use case to create"
+    },
+    "useCaseName": {
+      "type": "parameter",
+      "datatype": "string",
+      "isRequired": true,
+      "replaces": "UseCaseName",
+      "fileRename": "UseCaseName"
+    },
+    "createCommand": {
+      "type": "computed",
+      "value": "(useCaseType != \"command\")"
+    },
+    "createQuery": {
+      "type": "computed",
+      "value": "(useCaseType != \"query\")"
+    },
+    "createQueryPagedList": {
+      "type": "computed",
+      "value": "(useCaseType != \"queryPagedList\")"
+    }
+  },
+  "sources": [
+    {
+      "modifiers": [
+        {
+          "condition": "(createCommand)",
+          "exclude": [
+            "Features/DomainName/Commands/**"
+          ]
+        },
+        {
+          "condition": "(createQuery)",
+          "exclude": [
+            "Features/DomainName/Queries/UseCaseName/**"
+          ]
+        },
+        {
+          "condition": "(createQueryPagedList)",
+          "exclude": [
+            "Features/DomainName/Queries/UseCaseNamePagedList/**"
+          ]
+        }
+      ]
+    }
+  ]
+}

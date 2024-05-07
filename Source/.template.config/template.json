@@ -1,0 +1,22 @@
+{
+  "author": "Saman Azadi",
+  "classifications": [
+    "Web",
+    "Api",
+    "ASP.NET",
+    "Clean Architecture"
+  ],
+  "description": "Loosely-Coupled and Inverted-Dependency Architecture in ASP.NET Core 8 WebApi Template with good design patterns and practices for enterprise application, so that you can get started in no time.",
+  "name": "Clean Architecture",
+  "defaultName": "CleanArchitecture",
+  "identity": "CleanArchitecture.CSharp",
+  "groupIdentity": "CleanArchitecture",
+  "tags": {
+    "language": "C#",
+    "type": "project"
+  },
+  "shortName": "ca-api",
+  "sourceName": "CleanArchitecture",
+  "guids": [],
+  "preferNameDirectory": true
+}
