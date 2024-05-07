@@ -22,14 +22,14 @@
       "replaces": "CleanArchitecture.Domain",
       "defaultValue": "CleanArchitecture.Domain"
     },
-    "domainName": {
+    "domain-name": {
       "type": "parameter",
       "datatype": "string",
       "isRequired": true,
       "replaces": "DomainName",
       "fileRename": "DomainName"
     },
-    "entityName": {
+    "entity-name": {
       "type": "parameter",
       "datatype": "string",
       "isRequired": true,

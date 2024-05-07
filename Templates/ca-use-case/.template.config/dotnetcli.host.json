@@ -1,0 +1,16 @@
+{
+    "symbolInfo": {
+        "feature-name": {
+            "longName": "feature-name",
+            "shortName": "fn"
+        },
+        "usecase-type": {
+            "longName": "usecase-type",
+            "shortName": "ut"
+        },
+        "usecase-name": {
+            "longName": "usecase-name",
+            "shortName": "un"
+        }
+    }
+}

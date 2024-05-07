@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using CleanArchitecture.Application.DTOs;
 using CleanArchitecture.Application.Wrappers;
 
-namespace CleanArchitecture.Application.Features.DomainName.Queries.UseCaseNamePagedList
+namespace CleanArchitecture.Application.Features.FeatureName.Queries.UseCaseNamePagedList
 {
     public class UseCaseNamePagedListQueryHandler : IRequestHandler<UseCaseNamePagedListQuery, PagedResponse<string>>
     {

@@ -2,7 +2,7 @@
 using CleanArchitecture.Application.Parameters;
 using MediatR;
 
-namespace CleanArchitecture.Application.Features.DomainName.Queries.UseCaseNamePagedList
+namespace CleanArchitecture.Application.Features.FeatureName.Queries.UseCaseNamePagedList
 {
     public class UseCaseNamePagedListQuery : PagenationRequestParameter, IRequest<PagedResponse<string>>
     {

@@ -8,7 +8,7 @@
   "description": "Create a new use case (query or command)",
   "identity": "Clean.Architecture.UseCase.CSharp",
   "groupIdentity": "Clean.Architecture.UseCase",
-  "shortName": "ca-usecase",
+  "shortName": "ca-use-case",
   "tags": {
     "language": "C#",
     "type": "item"
@@ -22,14 +22,14 @@
       "replaces": "CleanArchitecture.Application",
       "defaultValue": "CleanArchitecture.Application"
     },
-    "domainName": {
+    "feature-name": {
       "type": "parameter",
       "datatype": "string",
       "isRequired": true,
-      "replaces": "DomainName",
-      "fileRename": "DomainName"
+      "replaces": "FeatureName",
+      "fileRename": "FeatureName"
     },
-    "useCaseType": {
+    "usecase-type": {
       "type": "parameter",
       "datatype": "choice",
       "isRequired": true,
@@ -49,7 +49,7 @@
       ],
       "description": "The type of use case to create"
     },
-    "useCaseName": {
+    "usecase-name": {
       "type": "parameter",
       "datatype": "string",
       "isRequired": true,
@@ -58,15 +58,15 @@
     },
     "createCommand": {
       "type": "computed",
-      "value": "(useCaseType != \"command\")"
+      "value": "(usecase-type != \"command\")"
     },
     "createQuery": {
       "type": "computed",
-      "value": "(useCaseType != \"query\")"
+      "value": "(usecase-type != \"query\")"
     },
     "createQueryPagedList": {
       "type": "computed",
-      "value": "(useCaseType != \"queryPagedList\")"
+      "value": "(usecase-type != \"queryPagedList\")"
     }
   },
   "sources": [
@@ -75,19 +75,19 @@
         {
           "condition": "(createCommand)",
           "exclude": [
-            "Features/DomainName/Commands/**"
+            "Features/FeatureName/Commands/**"
           ]
         },
         {
           "condition": "(createQuery)",
           "exclude": [
-            "Features/DomainName/Queries/UseCaseName/**"
+            "Features/FeatureName/Queries/UseCaseName/**"
           ]
         },
         {
           "condition": "(createQueryPagedList)",
           "exclude": [
-            "Features/DomainName/Queries/UseCaseNamePagedList/**"
+            "Features/FeatureName/Queries/UseCaseNamePagedList/**"
           ]
         }
       ]

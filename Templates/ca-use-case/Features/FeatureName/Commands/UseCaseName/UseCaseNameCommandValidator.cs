@@ -1,7 +1,7 @@
 ﻿using CleanArchitecture.Application.Interfaces;
 using FluentValidation;
 
-namespace CleanArchitecture.Application.Features.DomainName.Commands.UseCaseName
+namespace CleanArchitecture.Application.Features.FeatureName.Commands.UseCaseName
 {
     public class UseCaseNameCommandValidator : AbstractValidator<UseCaseNameCommand>
     {

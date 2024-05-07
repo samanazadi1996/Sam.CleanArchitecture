@@ -3,7 +3,7 @@ using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace CleanArchitecture.Application.Features.DomainName.Commands.UseCaseName
+namespace CleanArchitecture.Application.Features.FeatureName.Commands.UseCaseName
 {
     public class UseCaseNameCommandHandler : IRequestHandler<UseCaseNameCommand, BaseResult<long>>
     {
