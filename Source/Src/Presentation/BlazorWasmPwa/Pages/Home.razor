@@ -10,9 +10,12 @@
 
 <p>@output</p>
 
-<button @onclick="DisplayToken">Display Access Token </button>
-<p>@resultAnon</p>
-<p>@result</p>
+<button @onclick="CallApiAndTest">Display Access Token </button>
+<p style="width:auto">result Anonymous: @resultAnon</p>
+<p>result Authenticated:@result</p>
+
+<a href="/user">User Info action link</a>
+
 @if (output != null)
     {
     @*     <h1>@AuthenticatedUser?.Identity?.Name</h1>
@@ -52,7 +55,7 @@
 
 
 
-    private async Task DisplayToken()
+    private async Task CallApiAndTest()
         {
         // var tokenResult = await TokenProvider.RequestAccessToken();
         var token = await GetIdTokenAsync();
@@ -66,7 +69,12 @@
             if (response2.IsSuccessStatusCode)
                 {
                 resultAnon = await response2.Content.ReadAsStringAsync();
-                resultAnon ??= "nothing";
+                resultAnon ??= "null";
+                }
+            else
+                {
+
+                resultAnon = response2.StatusCode.ToString();
                 }
 
             var response = await HttpClient.GetAsync("https://localhost:5001/api/WeatherForecast");
