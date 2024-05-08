@@ -13,7 +13,7 @@
     "language": "C#",
     "type": "item"
   },
-  "sourceName": "UseCaseName",
+  "sourceName": "CleanArchitecture.Application",
   "preferNameDirectory": false,
   "symbols": {
     "DefaultNamespace": {
@@ -26,8 +26,8 @@
       "type": "parameter",
       "datatype": "string",
       "isRequired": true,
-      "replaces": "FeatureName",
-      "fileRename": "FeatureName"
+      "replaces": "CleanArchitecture.Application",
+      "fileRename": "CleanArchitecture.Application"
     },
     "usecase-type": {
       "type": "parameter",

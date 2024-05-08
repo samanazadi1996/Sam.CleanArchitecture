@@ -13,7 +13,7 @@
     "language": "C#",
     "type": "item"
   },
-  "sourceName": "EntityName",
+  "sourceName": "CleanArchitecture.Domain",
   "preferNameDirectory": false,
   "symbols": {
     "DefaultNamespace": {

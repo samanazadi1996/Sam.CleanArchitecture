@@ -1,0 +1,37 @@
+{
+  "$schema": "http://json.schemastore.org/template",
+  "author": "Saman Azadi",
+  "classifications": [
+    "Clean Architecture"
+  ],
+  "name": "Clean Architecture Tools",
+  "description": "Create a new Entity",
+  "identity": "Clean.Architecture.Tools.CSharp",
+  "groupIdentity": "Clean.Architecture.Tools",
+  "shortName": "ca-tools",
+  "tags": {
+    "language": "C#",
+    "type": "item"
+  },
+  "sourceName": "CleanArchitecture",
+  "preferNameDirectory": false,
+  "symbols": {
+    "DefaultNamespace": {
+      "type": "bind",
+      "binding": "msbuild:RootNamespace",
+      "replaces": "CleanArchitecture",
+      "defaultValue": "CleanArchitecture"
+    }
+    },
+  "sources": [
+    {
+      "modifiers": [
+        {
+          "exclude": [
+            "./**"
+          ]
+        }
+      ]
+    }
+  ]
+}
