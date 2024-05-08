@@ -5,7 +5,7 @@
     "Clean Architecture"
   ],
   "name": "Clean Architecture Tools",
-  "description": "Create a new Entity",
+  "description": "Clean Architecture Tools",
   "identity": "Clean.Architecture.Tools.CSharp",
   "groupIdentity": "Clean.Architecture.Tools",
   "shortName": "ca-tools",
