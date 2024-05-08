@@ -13,7 +13,7 @@ namespace CleanArchitecture.Application.Features.FeatureName.Queries.UseCaseName
         {
             // Handler
 
-            List<object> data = ["data 1", "data 2", "data 3"];
+            List<object> data = [];
             int totalCount = 100;
 
             var result = new PagenationResponseDto<object>(data, totalCount, request.PageNumber, request.PageSize);
