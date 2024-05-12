@@ -1,0 +1,44 @@
+{
+  "$schema": "http://json.schemastore.org/template",
+  "author": "Saman Azadi",
+  "classifications": [
+    "Clean Architecture"
+  ],
+  "name": "Clean Architecture Resource",
+  "description": "Create a new Resource",
+  "identity": "Clean.Architecture.Resource.CSharp",
+  "groupIdentity": "Clean.Architecture.Resource",
+  "shortName": "ca-resource",
+  "tags": {
+    "language": "C#",
+    "type": "item"
+  },
+  "sourceName": "CleanArchitecture.Infrastructure.Resources",
+  "preferNameDirectory": false,
+  "symbols": {
+    "DefaultNamespace": {
+      "type": "bind",
+      "binding": "msbuild:RootNamespace",
+      "replaces": "CleanArchitecture.Infrastructure.Resources",
+      "defaultValue": "CleanArchitecture.Infrastructure.Resources"
+    },
+    "culture": {
+      "type": "parameter",
+      "datatype": "string",
+      "isRequired": true,
+      "replaces": "Culture",
+      "fileRename": "Culture"
+    }
+  },
+  "sources": [
+    {
+      "modifiers": [
+        {
+          "exclude": [
+            "./**"
+          ]
+        }
+      ]
+    }
+  ]
+}
