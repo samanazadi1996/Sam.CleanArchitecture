@@ -26,6 +26,11 @@ dotnet new ca-api -n MyProjectName
 
 The MyProjectName directory and solution file will be created, and inside that will be all of your new solution contents, properly namespaced and ready to run/test!
 
+### To increase the speed of coding, you can use the commands added in this package
+1. [Create new UseCase](./Documents/CleanArchitectureTemplates.md)
+1. [Create New Entity](./Documents/CleanArchitectureTemplates.md)
+1. [Create New Resource](./Documents/CleanArchitectureTemplates.md)
+
 # Getting Started with Visual Studio
 
 [Download the Extension](https://marketplace.visualstudio.com/items?itemName=SamanAzadi1996.ASPDotnetCoreCleanArchitecture) and install it on your machine. Make sure Visual Studio 2022 is installed on your machine with the latest SDK.
