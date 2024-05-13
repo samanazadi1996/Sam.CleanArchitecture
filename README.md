@@ -27,9 +27,9 @@ dotnet new ca-api -n MyProjectName
 The MyProjectName directory and solution file will be created, and inside that will be all of your new solution contents, properly namespaced and ready to run/test!
 
 ### To increase the speed of coding, you can use the commands added in this package
-1. [Create new UseCase](./Documents/CleanArchitectureTemplates.md#Create-new-UseCase)
-1. [Create New Entity](./Documents/CleanArchitectureTemplates.md#Create-New-Entity)
-1. [Create New Resource](./Documents/CleanArchitectureTemplates.md#Create-New-Resource)
+1. [Create new UseCase](./Documents/CleanArchitectureTemplates.md#create-new-usecase)
+1. [Create New Entity](./Documents/CleanArchitectureTemplates.md#create-new-entity)
+1. [Create New Resource](./Documents/CleanArchitectureTemplates.md#create-new-resource)
 
 # Getting Started with Visual Studio
 
