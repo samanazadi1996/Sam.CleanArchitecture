@@ -22,9 +22,9 @@ dotnet new ca-use-case --feature-name Orders --usecase-name CreateOrder --usecas
 dotnet new ca-use-case -fn Orders -ut query -un GetOrders  -rt "List<Order>"
 ```
 
-#### To create a querypagelist:
+#### To create a querypagedlist:
 ``` sh
-dotnet new ca-use-case -fn Orders -ut querypagelist -un GetOrders  -rt Order
+dotnet new ca-use-case -fn Orders -ut querypagedlist -un GetOrders  -rt Order
 ```
 
 #### To learn more, run the following command:
