@@ -26,8 +26,8 @@
       "type": "parameter",
       "datatype": "string",
       "isRequired": true,
-      "replaces": "CleanArchitecture.Application",
-      "fileRename": "CleanArchitecture.Application"
+      "replaces": "FeatureName",
+      "fileRename": "FeatureName"
     },
     "usecase-type": {
       "type": "parameter",
