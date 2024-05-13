@@ -9,7 +9,8 @@ This article aims to explore and introduce the new features recently added to ve
 
 ## Getting Started
 
-## You can create use cases (commands or queries) by navigating to './Src/Core/CleanArchitecture.Application' and running 'dotnet new ca-use-case'. Here are some examples:
+### Create new UseCase
+You can create use cases (commands or queries) by navigating to './Src/Core/CleanArchitecture.Application' and running 'dotnet new ca-use-case'. Here are some examples:
 
 #### To create a new command:
 ``` sh
@@ -39,8 +40,10 @@ Short Names
 -rt : --return-type
 ```
 
+---
 
-## You can create entity by navigating to './Src/Core/CleanArchitecture.Domain' and running 'dotnet new ca-entity'. Here are some examples:
+### Create new Entity
+You can create entity by navigating to './Src/Core/CleanArchitecture.Domain' and running 'dotnet new ca-entity'. Here are some examples:
 
 #### To create a new entity:
 ``` sh
@@ -58,8 +61,11 @@ Short Names
 -en : --entity-name 
 ```
 
+---
 
-## You can create resource by navigating to './Src/Infrastructure/CleanArchitecture.Infrastructure.Resources' and running 'dotnet new ca-resource'. Here are some examples:
+### Create New Resource
+
+You can create resource by navigating to './Src/Infrastructure/CleanArchitecture.Infrastructure.Resources' and running 'dotnet new ca-resource'. Here are some examples:
 
 #### To create a new resource:
 ``` sh
