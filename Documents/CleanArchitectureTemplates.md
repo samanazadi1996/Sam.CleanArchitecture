@@ -69,7 +69,7 @@ You can create resource by navigating to './Src/Infrastructure/CleanArchitecture
 
 #### To create a new resource:
 ``` sh
-dotnet new ca-resource --culture En
+dotnet new ca-resource --culture Ar
 ```
 
 #### To learn more, run the following command:
