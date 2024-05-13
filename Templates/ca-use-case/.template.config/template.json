@@ -43,8 +43,8 @@
           "description": "Create a new query"
         },
         {
-          "choice": "queryPagedList",
-          "description": "Create a new queryPagedList"
+          "choice": "querypagedlist",
+          "description": "Create a new query paged list"
         }
       ],
       "description": "The type of use case to create"
@@ -73,7 +73,7 @@
     },
     "createQueryPagedList": {
       "type": "computed",
-      "value": "(usecase-type != \"queryPagedList\")"
+      "value": "(usecase-type != \"querypagedlist\")"
     }
   },
   "sources": [
