@@ -45,13 +45,14 @@ namespace CleanArchitecture.Infrastructure.Persistence.Repositories
                  .ToListAsync();
         }
 
-        protected async Task<PagenationResponseDto<TEntity>> Paged<TEntity>(IQueryable<TEntity> query, int pageNumber, int pageSize)
+        protected async Task<PagenationResponseDto<TEntity>> Paged<TEntity>(IQueryable<TEntity> query, int pageNumber, int pageSize) where TEntity : class
         {
             var count = await query.CountAsync();
 
             var pagedResult = await query
                 .Skip((pageNumber - 1) * pageSize)
                 .Take(pageSize)
+                .AsNoTracking()
                 .ToListAsync();
 
             return new(pagedResult, count, pageNumber, pageSize);
