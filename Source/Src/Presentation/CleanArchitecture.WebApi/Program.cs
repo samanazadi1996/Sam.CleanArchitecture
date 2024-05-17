@@ -96,3 +96,6 @@ app.MapControllers();
 app.UseSerilogRequestLogging();
 
 app.Run();
+public partial class Program
+{
+}
