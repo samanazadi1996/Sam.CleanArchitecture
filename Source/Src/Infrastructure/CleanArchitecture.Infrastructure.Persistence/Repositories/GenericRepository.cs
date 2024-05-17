@@ -42,6 +42,7 @@ namespace CleanArchitecture.Infrastructure.Persistence.Repositories
         {
             return await _dbContext
                  .Set<T>()
+                 .AsNoTracking()
                  .ToListAsync();
         }
 
