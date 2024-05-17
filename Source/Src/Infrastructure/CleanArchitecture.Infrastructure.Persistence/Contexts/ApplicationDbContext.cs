@@ -21,17 +21,21 @@ namespace CleanArchitecture.Infrastructure.Persistence.Contexts
         public DbSet<Product> Products { get; set; }
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
         {
-            var userId = Guid.Parse(authenticatedUser.UserId ?? "00000000-0000-0000-0000-000000000000");
+            var userId = string.IsNullOrEmpty(authenticatedUser.UserId) 
+                ? Guid.Empty : Guid.Parse(authenticatedUser.UserId);
+
+            var currentTime = DateTime.Now;
+
             foreach (var entry in ChangeTracker.Entries<AuditableBaseEntity>())
             {
                 switch (entry.State)
                 {
                     case EntityState.Added:
-                        entry.Entity.Created = DateTime.Now;
+                        entry.Entity.Created = currentTime;
                         entry.Entity.CreatedBy = userId;
                         break;
                     case EntityState.Modified:
-                        entry.Entity.LastModified = DateTime.Now;
+                        entry.Entity.LastModified = currentTime;
                         entry.Entity.LastModifiedBy = userId;
                         break;
                 }
