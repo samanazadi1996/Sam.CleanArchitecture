@@ -1,7 +1,7 @@
 ﻿using CleanArchitecture.Application.Wrappers;
 using CleanArchitecture.Domain.Products.Dtos;
 using Shouldly;
-using CleanArchitecture.FunctionalTests.Helpers;
+using CleanArchitecture.FunctionalTests.Common;
 
 namespace CleanArchitecture.FunctionalTests.ApiEndpoints
 {
@@ -11,7 +11,7 @@ namespace CleanArchitecture.FunctionalTests.ApiEndpoints
         private readonly HttpClient _client = factory.CreateClient();
 
         [Fact]
-        public async Task ReturnsPagedResponseProduct()
+        public async Task GetPagedListProduct_ShouldReturnPagedResponse()
         {
             // Arrange
             var url = "/api/v1/Product/GetPagedListProduct";

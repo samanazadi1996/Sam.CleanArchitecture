@@ -1,8 +1,7 @@
 ﻿using System.Text;
 using System.Text.Json;
-using Xunit.Abstractions;
 
-namespace CleanArchitecture.FunctionalTests.Helpers
+namespace CleanArchitecture.FunctionalTests.Common
 {
     public static class HttpClientGetExtensionMethods
     {
@@ -23,7 +22,7 @@ namespace CleanArchitecture.FunctionalTests.Helpers
 #pragma warning restore CS8603 // Possible null reference return.
         }
 
-        public static async Task<T> PostAndDeserializeAsync<T>(this HttpClient client, string requestUri,object model)
+        public static async Task<T> PostAndDeserializeAsync<T>(this HttpClient client, string requestUri, object? model = null)
         {
             string jsonContent = JsonSerializer.Serialize(model, DefaultJsonOptions);
             var content = new StringContent(jsonContent, Encoding.UTF8, "application/json");

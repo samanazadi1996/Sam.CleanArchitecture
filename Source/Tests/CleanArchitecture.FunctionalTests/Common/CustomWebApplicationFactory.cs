@@ -8,7 +8,8 @@ namespace CleanArchitecture.FunctionalTests
     {
         protected override IHost CreateHost(IHostBuilder builder)
         {
-            builder.UseEnvironment("Development"); // will not send real emails
+            builder.UseEnvironment("Development");
+
             var host = builder.Build();
             host.Start();
 

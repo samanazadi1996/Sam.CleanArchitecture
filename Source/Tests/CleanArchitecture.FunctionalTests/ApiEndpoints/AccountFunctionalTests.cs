@@ -1,7 +1,7 @@
 ﻿using CleanArchitecture.Application.DTOs.Account.Requests;
 using CleanArchitecture.Application.DTOs.Account.Responses;
 using CleanArchitecture.Application.Wrappers;
-using CleanArchitecture.FunctionalTests.Helpers;
+using CleanArchitecture.FunctionalTests.Common;
 using Shouldly;
 
 namespace CleanArchitecture.FunctionalTests.ApiEndpoints
@@ -12,7 +12,7 @@ namespace CleanArchitecture.FunctionalTests.ApiEndpoints
         private readonly HttpClient _client = factory.CreateClient();
 
         [Fact]
-        public async Task ReturnsAccountNotFound()
+        public async Task Authenticate_WithInvalidCredentials_ShouldReturnAccountNotFound()
         {
             // Arrange
             var url = "/api/v1/Account/Authenticate";
@@ -32,7 +32,7 @@ namespace CleanArchitecture.FunctionalTests.ApiEndpoints
         }
 
         [Fact]
-        public async Task ReturnsAccountInformation()
+        public async Task Authenticate_WithValidCredentials_ShouldReturnAccountInformation()
         {
             // Arrange
             var url = "/api/v1/Account/Authenticate";
@@ -51,6 +51,22 @@ namespace CleanArchitecture.FunctionalTests.ApiEndpoints
             result.Data.JWToken.ShouldNotBeNull();
             result.Data.UserName.ShouldBe(model.UserName);
             result.Data.IsVerified.ShouldBeTrue();
+        }
+
+        [Fact]
+        public async Task StartGhostAccount_ShouldReturnGhostAccountInformation()
+        {
+            // Arrange
+            var url = "/api/v1/Account/Start";
+
+            // Act
+            var result = await _client.PostAndDeserializeAsync<BaseResult<AuthenticationResponse>>(url);
+
+            // Assert
+            result.Success.ShouldBeTrue();
+            result.Errors.ShouldBeNull();
+            result.Data.JWToken.ShouldNotBeNull();
+            result.Data.IsVerified.ShouldBeFalse();
         }
     }
 }
