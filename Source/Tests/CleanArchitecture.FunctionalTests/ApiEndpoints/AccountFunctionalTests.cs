@@ -9,7 +9,7 @@ namespace CleanArchitecture.FunctionalTests.ApiEndpoints
     [Collection("AccountFunctionalTests")]
     public class AccountFunctionalTests(CustomWebApplicationFactory<Program> factory) : IClassFixture<CustomWebApplicationFactory<Program>>
     {
-        private readonly HttpClient _client = factory.CreateClient();
+        private readonly HttpClient client = factory.CreateClient();
 
         [Fact]
         public async Task Authenticate_WithInvalidCredentials_ShouldReturnAccountNotFound()
@@ -23,7 +23,7 @@ namespace CleanArchitecture.FunctionalTests.ApiEndpoints
             };
 
             // Act
-            var result = await _client.PostAndDeserializeAsync<BaseResult<AuthenticationResponse>>(url, model);
+            var result = await client.PostAndDeserializeAsync<BaseResult<AuthenticationResponse>>(url, model);
 
             // Assert
             result.Success.ShouldBeFalse();
@@ -43,7 +43,7 @@ namespace CleanArchitecture.FunctionalTests.ApiEndpoints
             };
 
             // Act
-            var result = await _client.PostAndDeserializeAsync<BaseResult<AuthenticationResponse>>(url, model);
+            var result = await client.PostAndDeserializeAsync<BaseResult<AuthenticationResponse>>(url, model);
 
             // Assert
             result.Success.ShouldBeTrue();
@@ -57,16 +57,58 @@ namespace CleanArchitecture.FunctionalTests.ApiEndpoints
         public async Task StartGhostAccount_ShouldReturnGhostAccountInformation()
         {
             // Arrange
+
             var url = "/api/v1/Account/Start";
 
             // Act
-            var result = await _client.PostAndDeserializeAsync<BaseResult<AuthenticationResponse>>(url);
+            var result = await client.PostAndDeserializeAsync<BaseResult<AuthenticationResponse>>(url);
 
             // Assert
             result.Success.ShouldBeTrue();
             result.Errors.ShouldBeNull();
             result.Data.JWToken.ShouldNotBeNull();
             result.Data.IsVerified.ShouldBeFalse();
+        }
+
+        [Fact]
+        public async Task ChangePassword_ShouldSucceed()
+        {
+            // Arrange
+            var ghostAccount = await client.GetGhostAccount();
+
+            var url = "/api/v1/Account/ChangePassword";
+            var model = new ChangePasswordRequest()
+            {
+                Password = "Sam@7654321",
+                ConfirmPassword = "Sam@7654321"
+            };
+
+            // Act
+            var result = await client.PutAndDeserializeAsync<BaseResult>(url, model, ghostAccount.JWToken);
+
+            // Assert
+            result.Success.ShouldBeTrue();
+            result.Errors.ShouldBeNull();
+        }
+
+        [Fact]
+        public async Task ChangeUserName_ShouldSucceed()
+        {
+            // Arrange
+            var ghostAccount = await client.GetGhostAccount();
+
+            var url = "/api/v1/Account/ChangeUserName";
+            var model = new ChangeUserNameRequest()
+            {
+                UserName = ghostAccount.UserName + "Test"
+            };
+
+            // Act
+            var result = await client.PutAndDeserializeAsync<BaseResult>(url, model, ghostAccount.JWToken);
+
+            // Assert
+            result.Success.ShouldBeTrue();
+            result.Errors.ShouldBeNull();
         }
     }
 }

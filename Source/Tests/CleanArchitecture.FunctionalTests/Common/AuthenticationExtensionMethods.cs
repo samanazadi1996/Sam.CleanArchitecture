@@ -1,0 +1,43 @@
+﻿using CleanArchitecture.Application.DTOs.Account.Requests;
+using CleanArchitecture.Application.DTOs.Account.Responses;
+using CleanArchitecture.Application.Wrappers;
+using CleanArchitecture.FunctionalTests.Common;
+
+namespace CleanArchitecture.FunctionalTests
+{
+    public static class AuthenticationExtensionMethods
+    {
+        private static string? AdminToken;
+        public static async Task<string> GetAdminToken(this HttpClient _client)
+        {
+            if (AdminToken is not null) return AdminToken;
+
+            var url = "/api/v1/Account/Authenticate";
+            var model = new AuthenticationRequest()
+            {
+                UserName = "Admin",
+                Password = "Sam@12345"
+            };
+
+            var result = await _client.PostAndDeserializeAsync<BaseResult<AuthenticationResponse>>(url, model);
+            AdminToken = result.Data.JWToken;
+
+            return AdminToken;
+        }
+
+        private static AuthenticationResponse? GhostAccount;
+
+        public static async Task<AuthenticationResponse> GetGhostAccount(this HttpClient _client)
+        {
+            if (GhostAccount is not null) return GhostAccount;
+
+            var url = "/api/v1/Account/Start";
+
+            var result = await _client.PostAndDeserializeAsync<BaseResult<AuthenticationResponse>>(url);
+            GhostAccount = result.Data;
+
+            return GhostAccount;
+        }
+
+    }
+}
