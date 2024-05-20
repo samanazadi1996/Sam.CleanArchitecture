@@ -49,14 +49,14 @@ namespace CleanArchitecture.FunctionalTests.ApiEndpoints
             var url = "/api/v1/Product/CreateProduct";
             var command = new CreateProductCommand
             {
-                Name = "New Product",
-                Price = 100000,
-                BarCode = "abcdefgh"
+                Name = RandomDataExtensionMethods.RandomString(10),
+                Price = RandomDataExtensionMethods.RandomNumber(100000000),
+                BarCode = RandomDataExtensionMethods.RandomString(11)
             };
-            var token = await client.GetAdminToken();
+            var adminAccount = await client.GetAdminAccount();
 
             // Act
-            var result = await client.PostAndDeserializeAsync<BaseResult<long>>(url, command, token);
+            var result = await client.PostAndDeserializeAsync<BaseResult<long>>(url, command, adminAccount.JWToken);
 
             // Assert
             result.Success.ShouldBeTrue();
@@ -72,14 +72,14 @@ namespace CleanArchitecture.FunctionalTests.ApiEndpoints
             var command = new UpdateProductCommand
             {
                 Id = firstProduct.Id,
-                Name = "Updated Product",
-                Price = 2000000,
-                BarCode = "qwertyuio"
+                Name = RandomDataExtensionMethods.RandomString(10),
+                Price = RandomDataExtensionMethods.RandomNumber(100000000),
+                BarCode = RandomDataExtensionMethods.RandomString(11)
             };
-            var token = await client.GetAdminToken();
+            var adminAccount = await client.GetAdminAccount();
 
             // Act
-            var result = await client.PutAndDeserializeAsync<BaseResult>(url, command, token);
+            var result = await client.PutAndDeserializeAsync<BaseResult>(url, command, adminAccount.JWToken);
 
             // Assert
             result.Success.ShouldBeTrue();
@@ -91,10 +91,10 @@ namespace CleanArchitecture.FunctionalTests.ApiEndpoints
             // Arrange
             var firstProduct = await GetLastProduct();
             var url = $"/api/v1/Product/DeleteProduct?id={firstProduct.Id}";
-            var token = await client.GetAdminToken();
+            var adminAccount = await client.GetAdminAccount();
 
             // Act
-            var result = await client.DeleteAndDeserializeAsync<BaseResult>(url, token);
+            var result = await client.DeleteAndDeserializeAsync<BaseResult>(url, adminAccount.JWToken);
 
             // Assert
             result.Success.ShouldBeTrue();

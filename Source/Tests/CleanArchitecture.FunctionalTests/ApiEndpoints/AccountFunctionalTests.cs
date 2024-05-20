@@ -100,7 +100,7 @@ namespace CleanArchitecture.FunctionalTests.ApiEndpoints
             var url = "/api/v1/Account/ChangeUserName";
             var model = new ChangeUserNameRequest()
             {
-                UserName = ghostAccount.UserName + "Test"
+                UserName = ghostAccount.UserName + RandomDataExtensionMethods.RandomString(6)
             };
 
             // Act

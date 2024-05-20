@@ -2,42 +2,62 @@
 using CleanArchitecture.Application.DTOs.Account.Responses;
 using CleanArchitecture.Application.Wrappers;
 using CleanArchitecture.FunctionalTests.Common;
+using System.Threading;
 
 namespace CleanArchitecture.FunctionalTests
 {
     public static class AuthenticationExtensionMethods
     {
-        private static string? AdminToken;
-        public static async Task<string> GetAdminToken(this HttpClient _client)
+
+        private static AuthenticationResponse? AdminToken;
+        private static readonly SemaphoreSlim semaphoreAdminToken = new SemaphoreSlim(1, 1);
+        public static async Task<AuthenticationResponse> GetAdminAccount(this HttpClient _client, bool force = false)
         {
-            if (AdminToken is not null) return AdminToken;
-
-            var url = "/api/v1/Account/Authenticate";
-            var model = new AuthenticationRequest()
+            await semaphoreAdminToken.WaitAsync();
+            try
             {
-                UserName = "Admin",
-                Password = "Sam@12345"
-            };
+                if (AdminToken is not null && !force) return AdminToken;
 
-            var result = await _client.PostAndDeserializeAsync<BaseResult<AuthenticationResponse>>(url, model);
-            AdminToken = result.Data.JWToken;
+                var url = "/api/v1/Account/Authenticate";
+                var model = new AuthenticationRequest()
+                {
+                    UserName = "Admin",
+                    Password = "Sam@12345"
+                };
 
-            return AdminToken;
+                var result = await _client.PostAndDeserializeAsync<BaseResult<AuthenticationResponse>>(url, model);
+                AdminToken = result.Data;
+
+                return AdminToken;
+            }
+            finally
+            {
+                semaphoreAdminToken.Release();
+            }
         }
+
+
 
         private static AuthenticationResponse? GhostAccount;
-
-        public static async Task<AuthenticationResponse> GetGhostAccount(this HttpClient _client)
+        private static readonly SemaphoreSlim semaphoreGhostAccount = new SemaphoreSlim(1, 1);
+        public static async Task<AuthenticationResponse> GetGhostAccount(this HttpClient _client, bool force = false)
         {
-            if (GhostAccount is not null) return GhostAccount;
+            await semaphoreGhostAccount.WaitAsync();
+            try
+            {
+                if (GhostAccount is not null && !force) return GhostAccount;
 
-            var url = "/api/v1/Account/Start";
+                var url = "/api/v1/Account/Start";
 
-            var result = await _client.PostAndDeserializeAsync<BaseResult<AuthenticationResponse>>(url);
-            GhostAccount = result.Data;
+                var result = await _client.PostAndDeserializeAsync<BaseResult<AuthenticationResponse>>(url);
+                GhostAccount = result.Data;
 
-            return GhostAccount;
+                return GhostAccount;
+            }
+            finally
+            {
+                semaphoreGhostAccount.Release();
+            }
         }
-
     }
 }
