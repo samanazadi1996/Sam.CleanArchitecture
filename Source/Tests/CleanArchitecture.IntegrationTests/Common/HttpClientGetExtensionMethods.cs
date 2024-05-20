@@ -1,7 +1,7 @@
 ﻿using System.Text;
 using System.Text.Json;
 
-namespace CleanArchitecture.FunctionalTests.Common
+namespace CleanArchitecture.IntegrationTests.Common
 {
     public static class HttpClientGetExtensionMethods
     {

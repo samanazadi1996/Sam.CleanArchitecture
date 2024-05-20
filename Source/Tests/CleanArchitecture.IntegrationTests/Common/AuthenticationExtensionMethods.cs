@@ -1,10 +1,8 @@
 ﻿using CleanArchitecture.Application.DTOs.Account.Requests;
 using CleanArchitecture.Application.DTOs.Account.Responses;
 using CleanArchitecture.Application.Wrappers;
-using CleanArchitecture.FunctionalTests.Common;
-using System.Threading;
 
-namespace CleanArchitecture.FunctionalTests
+namespace CleanArchitecture.IntegrationTests.Common
 {
     public static class AuthenticationExtensionMethods
     {
