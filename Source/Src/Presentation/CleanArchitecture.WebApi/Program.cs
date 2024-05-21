@@ -19,7 +19,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Serilog;
-using System.Reflection;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -32,15 +31,8 @@ builder.Services.AddResourcesInfrastructure();
 builder.Services.AddScoped<IAuthenticatedUserService, AuthenticatedUserService>();
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddJwt(builder.Configuration);
-
-#pragma warning disable CS0618 // Type or member is obsolete
-builder.Services.AddControllers().AddFluentValidation(options =>
-{
-    options.ImplicitlyValidateChildProperties = true;
-    options.RegisterValidatorsFromAssembly(Assembly.GetExecutingAssembly());
-});
-#pragma warning restore CS0618 // Type or member is obsolete
-
+builder.Services.AddControllers();
+builder.Services.AddFluentValidationAutoValidation().AddFluentValidationClientsideAdapters();
 builder.Services.AddSwaggerWithVersioning();
 builder.Services.AddCors(x =>
 {
