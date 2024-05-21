@@ -46,7 +46,6 @@ builder.Services.AddCors(x =>
 });
 builder.Services.AddCustomLocalization(builder.Configuration);
 builder.Services.AddHealthChecks();
-builder.Services.AddScoped<IAuthenticatedUserService, AuthenticatedUserService>();
 builder.Host.UseSerilog((context, configuration) => configuration.ReadFrom.Configuration(context.Configuration));
 
 var app = builder.Build();
