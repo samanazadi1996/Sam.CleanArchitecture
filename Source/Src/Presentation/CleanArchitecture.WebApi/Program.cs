@@ -32,7 +32,7 @@ builder.Services.AddScoped<IAuthenticatedUserService, AuthenticatedUserService>(
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddJwt(builder.Configuration);
 builder.Services.AddControllers();
-builder.Services.AddFluentValidationAutoValidation().AddFluentValidationClientsideAdapters();
+builder.Services.AddFluentValidationAutoValidation();
 builder.Services.AddSwaggerWithVersioning();
 builder.Services.AddCors(x =>
 {
