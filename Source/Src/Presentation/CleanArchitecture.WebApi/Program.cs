@@ -18,7 +18,6 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using Serilog;
 using System.Reflection;
 
@@ -30,7 +29,6 @@ builder.Services.AddPersistenceInfrastructure(builder.Configuration);
 builder.Services.AddFileManagerInfrastructure(builder.Configuration);
 builder.Services.AddIdentityInfrastructure(builder.Configuration);
 builder.Services.AddResourcesInfrastructure();
-
 builder.Services.AddScoped<IAuthenticatedUserService, AuthenticatedUserService>();
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddJwt(builder.Configuration);
@@ -55,7 +53,6 @@ builder.Services.AddCors(x =>
     });
 });
 builder.Services.AddCustomLocalization(builder.Configuration);
-
 builder.Services.AddHealthChecks();
 builder.Services.AddScoped<IAuthenticatedUserService, AuthenticatedUserService>();
 builder.Host.UseSerilog((context, configuration) => configuration.ReadFrom.Configuration(context.Configuration));
@@ -76,11 +73,6 @@ using (var scope = app.Services.CreateScope())
     await DefaultData.SeedAsync(services.GetRequiredService<ApplicationDbContext>());
 }
 
-if (app.Environment.IsDevelopment())
-{
-    app.UseDeveloperExceptionPage();
-}
-
 app.UseCustomLocalization();
 app.UseCors("Any");
 app.UseRouting();
@@ -89,7 +81,6 @@ app.UseAuthorization();
 app.UseSwaggerWithVersioning();
 app.UseMiddleware<ErrorHandlerMiddleware>();
 app.UseHealthChecks("/health");
-
 app.MapControllers();
 app.UseSerilogRequestLogging();
 
