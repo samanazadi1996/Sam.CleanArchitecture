@@ -29,7 +29,6 @@ builder.Services.AddFileManagerInfrastructure(builder.Configuration);
 builder.Services.AddIdentityInfrastructure(builder.Configuration);
 builder.Services.AddResourcesInfrastructure();
 builder.Services.AddScoped<IAuthenticatedUserService, AuthenticatedUserService>();
-builder.Services.AddDistributedMemoryCache();
 builder.Services.AddJwt(builder.Configuration);
 builder.Services.AddControllers();
 builder.Services.AddFluentValidationAutoValidation();
@@ -41,7 +40,6 @@ builder.Services.AddCors(x =>
         b.AllowAnyOrigin();
         b.AllowAnyHeader();
         b.AllowAnyMethod();
-
     });
 });
 builder.Services.AddCustomLocalization(builder.Configuration);
