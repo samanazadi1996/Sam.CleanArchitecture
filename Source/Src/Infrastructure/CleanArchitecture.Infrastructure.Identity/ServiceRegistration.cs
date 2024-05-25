@@ -11,8 +11,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
 using System;
 using System.Linq;
 using System.Security.Claims;
@@ -56,23 +54,17 @@ namespace CleanArchitecture.Infrastructure.Identity
         }
         public static void AddJwt(this IServiceCollection services, IConfiguration configuration)
         {
-            var serializerSettings = new JsonSerializerSettings()
-            {
-                ContractResolver = new CamelCasePropertyNamesContractResolver()
-            };
-
             services.AddIdentity<ApplicationUser, ApplicationRole>().AddEntityFrameworkStores<IdentityContext>().AddDefaultTokenProviders();
 
             var jwtSettings = configuration.GetSection(nameof(JWTSettings)).Get<JWTSettings>();
             services.AddSingleton(jwtSettings);
 
-#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
             services.AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
             })
-                .AddJwtBearer(async o =>
+                .AddJwtBearer(o =>
                 {
                     o.RequireHttpsMetadata = false;
                     o.SaveToken = false;
@@ -89,20 +81,16 @@ namespace CleanArchitecture.Infrastructure.Identity
                     };
                     o.Events = new JwtBearerEvents()
                     {
-                        OnChallenge = context =>
+                        OnChallenge = async context =>
                         {
                             context.HandleResponse();
                             context.Response.StatusCode = 401;
-                            context.Response.ContentType = "application/json";
-                            var result = JsonConvert.SerializeObject(new BaseResult(new Error(ErrorCode.AccessDenied, "You are not Authorized")), serializerSettings);
-                            return context.Response.WriteAsync(result);
+                            await context.Response.WriteAsJsonAsync(new BaseResult(new Error(ErrorCode.AccessDenied, "You are not Authorized")));
                         },
-                        OnForbidden = context =>
+                        OnForbidden = async context =>
                         {
                             context.Response.StatusCode = 403;
-                            context.Response.ContentType = "application/json";
-                            var result = JsonConvert.SerializeObject(new BaseResult(new Error(ErrorCode.AccessDenied, "You are not authorized to access this resource")), serializerSettings);
-                            return context.Response.WriteAsync(result);
+                            await context.Response.WriteAsJsonAsync(new BaseResult(new Error(ErrorCode.AccessDenied, "You are not authorized to access this resource")));
                         },
                         OnTokenValidated = async context =>
                         {
@@ -122,9 +110,6 @@ namespace CleanArchitecture.Infrastructure.Identity
 
                     };
                 });
-#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
-
         }
-
     }
 }

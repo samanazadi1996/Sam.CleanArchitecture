@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CleanArchitecture.Infrastructure.FileManager.Migrations
 {
     [DbContext(typeof(FileManagerDbContext))]
-    [Migration("20240323200159_Init")]
+    [Migration("00000000000000_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -19,7 +19,7 @@ namespace CleanArchitecture.Infrastructure.FileManager.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.3")
+                .HasAnnotation("ProductVersion", "8.0.5")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);

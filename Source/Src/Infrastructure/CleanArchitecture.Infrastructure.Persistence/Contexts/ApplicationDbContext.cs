@@ -21,7 +21,7 @@ namespace CleanArchitecture.Infrastructure.Persistence.Contexts
         public DbSet<Product> Products { get; set; }
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
         {
-            var userId = string.IsNullOrEmpty(authenticatedUser.UserId) 
+            var userId = string.IsNullOrEmpty(authenticatedUser.UserId)
                 ? Guid.Empty : Guid.Parse(authenticatedUser.UserId);
 
             var currentTime = DateTime.Now;

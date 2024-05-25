@@ -176,32 +176,21 @@ The 'PagedResponse<T>' class serves as an extension of the 'BaseResult<List<T>>'
 ```c#
 public class PagedResponse<T> : BaseResult<List<T>>
 {
-    public int PageNumber { get; }
-    public int PageSize { get; }
+    public int PageNumber { get; set; }
+    public int PageSize { get; set; }
     public int TotalPages { get; set; }
     public int TotalItems { get; set; }
     public bool HasPreviousPage => PageNumber > 1;
     public bool HasNextPage => PageNumber < TotalPages;
-    public PagedResponse()
-    {
-    }
+
     public PagedResponse(Error error) : base(error)
     {
     }
-    public PagedResponse(PagenationResponseDto<T> model, PagenationRequestParameter request)
+
+    public PagedResponse(PagenationResponseDto<T> model)
     {
-        PageNumber = request.PageNumber;
-        PageSize = request.PageSize;
-        TotalItems = model.Count;
-        TotalPages = TotalItems / PageSize;
-        if (TotalItems % PageSize > 0) TotalPages++;
-        this.Data = model.Data;
-        this.Success = true;
-    }
-    public PagedResponse(PagenationResponseDto<T> model, int pageNumber, int pageSize)
-    {
-        PageNumber = pageNumber;
-        PageSize = pageSize;
+        PageNumber = model.PageNumber;
+        PageSize = model.PageSize;
         TotalItems = model.Count;
         TotalPages = TotalItems / PageSize;
         if (TotalItems % PageSize > 0) TotalPages++;
@@ -254,9 +243,9 @@ The use of C# generics in the 'PagedResponse<T>' class enables the handling of d
    var data = GetPagedDataFromRepository(paginationRequest.PageNumber, paginationRequest.PageSize);
    var totalCount = GetTotalCountDataFromRepository();
 
-   var paginatedModel = new PagenationResponseDto<int>(data, totalCount); // Assume a method to  retrieve paginated data
+   var paginatedModel = new PagenationResponseDto<int>(data, totalCount, paginationRequest.PageNumber, paginationRequest.PageSize); // Assume a method to  retrieve paginated data
 
-   var successResponse = new PagedResponse<int>(paginatedModel, paginationRequest);
+   var successResponse = new PagedResponse<int>(paginatedModel);
    // Creates a paginated response with success status,    including the paginated data and relevant pagination details
    ```
 

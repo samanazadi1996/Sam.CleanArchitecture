@@ -1,6 +1,6 @@
 ﻿using CleanArchitecture.Infrastructure.Identity.Models;
 using Microsoft.AspNetCore.Identity;
-using System.Linq;
+using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 
 namespace CleanArchitecture.Infrastructure.Identity.Seeds
@@ -20,7 +20,7 @@ namespace CleanArchitecture.Infrastructure.Identity.Seeds
                 PhoneNumberConfirmed = true
             };
 
-            if (!userManager.Users.Any())
+            if (!await userManager.Users.AnyAsync())
             {
                 var user = await userManager.FindByEmailAsync(defaultUser.Email);
                 if (user == null)
