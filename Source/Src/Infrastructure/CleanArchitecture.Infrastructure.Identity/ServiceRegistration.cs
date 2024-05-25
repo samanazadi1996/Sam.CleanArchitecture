@@ -15,7 +15,6 @@ using System;
 using System.Linq;
 using System.Security.Claims;
 using System.Text;
-using System.Text.Json;
 
 namespace CleanArchitecture.Infrastructure.Identity
 {
@@ -55,11 +54,6 @@ namespace CleanArchitecture.Infrastructure.Identity
         }
         public static void AddJwt(this IServiceCollection services, IConfiguration configuration)
         {
-            var serializerOptions = new JsonSerializerOptions()
-            {
-                PropertyNamingPolicy = JsonNamingPolicy.CamelCase
-            };
-
             services.AddIdentity<ApplicationUser, ApplicationRole>().AddEntityFrameworkStores<IdentityContext>().AddDefaultTokenProviders();
 
             var jwtSettings = configuration.GetSection(nameof(JWTSettings)).Get<JWTSettings>();
@@ -87,20 +81,16 @@ namespace CleanArchitecture.Infrastructure.Identity
                     };
                     o.Events = new JwtBearerEvents()
                     {
-                        OnChallenge = context =>
+                        OnChallenge = async context =>
                         {
                             context.HandleResponse();
                             context.Response.StatusCode = 401;
-                            context.Response.ContentType = "application/json";
-                            var result = JsonSerializer.Serialize(new BaseResult(new Error(ErrorCode.AccessDenied, "You are not Authorized")), serializerOptions);
-                            return context.Response.WriteAsync(result);
+                            await context.Response.WriteAsJsonAsync(new BaseResult(new Error(ErrorCode.AccessDenied, "You are not Authorized")));
                         },
-                        OnForbidden = context =>
+                        OnForbidden = async context =>
                         {
                             context.Response.StatusCode = 403;
-                            context.Response.ContentType = "application/json";
-                            var result = JsonSerializer.Serialize(new BaseResult(new Error(ErrorCode.AccessDenied, "You are not authorized to access this resource")), serializerOptions);
-                            return context.Response.WriteAsync(result);
+                            await context.Response.WriteAsJsonAsync(new BaseResult(new Error(ErrorCode.AccessDenied, "You are not authorized to access this resource")));
                         },
                         OnTokenValidated = async context =>
                         {
