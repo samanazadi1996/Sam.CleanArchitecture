@@ -61,7 +61,7 @@ namespace CleanArchitecture.Infrastructure.Identity.Services
                 return new BaseResult<AuthenticationResponse>(new Error(ErrorCode.FieldDataInvalid, translator.GetString(TranslatorMessages.AccountMessages.Invalid_password()), nameof(request.Password)));
             }
 
-            var rolesList = await userManager.GetRolesAsync(user).ConfigureAwait(false);
+            var rolesList = await userManager.GetRolesAsync(user);
 
             var jwToken = await GenerateJwtToken(user);
 
@@ -86,7 +86,7 @@ namespace CleanArchitecture.Infrastructure.Identity.Services
                 return new BaseResult<AuthenticationResponse>(new Error(ErrorCode.NotFound, translator.GetString(TranslatorMessages.AccountMessages.Account_notfound_with_UserName(username)), nameof(username)));
             }
 
-            var rolesList = await userManager.GetRolesAsync(user).ConfigureAwait(false);
+            var rolesList = await userManager.GetRolesAsync(user);
 
             var jwToken = await GenerateJwtToken(user);
 
