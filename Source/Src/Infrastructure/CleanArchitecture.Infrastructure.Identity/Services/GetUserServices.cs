@@ -16,9 +16,7 @@ namespace CleanArchitecture.Infrastructure.Identity.Services
         {
             var skip = (model.PageNumber - 1) * model.PageSize;
 
-            var users = await identityContext.Users
-                .Skip(skip)
-                .Take(model.PageSize)
+            var users = identityContext.Users
                 .Select(p => new UserDto()
                 {
                     Name = p.Name,
@@ -27,9 +25,17 @@ namespace CleanArchitecture.Infrastructure.Identity.Services
                     PhoneNumber = p.PhoneNumber,
                     Id = p.Id,
                     Created = p.Created,
-                }).ToListAsync();
+                });
 
-            var result = new PagenationResponseDto<UserDto>(users, await identityContext.Users.CountAsync(), model.PageNumber, model.PageSize);
+            if (!string.IsNullOrEmpty(model.Name))
+            {
+                users = users.Where(p => p.Name.Contains(model.Name));
+            }
+
+            var result = new PagenationResponseDto<UserDto>(
+                await users.Skip(skip).Take(model.PageSize).ToListAsync(), 
+                await users.CountAsync(), 
+                model.PageNumber, model.PageSize);
 
             return new PagedResponse<UserDto>(result);
         }
