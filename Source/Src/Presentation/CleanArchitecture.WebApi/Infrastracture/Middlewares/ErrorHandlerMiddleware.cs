@@ -40,7 +40,10 @@ namespace CleanArchitecture.WebApi.Infrastracture.Middlewares
                         response.StatusCode = (int)HttpStatusCode.InternalServerError;
                         break;
                 }
-                var result = JsonSerializer.Serialize(responseModel);
+                var result = JsonSerializer.Serialize(responseModel, new JsonSerializerOptions()
+                {
+                    PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+                });
 
                 await response.WriteAsync(result);
             }
