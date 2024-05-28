@@ -27,7 +27,7 @@ namespace CleanArchitecture.WebApi.Infrastracture.Middlewares
                 switch (error)
                 {
                     case ValidationException e:
-                        // custom application error
+                        // validation error
                         response.StatusCode = (int)HttpStatusCode.BadRequest;
                         responseModel.Errors = e.Errors.Select(p => new Error(ErrorCode.ModelStateNotValid, p.ErrorMessage, p.PropertyName)).ToList();
                         break;

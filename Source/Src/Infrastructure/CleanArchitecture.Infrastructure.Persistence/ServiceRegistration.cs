@@ -31,14 +31,13 @@ namespace CleanArchitecture.Infrastructure.Persistence
             var interfaces = Assembly.GetAssembly(interfaceType).GetTypes()
                 .Where(p => p.GetInterface(interfaceType.Name.ToString()) != null);
 
+            var implementations = Assembly.GetAssembly(typeof(GenericRepository<>)).GetTypes();
+
             foreach (var item in interfaces)
             {
-                var implimentation = Assembly.GetAssembly(typeof(GenericRepository<>)).GetTypes()
-                    .FirstOrDefault(p => p.GetInterface(item.Name.ToString()) != null);
-                services.AddTransient(item, implimentation);
-
+                var implementation = implementations.FirstOrDefault(p => p.GetInterface(item.Name.ToString()) != null);
+                services.AddTransient(item, implementation);
             }
-
         }
     }
 }
