@@ -49,7 +49,6 @@ namespace CleanArchitecture.Infrastructure.Identity
                 b => b.MigrationsAssembly(typeof(IdentityContext).Assembly.FullName)));
 
             services.AddTransient<IGetUserServices, GetUserServices>();
-            services.AddTransient<IUpdateUserServices, UpdateUserServices>();
             services.AddTransient<IAccountServices, AccountServices>();
         }
         public static void AddJwt(this IServiceCollection services, IConfiguration configuration)
@@ -96,7 +95,7 @@ namespace CleanArchitecture.Infrastructure.Identity
                         {
                             var signInManager = context.HttpContext.RequestServices.GetRequiredService<SignInManager<ApplicationUser>>();
                             var claimsIdentity = context.Principal.Identity as ClaimsIdentity;
-                            if (claimsIdentity.Claims?.Any() != true)
+                            if (claimsIdentity.Claims?.Any() is not true)
                                 context.Fail("This token has no claims.");
 
                             var securityStamp = claimsIdentity.FindFirst("AspNet.Identity.SecurityStamp");
@@ -104,7 +103,7 @@ namespace CleanArchitecture.Infrastructure.Identity
                                 context.Fail("This token has no secuirty stamp");
 
                             var validatedUser = await signInManager.ValidateSecurityStampAsync(context.Principal);
-                            if (validatedUser == null)
+                            if (validatedUser is null)
                                 context.Fail("Token secuirty stamp is not valid.");
                         },
 
