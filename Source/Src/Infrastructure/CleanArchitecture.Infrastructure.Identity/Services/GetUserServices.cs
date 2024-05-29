@@ -33,8 +33,8 @@ namespace CleanArchitecture.Infrastructure.Identity.Services
             }
 
             var result = new PagenationResponseDto<UserDto>(
-                await users.Skip(skip).Take(model.PageSize).ToListAsync(), 
-                await users.CountAsync(), 
+                await users.Skip(skip).Take(model.PageSize).ToListAsync(),
+                await users.CountAsync(),
                 model.PageNumber, model.PageSize);
 
             return new PagedResponse<UserDto>(result);
