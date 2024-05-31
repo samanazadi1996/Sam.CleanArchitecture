@@ -15,13 +15,17 @@
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/samanazadi1996/Sam.CleanArchitecture.git</RepositoryUrl>
     <NoPackageAnalysis>true</NoPackageAnalysis>
-
+    <ApplicationIcon>TemplateIcon.ico</ApplicationIcon>
   </PropertyGroup>
   
   <ItemGroup>
     <Content Include="Source\**\*" Exclude="**\bin\**\*;**\obj\**\*;**\.vs\**\*;**\.vscode\**\*" />
     <Content Include="Templates\**\*" Exclude="**\bin\**\*;**\obj\**\*;**\.vs\**\*;**\.vscode\**\*" />
     <Compile Remove="**\*" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="TemplateIcon.ico" Pack="true" PackagePath="" />
   </ItemGroup>
 
   </Project>
