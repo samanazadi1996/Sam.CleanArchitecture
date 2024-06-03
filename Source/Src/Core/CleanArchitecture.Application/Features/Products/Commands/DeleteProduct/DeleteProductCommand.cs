@@ -1,10 +1,9 @@
-﻿using CleanArchitecture.Application.Wrappers;
+using CleanArchitecture.Application.Wrappers;
 using MediatR;
 
-namespace CleanArchitecture.Application.Features.Products.Commands.DeleteProduct
+namespace CleanArchitecture.Application.Features.Products.Commands.DeleteProduct;
+
+public class DeleteProductCommand : IRequest<BaseResult>
 {
-    public class DeleteProductCommand : IRequest<BaseResult>
-    {
-        public long Id { get; set; }
-    }
+    public long Id { get; set; }
 }

@@ -1,9 +1,8 @@
-﻿using CleanArchitecture.Application.Parameters;
+using CleanArchitecture.Application.Parameters;
 
-namespace CleanArchitecture.Application.DTOs.Account.Requests
+namespace CleanArchitecture.Application.DTOs.Account.Requests;
+
+public class GetAllUsersRequest : PagenationRequestParameter
 {
-    public class GetAllUsersRequest : PagenationRequestParameter
-    {
-        public string Name { get; set; }
-    }
+    public string Name { get; set; }
 }
