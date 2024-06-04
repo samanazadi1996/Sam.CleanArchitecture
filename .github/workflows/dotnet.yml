@@ -22,13 +22,13 @@ jobs:
         dotnet-version: 8.0.x
       
     - name: Restore dependencies
-      working-directory: "/Source"
+      working-directory: "./Source"
       run: dotnet restore
       
     - name: Build
-      working-directory: "/Source"
+      working-directory: "./Source"
       run: dotnet build --no-restore
       
     - name: Test
-      working-directory: "/Source"
+      working-directory: "./Source"
       run: dotnet test --no-build --verbosity normal
