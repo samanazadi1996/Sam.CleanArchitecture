@@ -57,21 +57,20 @@ public static class SwaggerExtentions
             });
             setup.AddSecurityRequirement(new OpenApiSecurityRequirement
             {
+                {
+                    new OpenApiSecurityScheme
                     {
-                        new OpenApiSecurityScheme
+                        Reference = new OpenApiReference
                         {
-                            Reference = new OpenApiReference
-                            {
-                                Type = ReferenceType.SecurityScheme,
-                                Id = "Bearer",
-                            },
-                            Scheme = "Bearer",
-                            Name = "Bearer",
-                            In = ParameterLocation.Header,
-                        }, new List<string>()
-                    },
+                            Type = ReferenceType.SecurityScheme,
+                            Id = "Bearer",
+                        },
+                        Scheme = "Bearer",
+                        Name = "Bearer",
+                        In = ParameterLocation.Header,
+                    }, new List<string>()
+                },
             });
-
         });
         services.ConfigureOptions<ConfigureSwaggerOptions>();
 
