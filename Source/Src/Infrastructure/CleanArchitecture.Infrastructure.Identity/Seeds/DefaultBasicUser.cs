@@ -26,7 +26,6 @@ public static class DefaultBasicUser
             if (user == null)
             {
                 await userManager.CreateAsync(defaultUser, "Sam@12345");
-                await userManager.AddToRoleAsync(defaultUser, "Admin");
             }
 
         }

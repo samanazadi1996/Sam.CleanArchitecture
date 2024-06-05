@@ -8,7 +8,8 @@ namespace CleanArchitecture.FunctionalTests.Common
     {
         protected override IHost CreateHost(IHostBuilder builder)
         {
-            builder.UseEnvironment("Development");
+            builder.UseEnvironment("Test");
+
             var host = builder.Build();
             host.Start();
 

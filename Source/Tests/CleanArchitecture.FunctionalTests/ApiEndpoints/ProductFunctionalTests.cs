@@ -30,8 +30,7 @@ namespace CleanArchitecture.FunctionalTests.ApiEndpoints
         public async Task GetProductById_ShouldReturnProduct()
         {
             // Arrange
-            var firstProduct = await GetFirstProduct();
-            var url = $"/api/v1/Product/GetProductById?id={firstProduct.Id}";
+            var url = "/api/v1/Product/GetProductById?id=1";
 
             // Act
             var result = await client.GetAndDeserializeAsync<BaseResult<ProductDto>>(url);
@@ -39,7 +38,7 @@ namespace CleanArchitecture.FunctionalTests.ApiEndpoints
             // Assert
             result.Success.ShouldBeTrue();
             result.Data.ShouldNotBeNull();
-            result.Data.Id.ShouldBe(firstProduct.Id);
+            result.Data.Id.ShouldBe(1);
         }
 
         [Fact]
@@ -68,18 +67,17 @@ namespace CleanArchitecture.FunctionalTests.ApiEndpoints
         {
             // Arrange
             var url = "/api/v1/Product/UpdateProduct";
-            var firstProduct = await GetFirstProduct();
             var command = new UpdateProductCommand
             {
-                Id = firstProduct.Id,
+                Id = 1,
                 Name = RandomDataExtensionMethods.RandomString(10),
                 Price = RandomDataExtensionMethods.RandomNumber(100000000),
                 BarCode = RandomDataExtensionMethods.RandomString(11)
             };
-            var adminAccount = await client.GetAdminAccount();
+            var ghostAccount = await client.GetGhostAccount(true);
 
             // Act
-            var result = await client.PutAndDeserializeAsync<BaseResult>(url, command, adminAccount.JWToken);
+            var result = await client.PutAndDeserializeAsync<BaseResult>(url, command, ghostAccount.JWToken);
 
             // Assert
             result.Success.ShouldBeTrue();
@@ -89,31 +87,15 @@ namespace CleanArchitecture.FunctionalTests.ApiEndpoints
         public async Task DeleteProduct_ShouldSucceed()
         {
             // Arrange
-            var firstProduct = await GetLastProduct();
-            var url = $"/api/v1/Product/DeleteProduct?id={firstProduct.Id}";
-            var adminAccount = await client.GetAdminAccount();
+            var url = "/api/v1/Product/DeleteProduct?id=3";
+            var ghostAccount = await client.GetGhostAccount(true);
 
             // Act
-            var result = await client.DeleteAndDeserializeAsync<BaseResult>(url, adminAccount.JWToken);
+            var result = await client.DeleteAndDeserializeAsync<BaseResult>(url, ghostAccount.JWToken);
 
             // Assert
             result.Success.ShouldBeTrue();
         }
-
-        #region private
-        private async Task<ProductDto?> GetFirstProduct()
-        {
-            var url = "/api/v1/Product/GetPagedListProduct";
-            var result = await client.GetAndDeserializeAsync<PagedResponse<ProductDto>>(url);
-            return result.Data.FirstOrDefault();
-        }
-        private async Task<ProductDto?> GetLastProduct()
-        {
-            var url = "/api/v1/Product/GetPagedListProduct";
-            var result = await client.GetAndDeserializeAsync<PagedResponse<ProductDto>>(url);
-            return result.Data.LastOrDefault();
-        }
-        #endregion
 
     }
 }

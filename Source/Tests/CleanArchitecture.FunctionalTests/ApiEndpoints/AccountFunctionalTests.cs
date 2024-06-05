@@ -74,7 +74,7 @@ namespace CleanArchitecture.FunctionalTests.ApiEndpoints
         public async Task ChangePassword_ShouldSucceed()
         {
             // Arrange
-            var ghostAccount = await client.GetGhostAccount();
+            var ghostAccount = await client.GetGhostAccount(true);
 
             var url = "/api/v1/Account/ChangePassword";
             var model = new ChangePasswordRequest()
@@ -95,12 +95,12 @@ namespace CleanArchitecture.FunctionalTests.ApiEndpoints
         public async Task ChangeUserName_ShouldSucceed()
         {
             // Arrange
-            var ghostAccount = await client.GetGhostAccount();
+            var ghostAccount = await client.GetGhostAccount(true);
 
             var url = "/api/v1/Account/ChangeUserName";
             var model = new ChangeUserNameRequest()
             {
-                UserName = ghostAccount.UserName + RandomDataExtensionMethods.RandomString(6)
+                UserName = "TestUserName" 
             };
 
             // Act

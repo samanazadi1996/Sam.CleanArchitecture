@@ -5,6 +5,10 @@ namespace CleanArchitecture.Domain.Products.Dtos
 {
     public class ProductDto
     {
+        public ProductDto()
+        {
+
+        }
         public ProductDto(Product product)
         {
             Id = product.Id;
