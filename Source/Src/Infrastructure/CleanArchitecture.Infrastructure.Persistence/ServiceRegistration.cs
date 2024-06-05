@@ -12,16 +12,23 @@ namespace CleanArchitecture.Infrastructure.Persistence;
 
 public static class ServiceRegistration
 {
-    public static void AddPersistenceInfrastructure(this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection AddPersistenceInfrastructure(this IServiceCollection services, IConfiguration configuration, bool useInMemoryDatabase)
     {
-        services.AddDbContext<ApplicationDbContext>(options =>
-       options.UseSqlServer(
-           configuration.GetConnectionString("DefaultConnection"),
-           b => b.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName)));
+        if (useInMemoryDatabase)
+        {
+            services.AddDbContext<ApplicationDbContext>(options =>
+                options.UseInMemoryDatabase(nameof(ApplicationDbContext)));
+        }
+        else
+        {
+            services.AddDbContext<ApplicationDbContext>(options =>
+                options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
+        }
 
         services.AddScoped<IUnitOfWork, UnitOfWork>();
         services.RegisterRepositories();
 
+        return services;
     }
     private static void RegisterRepositories(this IServiceCollection services)
     {

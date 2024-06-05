@@ -21,7 +21,7 @@ namespace CleanArchitecture.Infrastructure.Identity;
 public static class ServiceRegistration
 {
 
-    public static void AddIdentityCookie(this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection AddIdentityCookie(this IServiceCollection services, IConfiguration configuration)
     {
         var identitySettings = configuration.GetSection(nameof(IdentitySettings)).Get<IdentitySettings>();
         services.AddSingleton(identitySettings);
@@ -40,18 +40,28 @@ public static class ServiceRegistration
         })
             .AddEntityFrameworkStores<IdentityContext>()
             .AddDefaultTokenProviders();
+
+        return services;
     }
-    public static void AddIdentityInfrastructure(this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection AddIdentityInfrastructure(this IServiceCollection services, IConfiguration configuration, bool UseInMemoryDatabase)
     {
-        services.AddDbContext<IdentityContext>(options =>
-        options.UseSqlServer(
-            configuration.GetConnectionString("IdentityConnection"),
-            b => b.MigrationsAssembly(typeof(IdentityContext).Assembly.FullName)));
+        if (UseInMemoryDatabase)
+        {
+            services.AddDbContext<IdentityContext>(options =>
+                options.UseInMemoryDatabase(nameof(IdentityContext)));
+        }
+        else
+        {
+            services.AddDbContext<IdentityContext>(options =>
+                options.UseSqlServer(configuration.GetConnectionString("IdentityConnection")));
+        }
 
         services.AddTransient<IGetUserServices, GetUserServices>();
         services.AddTransient<IAccountServices, AccountServices>();
+
+        return services;
     }
-    public static void AddJwt(this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection AddJwt(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddIdentity<ApplicationUser, ApplicationRole>().AddEntityFrameworkStores<IdentityContext>().AddDefaultTokenProviders();
 
@@ -93,7 +103,6 @@ public static class ServiceRegistration
                     },
                     OnTokenValidated = async context =>
                     {
-                        var signInManager = context.HttpContext.RequestServices.GetRequiredService<SignInManager<ApplicationUser>>();
                         var claimsIdentity = context.Principal.Identity as ClaimsIdentity;
                         if (claimsIdentity.Claims?.Any() is not true)
                             context.Fail("This token has no claims.");
@@ -102,6 +111,7 @@ public static class ServiceRegistration
                         if (securityStamp is null)
                             context.Fail("This token has no secuirty stamp");
 
+                        var signInManager = context.HttpContext.RequestServices.GetRequiredService<SignInManager<ApplicationUser>>();
                         var validatedUser = await signInManager.ValidateSecurityStampAsync(context.Principal);
                         if (validatedUser is null)
                             context.Fail("Token secuirty stamp is not valid.");
@@ -109,5 +119,7 @@ public static class ServiceRegistration
 
                 };
             });
+
+        return services;
     }
 }
