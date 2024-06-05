@@ -2,7 +2,7 @@
 using CleanArchitecture.Application.DTOs.Account.Responses;
 using CleanArchitecture.Application.Wrappers;
 
-namespace CleanArchitecture.IntegrationTests.Common
+namespace CleanArchitecture.FunctionalTests.Common
 {
     public static class AuthenticationExtensionMethods
     {

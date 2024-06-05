@@ -2,13 +2,13 @@
 using CleanArchitecture.Application.Features.Products.Commands.UpdateProduct;
 using CleanArchitecture.Application.Wrappers;
 using CleanArchitecture.Domain.Products.Dtos;
-using CleanArchitecture.IntegrationTests.Common;
+using CleanArchitecture.FunctionalTests.Common;
 using Shouldly;
 
-namespace CleanArchitecture.IntegrationTests.ApiEndpoints
+namespace CleanArchitecture.FunctionalTests.ApiEndpoints
 {
-    [Collection("ProductIntegrationTests")]
-    public class ProductIntegrationTests(CustomWebApplicationFactory<Program> factory) : IClassFixture<CustomWebApplicationFactory<Program>>
+    [Collection("ProductFunctionalTests")]
+    public class ProductFunctionalTests(CustomWebApplicationFactory<Program> factory) : IClassFixture<CustomWebApplicationFactory<Program>>
     {
         private readonly HttpClient client = factory.CreateClient();
 

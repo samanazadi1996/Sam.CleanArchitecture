@@ -1,4 +1,4 @@
-﻿namespace CleanArchitecture.IntegrationTests.Common
+﻿namespace CleanArchitecture.FunctionalTests.Common
 {
     public static class RandomDataExtensionMethods
     {

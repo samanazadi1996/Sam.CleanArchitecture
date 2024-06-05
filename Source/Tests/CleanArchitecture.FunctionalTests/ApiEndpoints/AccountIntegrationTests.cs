@@ -1,13 +1,13 @@
 ﻿using CleanArchitecture.Application.DTOs.Account.Requests;
 using CleanArchitecture.Application.DTOs.Account.Responses;
 using CleanArchitecture.Application.Wrappers;
-using CleanArchitecture.IntegrationTests.Common;
+using CleanArchitecture.FunctionalTests.Common;
 using Shouldly;
 
-namespace CleanArchitecture.IntegrationTests.ApiEndpoints
+namespace CleanArchitecture.FunctionalTests.ApiEndpoints
 {
-    [Collection("AccountIntegrationTests")]
-    public class AccountIntegrationTests(CustomWebApplicationFactory<Program> factory) : IClassFixture<CustomWebApplicationFactory<Program>>
+    [Collection("AccountFunctionalTests")]
+    public class AccountFunctionalTests(CustomWebApplicationFactory<Program> factory) : IClassFixture<CustomWebApplicationFactory<Program>>
     {
         private readonly HttpClient client = factory.CreateClient();
 
