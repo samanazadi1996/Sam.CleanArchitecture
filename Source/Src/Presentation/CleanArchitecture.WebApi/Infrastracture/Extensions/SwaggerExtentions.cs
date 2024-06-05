@@ -1,4 +1,4 @@
-﻿
+
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
@@ -7,75 +7,73 @@ using Microsoft.OpenApi.Models;
 using System;
 using System.Collections.Generic;
 
-namespace CleanArchitecture.WebApi.Infrastracture.Extensions
+namespace CleanArchitecture.WebApi.Infrastracture.Extensions;
+
+public static class SwaggerExtentions
 {
-    public static class SwaggerExtentions
+    public static IApplicationBuilder UseSwaggerWithVersioning(this IApplicationBuilder app)
     {
-        public static IApplicationBuilder UseSwaggerWithVersioning(this IApplicationBuilder app)
+        IServiceProvider services = app.ApplicationServices;
+        var provider = services.GetRequiredService<IApiVersionDescriptionProvider>();
+
+        app.UseSwagger();
+
+        app.UseSwaggerUI(options =>
         {
-            IServiceProvider services = app.ApplicationServices;
-            var provider = services.GetRequiredService<IApiVersionDescriptionProvider>();
-
-            app.UseSwagger();
-
-            app.UseSwaggerUI(options =>
+            foreach (var description in provider.ApiVersionDescriptions)
             {
-                foreach (var description in provider.ApiVersionDescriptions)
-                {
-                    options.SwaggerEndpoint($"/swagger/{description.GroupName}/swagger.json", description.GroupName.ToUpperInvariant());
-                }
-            });
+                options.SwaggerEndpoint($"/swagger/{description.GroupName}/swagger.json", description.GroupName.ToUpperInvariant());
+            }
+        });
 
-            return app;
-        }
+        return app;
+    }
 
-        public static IServiceCollection AddSwaggerWithVersioning(this IServiceCollection services)
+    public static IServiceCollection AddSwaggerWithVersioning(this IServiceCollection services)
+    {
+        services.AddApiVersioning(setup =>
         {
-            services.AddApiVersioning(setup =>
-            {
-                setup.DefaultApiVersion = new ApiVersion(1, 0);
-                setup.AssumeDefaultVersionWhenUnspecified = true;
-                setup.ReportApiVersions = true;
-            });
+            setup.DefaultApiVersion = new ApiVersion(1, 0);
+            setup.AssumeDefaultVersionWhenUnspecified = true;
+            setup.ReportApiVersions = true;
+        });
 
-            services.AddVersionedApiExplorer(setup =>
-            {
-                setup.GroupNameFormat = "'v'VVV";
-                setup.SubstituteApiVersionInUrl = true;
-            });
+        services.AddVersionedApiExplorer(setup =>
+        {
+            setup.GroupNameFormat = "'v'VVV";
+            setup.SubstituteApiVersionInUrl = true;
+        });
 
-            services.AddSwaggerGen(setup =>
+        services.AddSwaggerGen(setup =>
+        {
+            setup.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
             {
-                setup.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                Name = "Authorization",
+                In = ParameterLocation.Header,
+                Type = SecuritySchemeType.ApiKey,
+                Scheme = "Bearer",
+                BearerFormat = "JWT",
+                Description = "Input your Bearer token in this format - Bearer {your token here} to access this API",
+            });
+            setup.AddSecurityRequirement(new OpenApiSecurityRequirement
+            {
                 {
-                    Name = "Authorization",
-                    In = ParameterLocation.Header,
-                    Type = SecuritySchemeType.ApiKey,
-                    Scheme = "Bearer",
-                    BearerFormat = "JWT",
-                    Description = "Input your Bearer token in this format - Bearer {your token here} to access this API",
-                });
-                setup.AddSecurityRequirement(new OpenApiSecurityRequirement
-                {
+                    new OpenApiSecurityScheme
                     {
-                        new OpenApiSecurityScheme
+                        Reference = new OpenApiReference
                         {
-                            Reference = new OpenApiReference
-                            {
-                                Type = ReferenceType.SecurityScheme,
-                                Id = "Bearer",
-                            },
-                            Scheme = "Bearer",
-                            Name = "Bearer",
-                            In = ParameterLocation.Header,
-                        }, new List<string>()
-                    },
-                });
-
+                            Type = ReferenceType.SecurityScheme,
+                            Id = "Bearer",
+                        },
+                        Scheme = "Bearer",
+                        Name = "Bearer",
+                        In = ParameterLocation.Header,
+                    }, new List<string>()
+                },
             });
-            services.ConfigureOptions<ConfigureSwaggerOptions>();
+        });
+        services.ConfigureOptions<ConfigureSwaggerOptions>();
 
-            return services;
-        }
+        return services;
     }
 }

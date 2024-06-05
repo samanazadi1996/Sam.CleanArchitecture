@@ -17,16 +17,19 @@ using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Serilog;
 
 
 var builder = WebApplication.CreateBuilder(args);
 
+bool useInMemoryDatabase = builder.Configuration.GetValue<bool>("UseInMemoryDatabase");
+
 builder.Services.AddApplicationLayer();
-builder.Services.AddPersistenceInfrastructure(builder.Configuration);
-builder.Services.AddFileManagerInfrastructure(builder.Configuration);
-builder.Services.AddIdentityInfrastructure(builder.Configuration);
+builder.Services.AddPersistenceInfrastructure(builder.Configuration, useInMemoryDatabase);
+builder.Services.AddFileManagerInfrastructure(builder.Configuration, useInMemoryDatabase);
+builder.Services.AddIdentityInfrastructure(builder.Configuration, useInMemoryDatabase);
 builder.Services.AddResourcesInfrastructure();
 builder.Services.AddScoped<IAuthenticatedUserService, AuthenticatedUserService>();
 builder.Services.AddJwt(builder.Configuration);
@@ -52,9 +55,12 @@ using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
 
-    await services.GetRequiredService<IdentityContext>().Database.MigrateAsync();
-    await services.GetRequiredService<ApplicationDbContext>().Database.MigrateAsync();
-    await services.GetRequiredService<FileManagerDbContext>().Database.MigrateAsync();
+    if (!useInMemoryDatabase)
+    {
+        await services.GetRequiredService<IdentityContext>().Database.MigrateAsync();
+        await services.GetRequiredService<ApplicationDbContext>().Database.MigrateAsync();
+        await services.GetRequiredService<FileManagerDbContext>().Database.MigrateAsync();
+    }
 
     //Seed Data
     await DefaultRoles.SeedAsync(services.GetRequiredService<RoleManager<ApplicationRole>>());
@@ -74,6 +80,7 @@ app.MapControllers();
 app.UseSerilogRequestLogging();
 
 app.Run();
+
 public partial class Program
 {
 }

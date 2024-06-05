@@ -1,23 +1,29 @@
-﻿using CleanArchitecture.Application.Interfaces;
+using CleanArchitecture.Application.Interfaces;
 using CleanArchitecture.Infrastructure.FileManager.Contexts;
 using CleanArchitecture.Infrastructure.FileManager.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace CleanArchitecture.Infrastructure.FileManager
+namespace CleanArchitecture.Infrastructure.FileManager;
+
+public static class ServiceRegistration
 {
-    public static class ServiceRegistration
+    public static IServiceCollection AddFileManagerInfrastructure(this IServiceCollection services, IConfiguration configuration, bool useInMemoryDatabase)
     {
-        public static IServiceCollection AddFileManagerInfrastructure(this IServiceCollection services, IConfiguration configuration)
+        if (useInMemoryDatabase)
         {
             services.AddDbContext<FileManagerDbContext>(options =>
-            {
-                options.UseSqlServer(configuration.GetConnectionString("FileManagerConnection"));
-            });
-            services.AddScoped<IFileManagerService, FileManagerService>();
-            return services;
-
+                options.UseInMemoryDatabase(nameof(FileManagerDbContext)));
         }
+        else
+        {
+            services.AddDbContext<FileManagerDbContext>(options =>
+                options.UseSqlServer(configuration.GetConnectionString("FileManagerConnection")));
+        }
+
+        services.AddScoped<IFileManagerService, FileManagerService>();
+
+        return services;
     }
 }

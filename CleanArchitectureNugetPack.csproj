@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <PackageType>Template</PackageType>
-    <Version>8.1.3</Version>
+    <Version>8.1.4</Version>
     <PackageId>Sam.CleanArchitecture.Template</PackageId>
     <Title>Clean Architecture</Title>
     <TargetFramework>net8.0</TargetFramework>
@@ -15,13 +15,17 @@
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/samanazadi1996/Sam.CleanArchitecture.git</RepositoryUrl>
     <NoPackageAnalysis>true</NoPackageAnalysis>
-
+    <ApplicationIcon>TemplateIcon.ico</ApplicationIcon>
   </PropertyGroup>
   
   <ItemGroup>
     <Content Include="Source\**\*" Exclude="**\bin\**\*;**\obj\**\*;**\.vs\**\*;**\.vscode\**\*" />
     <Content Include="Templates\**\*" Exclude="**\bin\**\*;**\obj\**\*;**\.vs\**\*;**\.vscode\**\*" />
     <Compile Remove="**\*" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="TemplateIcon.ico" Pack="true" PackagePath="" />
   </ItemGroup>
 
   </Project>

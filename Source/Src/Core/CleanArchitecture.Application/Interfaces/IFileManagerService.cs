@@ -1,14 +1,13 @@
-﻿using System.Threading.Tasks;
+using System.Threading.Tasks;
 
-namespace CleanArchitecture.Application.Interfaces
+namespace CleanArchitecture.Application.Interfaces;
+
+public interface IFileManagerService
 {
-    public interface IFileManagerService
-    {
-        Task Create(string name, byte[] content);
-        Task Update(string name, byte[] content);
-        Task<byte[]> Download(string name);
-        Task Delete(string name);
-        Task<int> SaveChangesAsync();
-    }
-
+    Task Create(string name, byte[] content);
+    Task Update(string name, byte[] content);
+    Task<byte[]> Download(string name);
+    Task Delete(string name);
+    Task<int> SaveChangesAsync();
 }
+

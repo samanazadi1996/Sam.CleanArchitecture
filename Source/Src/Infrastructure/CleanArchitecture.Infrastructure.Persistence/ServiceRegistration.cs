@@ -1,4 +1,4 @@
-﻿using CleanArchitecture.Application.Interfaces;
+using CleanArchitecture.Application.Interfaces;
 using CleanArchitecture.Application.Interfaces.Repositories;
 using CleanArchitecture.Infrastructure.Persistence.Contexts;
 using CleanArchitecture.Infrastructure.Persistence.Repositories;
@@ -8,37 +8,42 @@ using Microsoft.Extensions.DependencyInjection;
 using System.Linq;
 using System.Reflection;
 
-namespace CleanArchitecture.Infrastructure.Persistence
+namespace CleanArchitecture.Infrastructure.Persistence;
+
+public static class ServiceRegistration
 {
-    public static class ServiceRegistration
+    public static IServiceCollection AddPersistenceInfrastructure(this IServiceCollection services, IConfiguration configuration, bool useInMemoryDatabase)
     {
-        public static void AddPersistenceInfrastructure(this IServiceCollection services, IConfiguration configuration)
+        if (useInMemoryDatabase)
         {
             services.AddDbContext<ApplicationDbContext>(options =>
-           options.UseSqlServer(
-               configuration.GetConnectionString("DefaultConnection"),
-               b => b.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName)));
-
-            services.AddScoped<IUnitOfWork, UnitOfWork>();
-            services.RegisterRepositories();
-
+                options.UseInMemoryDatabase(nameof(ApplicationDbContext)));
         }
-        private static void RegisterRepositories(this IServiceCollection services)
+        else
         {
-            services.AddTransient(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+            services.AddDbContext<ApplicationDbContext>(options =>
+                options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
+        }
 
-            var interfaceType = typeof(IGenericRepository<>);
-            var interfaces = Assembly.GetAssembly(interfaceType).GetTypes()
-                .Where(p => p.GetInterface(interfaceType.Name.ToString()) != null);
+        services.AddScoped<IUnitOfWork, UnitOfWork>();
+        services.RegisterRepositories();
 
-            foreach (var item in interfaces)
-            {
-                var implimentation = Assembly.GetAssembly(typeof(GenericRepository<>)).GetTypes()
-                    .FirstOrDefault(p => p.GetInterface(item.Name.ToString()) != null);
-                services.AddTransient(item, implimentation);
+        return services;
+    }
+    private static void RegisterRepositories(this IServiceCollection services)
+    {
+        services.AddTransient(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 
-            }
+        var interfaceType = typeof(IGenericRepository<>);
+        var interfaces = Assembly.GetAssembly(interfaceType).GetTypes()
+            .Where(p => p.GetInterface(interfaceType.Name) != null);
 
+        var implementations = Assembly.GetAssembly(typeof(GenericRepository<>)).GetTypes();
+
+        foreach (var item in interfaces)
+        {
+            var implementation = implementations.FirstOrDefault(p => p.GetInterface(item.Name) != null);
+            services.AddTransient(item, implementation);
         }
     }
 }
