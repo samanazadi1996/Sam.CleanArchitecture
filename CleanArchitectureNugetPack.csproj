@@ -15,7 +15,7 @@
 		<RepositoryType>git</RepositoryType>
 		<RepositoryUrl>https://github.com/samanazadi1996/Sam.CleanArchitecture.git</RepositoryUrl>
 		<NoPackageAnalysis>true</NoPackageAnalysis>
-		<PackageIcon>TemplateIcon.ico</PackageIcon>
+		<PackageIcon>TemplateIcon.png</PackageIcon>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -25,7 +25,10 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<None Include="TemplateIcon.ico" Pack="true" PackagePath="" />
+	  <None Update="TemplateIcon.png">
+	    <Pack>True</Pack>
+	    <PackagePath>\</PackagePath>
+	  </None>
 	</ItemGroup>
-
+	
 </Project>
