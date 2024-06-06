@@ -105,6 +105,9 @@ If you found this Implementation helpful or used it in your Projects, do give it
 - Fluent Validation
 - Complete User Management Module (Register / Authenticate / Change UserName / Change Password)
 - [User Auditing](./Documents/UserAuditing.md)
+- TestProjects
+    - FunctionalTests
+    - UnitTests
 
 # Prerequisites
 
