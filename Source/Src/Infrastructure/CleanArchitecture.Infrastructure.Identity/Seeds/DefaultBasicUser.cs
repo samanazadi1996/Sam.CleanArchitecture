@@ -27,7 +27,6 @@ public static class DefaultBasicUser
             {
                 await userManager.CreateAsync(defaultUser, "Sam@12345");
             }
-
         }
     }
 }
