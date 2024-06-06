@@ -74,7 +74,7 @@ public class AccountFunctionalTests(CustomWebApplicationFactory<Program> factory
     public async Task ChangePassword_ShouldSucceed()
     {
         // Arrange
-        var ghostAccount = await client.GetGhostAccount(true);
+        var ghostAccount = await client.GetGhostAccount();
 
         var url = "/api/v1/Account/ChangePassword";
         var model = new ChangePasswordRequest()
@@ -95,12 +95,12 @@ public class AccountFunctionalTests(CustomWebApplicationFactory<Program> factory
     public async Task ChangeUserName_ShouldSucceed()
     {
         // Arrange
-        var ghostAccount = await client.GetGhostAccount(true);
+        var ghostAccount = await client.GetGhostAccount();
 
         var url = "/api/v1/Account/ChangeUserName";
         var model = new ChangeUserNameRequest()
         {
-            UserName = "TestUserName"
+            UserName = "TestUserName" + ghostAccount.UserName
         };
 
         // Act

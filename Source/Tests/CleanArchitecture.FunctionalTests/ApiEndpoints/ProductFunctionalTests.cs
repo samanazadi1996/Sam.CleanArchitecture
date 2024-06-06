@@ -52,10 +52,10 @@ public class ProductFunctionalTests(CustomWebApplicationFactory<Program> factory
             Price = RandomDataExtensionMethods.RandomNumber(100000000),
             BarCode = RandomDataExtensionMethods.RandomString(11)
         };
-        var adminAccount = await client.GetAdminAccount();
+        var ghostAccount = await client.GetGhostAccount();
 
         // Act
-        var result = await client.PostAndDeserializeAsync<BaseResult<long>>(url, command, adminAccount.JWToken);
+        var result = await client.PostAndDeserializeAsync<BaseResult<long>>(url, command, ghostAccount.JWToken);
 
         // Assert
         result.Success.ShouldBeTrue();
@@ -74,7 +74,7 @@ public class ProductFunctionalTests(CustomWebApplicationFactory<Program> factory
             Price = RandomDataExtensionMethods.RandomNumber(100000000),
             BarCode = RandomDataExtensionMethods.RandomString(11)
         };
-        var ghostAccount = await client.GetGhostAccount(true);
+        var ghostAccount = await client.GetGhostAccount();
 
         // Act
         var result = await client.PutAndDeserializeAsync<BaseResult>(url, command, ghostAccount.JWToken);
@@ -88,7 +88,7 @@ public class ProductFunctionalTests(CustomWebApplicationFactory<Program> factory
     {
         // Arrange
         var url = "/api/v1/Product/DeleteProduct?id=3";
-        var ghostAccount = await client.GetGhostAccount(true);
+        var ghostAccount = await client.GetGhostAccount();
 
         // Act
         var result = await client.DeleteAndDeserializeAsync<BaseResult>(url, ghostAccount.JWToken);
