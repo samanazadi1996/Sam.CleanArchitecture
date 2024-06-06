@@ -12,6 +12,26 @@ public class AccountFunctionalTests(CustomWebApplicationFactory<Program> factory
     private readonly HttpClient client = factory.CreateClient();
 
     [Fact]
+    public async Task Authenticate_WithInvalidCredentials_ShouldReturnBadRequest()
+    {
+        // Arrange
+        var url = "/api/v1/Account/Authenticate";
+        var model = new AuthenticationRequest()
+        {
+            UserName = "abcdefg",
+            Password = "12365478"
+        };
+
+        // Act
+        var result = await client.PostAndDeserializeAsync<BaseResult<AuthenticationResponse>>(url, model);
+
+        // Assert
+        result.Success.ShouldBeFalse();
+        result.Errors.ShouldNotBeNull();
+        result.Errors[0].ErrorCode.ShouldBe(ErrorCode.ModelStateNotValid);
+    }
+
+    [Fact]
     public async Task Authenticate_WithInvalidCredentials_ShouldReturnAccountNotFound()
     {
         // Arrange
