@@ -106,8 +106,8 @@ If you found this Implementation helpful or used it in your Projects, do give it
 - Complete User Management Module (Register / Authenticate / Change UserName / Change Password)
 - [User Auditing](./Documents/UserAuditing.md)
 - TestProjects
-    - FunctionalTests
-    - UnitTests
+    - [FunctionalTests](./Documents/FunctionalTests.md)
+    - [UnitTests](./Documents/UnitTests.md)
 
 # Prerequisites
 
