@@ -7,7 +7,7 @@ public static class AuthenticationExtensionMethods
 {
     public static async Task<AuthenticationResponse> GetGhostAccount(this HttpClient _client)
     {
-        var url = "/api/v1/Account/Start";
+        var url = ApiRoutes.V1.Account.Start;
 
         var result = await _client.PostAndDeserializeAsync<BaseResult<AuthenticationResponse>>(url);
 
