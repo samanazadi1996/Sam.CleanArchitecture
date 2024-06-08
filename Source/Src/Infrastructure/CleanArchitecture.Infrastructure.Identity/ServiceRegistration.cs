@@ -20,29 +20,6 @@ namespace CleanArchitecture.Infrastructure.Identity;
 
 public static class ServiceRegistration
 {
-
-    public static IServiceCollection AddIdentityCookie(this IServiceCollection services, IConfiguration configuration)
-    {
-        var identitySettings = configuration.GetSection(nameof(IdentitySettings)).Get<IdentitySettings>();
-        services.AddSingleton(identitySettings);
-        services.AddIdentity<ApplicationUser, ApplicationRole>(options =>
-        {
-
-            options.SignIn.RequireConfirmedAccount = false;
-            options.SignIn.RequireConfirmedEmail = false;
-            options.User.RequireUniqueEmail = false;
-
-            options.Password.RequireDigit = identitySettings.PasswordRequireDigit;
-            options.Password.RequiredLength = identitySettings.PasswordRequiredLength;
-            options.Password.RequireNonAlphanumeric = identitySettings.PasswordRequireNonAlphanumic;
-            options.Password.RequireUppercase = identitySettings.PasswordRequireUppercase;
-            options.Password.RequireLowercase = identitySettings.PasswordRequireLowercase;
-        })
-            .AddEntityFrameworkStores<IdentityContext>()
-            .AddDefaultTokenProviders();
-
-        return services;
-    }
     public static IServiceCollection AddIdentityInfrastructure(this IServiceCollection services, IConfiguration configuration, bool UseInMemoryDatabase)
     {
         if (UseInMemoryDatabase)
@@ -59,14 +36,24 @@ public static class ServiceRegistration
         services.AddTransient<IGetUserServices, GetUserServices>();
         services.AddTransient<IAccountServices, AccountServices>();
 
-        return services;
-    }
-    public static IServiceCollection AddJwt(this IServiceCollection services, IConfiguration configuration)
-    {
-        services.AddIdentity<ApplicationUser, ApplicationRole>().AddEntityFrameworkStores<IdentityContext>().AddDefaultTokenProviders();
+        var identitySettings = configuration.GetSection(nameof(IdentitySettings)).Get<IdentitySettings>();
+        services.AddSingleton(identitySettings);
 
         var jwtSettings = configuration.GetSection(nameof(JWTSettings)).Get<JWTSettings>();
         services.AddSingleton(jwtSettings);
+
+        services.AddIdentity<ApplicationUser, ApplicationRole>(options =>
+        {
+            options.SignIn.RequireConfirmedAccount = false;
+            options.SignIn.RequireConfirmedEmail = false;
+            options.User.RequireUniqueEmail = false;
+
+            options.Password.RequireDigit = identitySettings.PasswordRequireDigit;
+            options.Password.RequiredLength = identitySettings.PasswordRequiredLength;
+            options.Password.RequireNonAlphanumeric = identitySettings.PasswordRequireNonAlphanumic;
+            options.Password.RequireUppercase = identitySettings.PasswordRequireUppercase;
+            options.Password.RequireLowercase = identitySettings.PasswordRequireLowercase;
+        }).AddEntityFrameworkStores<IdentityContext>().AddDefaultTokenProviders();
 
         services.AddAuthentication(options =>
         {
