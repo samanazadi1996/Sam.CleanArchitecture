@@ -9,10 +9,8 @@ using CleanArchitecture.Infrastructure.Identity.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using System;
-using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
-using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -55,27 +53,16 @@ public class AccountServices(UserManager<ApplicationUser> userManager, IAuthenti
         {
             return new BaseResult<AuthenticationResponse>(new Error(ErrorCode.NotFound, translator.GetString(TranslatorMessages.AccountMessages.Account_notfound_with_UserName(request.UserName)), nameof(request.UserName)));
         }
-        var result = await signInManager.PasswordSignInAsync(user.UserName, request.Password, false, lockoutOnFailure: false);
-        if (!result.Succeeded)
+
+        var signInResult = await signInManager.PasswordSignInAsync(user.UserName, request.Password, false, lockoutOnFailure: false);
+        if (!signInResult.Succeeded)
         {
             return new BaseResult<AuthenticationResponse>(new Error(ErrorCode.FieldDataInvalid, translator.GetString(TranslatorMessages.AccountMessages.Invalid_password()), nameof(request.Password)));
         }
 
-        var rolesList = await userManager.GetRolesAsync(user);
+        var result = await GetAuthenticationResponse(user);
 
-        var jwToken = await GenerateJwtToken(user);
-
-        AuthenticationResponse response = new AuthenticationResponse()
-        {
-            Id = user.Id.ToString(),
-            JWToken = new JwtSecurityTokenHandler().WriteToken(jwToken),
-            Email = user.Email,
-            UserName = user.UserName,
-            Roles = rolesList.ToList(),
-            IsVerified = user.EmailConfirmed,
-        };
-
-        return new BaseResult<AuthenticationResponse>(response);
+        return new BaseResult<AuthenticationResponse>(result);
     }
 
     public async Task<BaseResult<AuthenticationResponse>> AuthenticateByUserName(string username)
@@ -85,22 +72,10 @@ public class AccountServices(UserManager<ApplicationUser> userManager, IAuthenti
         {
             return new BaseResult<AuthenticationResponse>(new Error(ErrorCode.NotFound, translator.GetString(TranslatorMessages.AccountMessages.Account_notfound_with_UserName(username)), nameof(username)));
         }
+        
+        var result = await GetAuthenticationResponse(user);
 
-        var rolesList = await userManager.GetRolesAsync(user);
-
-        var jwToken = await GenerateJwtToken(user);
-
-        AuthenticationResponse response = new AuthenticationResponse()
-        {
-            Id = user.Id.ToString(),
-            JWToken = new JwtSecurityTokenHandler().WriteToken(jwToken),
-            Email = user.Email,
-            UserName = user.UserName,
-            Roles = rolesList.ToList(),
-            IsVerified = user.EmailConfirmed,
-        };
-
-        return new BaseResult<AuthenticationResponse>(response);
+        return new BaseResult<AuthenticationResponse>(result);
     }
 
     public async Task<BaseResult<string>> RegisterGostAccount()
@@ -119,32 +94,42 @@ public class AccountServices(UserManager<ApplicationUser> userManager, IAuthenti
 
         string GenerateRandomString(int length)
         {
-            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
             Random random = new Random();
             return new string(Enumerable.Repeat(chars, length)
                     .Select(s => s[random.Next(s.Length)]).ToArray());
         }
     }
-    private async Task<JwtSecurityToken> GenerateJwtToken(ApplicationUser user)
+
+    private async Task<AuthenticationResponse> GetAuthenticationResponse(ApplicationUser user)
     {
-        await userManager.UpdateSecurityStampAsync(user);
+        var jwToken = await GenerateJwtToken(user);
 
-        var symmetricSecurityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.Key));
-        var signingCredentials = new SigningCredentials(symmetricSecurityKey, SecurityAlgorithms.HmacSha256);
+        var rolesList = await userManager.GetRolesAsync(user);
 
-        var jwtSecurityToken = new JwtSecurityToken(
-            issuer: jwtSettings.Issuer,
-            audience: jwtSettings.Audience,
-            claims: await GetClaimsAsync(),
-            expires: DateTime.UtcNow.AddMinutes(jwtSettings.DurationInMinutes),
-            signingCredentials: signingCredentials);
-        return jwtSecurityToken;
-
-        async Task<IList<Claim>> GetClaimsAsync()
+        return new AuthenticationResponse()
         {
-            var result = await signInManager.ClaimsFactory.CreateAsync(user);
-            return result.Claims.ToList();
+            Id = user.Id.ToString(),
+            JWToken = new JwtSecurityTokenHandler().WriteToken(jwToken),
+            Email = user.Email,
+            UserName = user.UserName,
+            Roles = rolesList,
+            IsVerified = user.EmailConfirmed,
+        };
+
+        async Task<JwtSecurityToken> GenerateJwtToken(ApplicationUser user)
+        {
+            await userManager.UpdateSecurityStampAsync(user);
+
+            var symmetricSecurityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.Key));
+            var signingCredentials = new SigningCredentials(symmetricSecurityKey, SecurityAlgorithms.HmacSha256);
+
+            return new JwtSecurityToken(
+                issuer: jwtSettings.Issuer,
+                audience: jwtSettings.Audience,
+                claims: (await signInManager.ClaimsFactory.CreateAsync(user)).Claims,
+                expires: DateTime.UtcNow.AddMinutes(jwtSettings.DurationInMinutes),
+                signingCredentials: signingCredentials);
         }
     }
-
 }
