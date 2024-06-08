@@ -1,9 +1,9 @@
 using CleanArchitecture.Application.Interfaces.UserInterfaces;
 using CleanArchitecture.Application.Wrappers;
-using CleanArchitecture.Domain.Settings;
 using CleanArchitecture.Infrastructure.Identity.Contexts;
 using CleanArchitecture.Infrastructure.Identity.Models;
 using CleanArchitecture.Infrastructure.Identity.Services;
+using CleanArchitecture.Infrastructure.Identity.Settings;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -37,7 +37,6 @@ public static class ServiceRegistration
         services.AddTransient<IAccountServices, AccountServices>();
 
         var identitySettings = configuration.GetSection(nameof(IdentitySettings)).Get<IdentitySettings>();
-        services.AddSingleton(identitySettings);
 
         var jwtSettings = configuration.GetSection(nameof(JWTSettings)).Get<JWTSettings>();
         services.AddSingleton(jwtSettings);
