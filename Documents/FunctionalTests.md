@@ -14,19 +14,19 @@ In Functional Testing, various inputs are sent to the system, and their outputs 
 
 In addition to writing test cases, creating helper classes can significantly streamline the process of writing and executing Functional Tests. These classes contain reusable methods and utilities that facilitate common testing tasks, such as interacting with APIs, generating test data, and managing test environments. Let's take a closer look at some of the key helper classes used in Functional Testing
 
-### CustomWebApplicationFactory
+### [CustomWebApplicationFactory](../Source/Tests/CleanArchitecture.FunctionalTests/Common/CustomWebApplicationFactory.cs)
   This class extends the WebApplicationFactory class provided by ASP.NET Core to create a custom test host environment. By configuring the test environment to mimic the production environment, CustomWebApplicationFactory ensures that Functional Tests accurately reflect the behavior of the deployed application.
 
-### ApiRoutes
+### [ApiRoutes](../Source/Tests/CleanArchitecture.FunctionalTests/Common/ApiRoutes.cs)
   This class defines the API endpoints used in the application under test. By centralizing endpoint definitions in one location, ApiRoutes promotes consistency and ease of maintenance in test code. For example, the AddQueryString method simplifies the process of adding query parameters to API requests.
 
-### AuthenticationExtensionMethods
+### [AuthenticationExtensionMethods](../Source/Tests/CleanArchitecture.FunctionalTests/Common/AuthenticationExtensionMethods.cs)
   This class contains extension methods for the HttpClient class to facilitate authentication-related tasks in Functional Tests. The GetGhostAccount method, for instance, retrieves a ghost account for testing purposes, allowing testers to simulate user authentication without relying on real user credentials.
 
-### RandomDataExtensionMethods
+### [RandomDataExtensionMethods](../Source/Tests/CleanArchitecture.FunctionalTests/Common/RandomDataExtensionMethods.cs)
   This class provides methods for generating random test data, such as random strings and numbers. These methods are invaluable for creating diverse test scenarios and covering edge cases in Functional Tests.
 
-### HttpClientGetExtensionMethods
+### [HttpClientGetExtensionMethods](../Source/Tests/CleanArchitecture.FunctionalTests/Common/HttpClientGetExtensionMethods.cs)
   This class enhances the HttpClient class by providing additional methods to simplify common HTTP operations used in Functional Tests. It includes methods for sending HTTP GET, POST, PUT, and DELETE requests and automatically deserializing JSON responses into specified types. By abstracting common tasks such as setting headers and serializing request bodies, it reduces repetitive code and improves the readability and maintainability of test cases.
 
   - GetAndDeserializeAsync: Sends an HTTP GET request to the specified URI, optionally including an authorization token, and deserializes the JSON response into a specified type.
