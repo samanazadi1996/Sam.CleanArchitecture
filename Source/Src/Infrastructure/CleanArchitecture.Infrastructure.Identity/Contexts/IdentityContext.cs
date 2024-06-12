@@ -6,11 +6,8 @@ using System;
 
 namespace CleanArchitecture.Infrastructure.Identity.Contexts;
 
-public class IdentityContext : IdentityDbContext<ApplicationUser, ApplicationRole, Guid>
+public class IdentityContext(DbContextOptions<IdentityContext> options) : IdentityDbContext<ApplicationUser, ApplicationRole, Guid>(options)
 {
-    public IdentityContext(DbContextOptions<IdentityContext> options) : base(options)
-    {
-    }
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);

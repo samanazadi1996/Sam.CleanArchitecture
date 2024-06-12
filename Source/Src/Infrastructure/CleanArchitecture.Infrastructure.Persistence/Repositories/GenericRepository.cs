@@ -8,39 +8,32 @@ using System.Threading.Tasks;
 
 namespace CleanArchitecture.Infrastructure.Persistence.Repositories;
 
-public class GenericRepository<T> : IGenericRepository<T> where T : class
+public class GenericRepository<T>(ApplicationDbContext dbContext) : IGenericRepository<T> where T : class
 {
-    private readonly ApplicationDbContext _dbContext;
-
-    public GenericRepository(ApplicationDbContext dbContext)
-    {
-        _dbContext = dbContext;
-    }
-
     public virtual async Task<T> GetByIdAsync(long id)
     {
-        return await _dbContext.Set<T>().FindAsync(id);
+        return await dbContext.Set<T>().FindAsync(id);
     }
 
     public async Task<T> AddAsync(T entity)
     {
-        await _dbContext.Set<T>().AddAsync(entity);
+        await dbContext.Set<T>().AddAsync(entity);
         return entity;
     }
 
     public void Update(T entity)
     {
-        _dbContext.Entry(entity).State = EntityState.Modified;
+        dbContext.Entry(entity).State = EntityState.Modified;
     }
 
     public void Delete(T entity)
     {
-        _dbContext.Set<T>().Remove(entity);
+        dbContext.Set<T>().Remove(entity);
     }
 
     public async Task<IReadOnlyList<T>> GetAllAsync()
     {
-        return await _dbContext
+        return await dbContext
              .Set<T>()
              .AsNoTracking()
              .ToListAsync();

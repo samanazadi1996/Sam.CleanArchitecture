@@ -3,13 +3,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CleanArchitecture.Infrastructure.FileManager.Contexts;
 
-public class FileManagerDbContext : DbContext
+public class FileManagerDbContext(DbContextOptions<FileManagerDbContext> options) : DbContext(options)
 {
-    public FileManagerDbContext(DbContextOptions<FileManagerDbContext> options) : base(options)
-    {
-
-    }
-
     public DbSet<FileEntity> Files { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
