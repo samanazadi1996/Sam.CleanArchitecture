@@ -9,14 +9,8 @@ using System.Threading.Tasks;
 
 namespace CleanArchitecture.Infrastructure.Persistence.Contexts;
 
-public class ApplicationDbContext : DbContext
+public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options, IAuthenticatedUserService authenticatedUser) : DbContext(options)
 {
-    private readonly IAuthenticatedUserService authenticatedUser;
-
-    public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options, IAuthenticatedUserService authenticatedUser) : base(options)
-    {
-        this.authenticatedUser = authenticatedUser;
-    }
 
     public DbSet<Product> Products { get; set; }
     public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
