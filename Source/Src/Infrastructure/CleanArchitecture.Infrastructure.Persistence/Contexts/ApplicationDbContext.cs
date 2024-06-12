@@ -11,7 +11,6 @@ namespace CleanArchitecture.Infrastructure.Persistence.Contexts;
 
 public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options, IAuthenticatedUserService authenticatedUser) : DbContext(options)
 {
-
     public DbSet<Product> Products { get; set; }
     public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
     {

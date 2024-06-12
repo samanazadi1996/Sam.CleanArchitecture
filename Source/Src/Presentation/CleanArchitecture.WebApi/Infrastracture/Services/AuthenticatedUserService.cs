@@ -10,7 +10,6 @@ public class AuthenticatedUserService : IAuthenticatedUserService
     {
         UserId = httpContextAccessor.HttpContext?.User?.FindFirstValue(ClaimTypes.NameIdentifier);
         UserName = httpContextAccessor.HttpContext?.User?.Identity.Name;
-
     }
 
     public string UserId { get; }
