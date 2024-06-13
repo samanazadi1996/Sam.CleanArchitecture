@@ -87,6 +87,9 @@ app.UseCustomLocalization();
 // ...
 ```
 
+## Adding Dynamic Translation with [GoogleTranslator](./Localization.GoogleTranslator.md)
+To enhance the localization capabilities of your application, you can incorporate dynamic translation using the GoogleTranslator. This allows your application to fetch translations dynamically, providing even greater flexibility.
+
 ## Summary
 
 By utilizing these two methods, you can add and implement localization settings in your ASP.NET Core applications. This capability allows you to easily configure your application to display content in various languages, enhancing the overall user experience.
