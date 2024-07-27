@@ -24,8 +24,7 @@ public class FileController(IFileManagerService fileManagerService) : BaseApiCon
     {
         using (MemoryStream memoryStream = new MemoryStream())
         {
-            file.CopyTo(memoryStream);
-
+            await file.CopyToAsync(memoryStream);
             await fileManagerService.Create(name, memoryStream.ToArray());
             await fileManagerService.SaveChangesAsync();
 

@@ -5,11 +5,11 @@ namespace CleanArchitecture.FunctionalTests.Common;
 
 public static class AuthenticationExtensionMethods
 {
-    public static async Task<AuthenticationResponse> GetGhostAccount(this HttpClient _client)
+    public static async Task<AuthenticationResponse> GetGhostAccount(this HttpClient client)
     {
         var url = ApiRoutes.V1.Account.Start;
 
-        var result = await _client.PostAndDeserializeAsync<BaseResult<AuthenticationResponse>>(url);
+        var result = await client.PostAndDeserializeAsync<BaseResult<AuthenticationResponse>>(url);
 
         return result.Data;
     }

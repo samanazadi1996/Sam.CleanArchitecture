@@ -7,7 +7,7 @@ namespace CleanArchitecture.Application.Interfaces.UserInterfaces;
 
 public interface IAccountServices
 {
-    Task<BaseResult<string>> RegisterGostAccount();
+    Task<BaseResult<string>> RegisterGhostAccount();
     Task<BaseResult> ChangePassword(ChangePasswordRequest model);
     Task<BaseResult> ChangeUserName(ChangeUserNameRequest model);
     Task<BaseResult<AuthenticationResponse>> Authenticate(AuthenticationRequest request);

@@ -1,4 +1,3 @@
-
 using CleanArchitecture.Application.DTOs.Account.Requests;
 using CleanArchitecture.Application.DTOs.Account.Responses;
 using CleanArchitecture.Application.Interfaces.UserInterfaces;
@@ -27,7 +26,7 @@ public class AccountController(IAccountServices accountServices) : BaseApiContro
     [HttpPost]
     public async Task<BaseResult<AuthenticationResponse>> Start()
     {
-        var gostUsername = await accountServices.RegisterGostAccount();
-        return await accountServices.AuthenticateByUserName(gostUsername.Data);
+        var ghostUsername = await accountServices.RegisterGhostAccount();
+        return await accountServices.AuthenticateByUserName(ghostUsername.Data);
     }
 }

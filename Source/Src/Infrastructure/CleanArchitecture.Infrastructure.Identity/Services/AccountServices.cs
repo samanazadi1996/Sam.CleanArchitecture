@@ -78,7 +78,7 @@ public class AccountServices(UserManager<ApplicationUser> userManager, IAuthenti
         return new BaseResult<AuthenticationResponse>(result);
     }
 
-    public async Task<BaseResult<string>> RegisterGostAccount()
+    public async Task<BaseResult<string>> RegisterGhostAccount()
     {
         var user = new ApplicationUser()
         {
