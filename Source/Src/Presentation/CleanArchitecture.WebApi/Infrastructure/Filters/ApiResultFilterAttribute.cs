@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc.Filters;
 using System.Collections.Generic;
 using System.Net;
 
-namespace CleanArchitecture.WebApi.Infrastracture.Filters;
+namespace CleanArchitecture.WebApi.Infrastructure.Filters;
 
 public class ApiResultFilterAttribute : ActionFilterAttribute
 {

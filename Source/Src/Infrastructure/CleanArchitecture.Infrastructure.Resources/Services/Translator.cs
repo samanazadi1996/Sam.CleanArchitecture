@@ -9,16 +9,11 @@ namespace CleanArchitecture.Infrastructure.Resources.Services;
 public class Translator : ITranslator
 {
 
-    private readonly ResourceManager resourceMessages;
-    private readonly ResourceManager resourceGeneral;
+    private readonly ResourceManager resourceMessages = new(typeof(ResourceMessages).FullName, typeof(ResourceMessages).Assembly);
+    private readonly ResourceManager resourceGeneral = new(typeof(ResourceGeneral).FullName, typeof(ResourceGeneral).Assembly);
 
     public string this[string name] => resourceGeneral.GetString(name, CultureInfo.CurrentCulture) ?? name;
 
-    public Translator()
-    {
-        resourceMessages = new ResourceManager(typeof(ResourceMessages).FullName, typeof(ResourceMessages).Assembly);
-        resourceGeneral = new ResourceManager(typeof(ResourceGeneral).FullName, typeof(ResourceGeneral).Assembly);
-    }
     public string GetString(string name)
     {
         return resourceMessages.GetString(name, CultureInfo.CurrentCulture) ?? name;

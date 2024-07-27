@@ -38,7 +38,7 @@ public static class ServiceRegistration
 
         var identitySettings = configuration.GetSection(nameof(IdentitySettings)).Get<IdentitySettings>();
 
-        var jwtSettings = configuration.GetSection(nameof(JWTSettings)).Get<JWTSettings>();
+        var jwtSettings = configuration.GetSection(nameof(JwtSettings)).Get<JwtSettings>();
         services.AddSingleton(jwtSettings);
 
         services.AddIdentity<ApplicationUser, ApplicationRole>(options =>
@@ -49,7 +49,7 @@ public static class ServiceRegistration
 
             options.Password.RequireDigit = identitySettings.PasswordRequireDigit;
             options.Password.RequiredLength = identitySettings.PasswordRequiredLength;
-            options.Password.RequireNonAlphanumeric = identitySettings.PasswordRequireNonAlphanumic;
+            options.Password.RequireNonAlphanumeric = identitySettings.PasswordRequireNonAlphanumeric;
             options.Password.RequireUppercase = identitySettings.PasswordRequireUppercase;
             options.Password.RequireLowercase = identitySettings.PasswordRequireLowercase;
         }).AddEntityFrameworkStores<IdentityContext>().AddDefaultTokenProviders();
@@ -95,12 +95,12 @@ public static class ServiceRegistration
 
                         var securityStamp = claimsIdentity.FindFirst("AspNet.Identity.SecurityStamp");
                         if (securityStamp is null)
-                            context.Fail("This token has no secuirty stamp");
+                            context.Fail("This token has no security stamp");
 
                         var signInManager = context.HttpContext.RequestServices.GetRequiredService<SignInManager<ApplicationUser>>();
                         var validatedUser = await signInManager.ValidateSecurityStampAsync(context.Principal);
                         if (validatedUser is null)
-                            context.Fail("Token secuirty stamp is not valid.");
+                            context.Fail("Token security stamp is not valid.");
                     },
 
                 };

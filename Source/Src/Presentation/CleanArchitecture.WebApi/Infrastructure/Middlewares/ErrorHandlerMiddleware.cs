@@ -8,7 +8,7 @@ using System.Net;
 using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace CleanArchitecture.WebApi.Infrastracture.Middlewares;
+namespace CleanArchitecture.WebApi.Infrastructure.Middlewares;
 
 public class ErrorHandlerMiddleware(RequestDelegate next)
 {

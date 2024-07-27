@@ -2,9 +2,9 @@ using System.Collections.Generic;
 
 namespace CleanArchitecture.Application.DTOs;
 
-public class PagenationResponseDto<T>
+public class PaginationResponseDto<T>
 {
-    public PagenationResponseDto(List<T> data, int count, int pageNumber, int pageSize)
+    public PaginationResponseDto(List<T> data, int count, int pageNumber, int pageSize)
     {
         Data = data;
         Count = count;

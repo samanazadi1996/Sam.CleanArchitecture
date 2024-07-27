@@ -16,7 +16,7 @@ public class DeleteProductCommandHandler(IProductRepository productRepository, I
 
         if (product is null)
         {
-            return new BaseResult(new Error(ErrorCode.NotFound, translator.GetString(TranslatorMessages.ProductMessages.Product_notfound_with_id(request.Id)), nameof(request.Id)));
+            return new BaseResult(new Error(ErrorCode.NotFound, translator.GetString(TranslatorMessages.ProductMessages.Product_NotFound_with_id(request.Id)), nameof(request.Id)));
         }
 
         productRepository.Delete(product);

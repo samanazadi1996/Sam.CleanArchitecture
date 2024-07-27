@@ -7,9 +7,9 @@ using Microsoft.OpenApi.Models;
 using System;
 using System.Collections.Generic;
 
-namespace CleanArchitecture.WebApi.Infrastracture.Extensions;
+namespace CleanArchitecture.WebApi.Infrastructure.Extensions;
 
-public static class SwaggerExtentions
+public static class SwaggerExtensions
 {
     public static IApplicationBuilder UseSwaggerWithVersioning(this IApplicationBuilder app)
     {

@@ -1,7 +1,7 @@
 ﻿using CleanArchitecture.Domain.Products.Entities;
 using System;
 
-namespace CleanArchitecture.Domain.Products.Dtos
+namespace CleanArchitecture.Domain.Products.DTOs
 {
     public class ProductDto
     {

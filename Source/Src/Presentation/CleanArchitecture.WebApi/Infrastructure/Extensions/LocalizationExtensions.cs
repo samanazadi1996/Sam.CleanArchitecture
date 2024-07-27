@@ -7,9 +7,9 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 
-namespace CleanArchitecture.WebApi.Infrastracture.Extensions;
+namespace CleanArchitecture.WebApi.Infrastructure.Extensions;
 
-public static class LocalizationExtentions
+public static class LocalizationExtensions
 {
     public static IServiceCollection AddCustomLocalization(this IServiceCollection services, IConfiguration configuration)
     {

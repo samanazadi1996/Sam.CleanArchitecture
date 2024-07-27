@@ -1,7 +1,7 @@
 using CleanArchitecture.Application.DTOs;
 using CleanArchitecture.Application.Features.Products.Queries.GetPagedListProduct;
 using CleanArchitecture.Application.Interfaces.Repositories;
-using CleanArchitecture.Domain.Products.Dtos;
+using CleanArchitecture.Domain.Products.DTOs;
 using Moq;
 using Shouldly;
 
@@ -25,7 +25,7 @@ public class GetPagedListProductQueryHandlerTests
 
         var productRepositoryMock = new Mock<IProductRepository>();
         productRepositoryMock.Setup(repo => repo.GetPagedListAsync(pageNumber, pageSize, productName))
-                             .ReturnsAsync(new PagenationResponseDto<ProductDto>(products, 100, pageNumber, pageSize));
+                             .ReturnsAsync(new PaginationResponseDto<ProductDto>(products, 100, pageNumber, pageSize));
 
         var handler = new GetPagedListProductQueryHandler(productRepositoryMock.Object);
 

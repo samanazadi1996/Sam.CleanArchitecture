@@ -1,7 +1,7 @@
 ﻿namespace CleanArchitecture.Infrastructure.Identity.Settings;
 
 #pragma warning disable
-public class JWTSettings
+public class JwtSettings
 {
     public string Key { get; set; }
     public string Issuer { get; set; }

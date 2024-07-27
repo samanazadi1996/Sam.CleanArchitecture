@@ -117,13 +117,13 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Account_notfound_with_UserName" xml:space="preserve">
+  <data name="Account_NotFound_with_UserName" xml:space="preserve">
     <value>User account with username {0} not found</value>
   </data>
   <data name="Invalid_password" xml:space="preserve">
     <value>The password is incorrect</value>
   </data>
-  <data name="Product_notfound_with_id" xml:space="preserve">
+  <data name="Product_NotFound_with_id" xml:space="preserve">
     <value>Product with ID {0} not found</value>
   </data>
   <data name="Username_is_already_taken" xml:space="preserve">

@@ -1,7 +1,7 @@
 using CleanArchitecture.Application.Features.Products.Commands.CreateProduct;
 using CleanArchitecture.Application.Features.Products.Commands.UpdateProduct;
 using CleanArchitecture.Application.Wrappers;
-using CleanArchitecture.Domain.Products.Dtos;
+using CleanArchitecture.Domain.Products.DTOs;
 using CleanArchitecture.FunctionalTests.Common;
 using Shouldly;
 

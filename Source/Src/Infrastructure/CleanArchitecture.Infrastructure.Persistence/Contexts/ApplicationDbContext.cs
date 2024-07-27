@@ -21,16 +21,15 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
 
         foreach (var entry in ChangeTracker.Entries<AuditableBaseEntity>())
         {
-            switch (entry.State)
+            if (entry.State == EntityState.Added)
             {
-                case EntityState.Added:
-                    entry.Entity.Created = currentTime;
-                    entry.Entity.CreatedBy = userId;
-                    break;
-                case EntityState.Modified:
-                    entry.Entity.LastModified = currentTime;
-                    entry.Entity.LastModifiedBy = userId;
-                    break;
+                entry.Entity.Created = currentTime;
+                entry.Entity.CreatedBy = userId;
+            }
+            else if (entry.State == EntityState.Modified)
+            {
+                entry.Entity.LastModified = currentTime;
+                entry.Entity.LastModifiedBy = userId;
             }
         }
         return base.SaveChangesAsync(cancellationToken);

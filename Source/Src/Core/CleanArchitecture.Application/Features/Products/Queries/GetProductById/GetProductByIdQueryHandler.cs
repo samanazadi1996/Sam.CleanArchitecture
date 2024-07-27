@@ -2,7 +2,7 @@ using CleanArchitecture.Application.Helpers;
 using CleanArchitecture.Application.Interfaces;
 using CleanArchitecture.Application.Interfaces.Repositories;
 using CleanArchitecture.Application.Wrappers;
-using CleanArchitecture.Domain.Products.Dtos;
+using CleanArchitecture.Domain.Products.DTOs;
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
@@ -17,7 +17,7 @@ public class GetProductByIdQueryHandler(IProductRepository productRepository, IT
 
         if (product is null)
         {
-            return new BaseResult<ProductDto>(new Error(ErrorCode.NotFound, translator.GetString(TranslatorMessages.ProductMessages.Product_notfound_with_id(request.Id)), nameof(request.Id)));
+            return new BaseResult<ProductDto>(new Error(ErrorCode.NotFound, translator.GetString(TranslatorMessages.ProductMessages.Product_NotFound_with_id(request.Id)), nameof(request.Id)));
         }
 
         var result = new ProductDto(product);

@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace CleanArchitecture.WebApi.Infrastracture.Extensions;
+namespace CleanArchitecture.WebApi.Infrastructure.Extensions;
 
-public static class CorsExtentions
+public static class CorsExtensions
 {
     public static IServiceCollection AddAnyCors(this IServiceCollection services)
     {

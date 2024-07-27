@@ -1,12 +1,7 @@
 namespace CleanArchitecture.Application.DTOs;
 
-public struct TranslatorMessageDto
+public struct TranslatorMessageDto(string text, string[] args)
 {
-    public TranslatorMessageDto(string text, string[] args)
-    {
-        Text = text;
-        Args = args;
-    }
-    public string Text { get; set; }
-    public string[] Args { get; set; }
+    public string Text { get; set; } = text;
+    public string[] Args { get; set; } = args;
 }

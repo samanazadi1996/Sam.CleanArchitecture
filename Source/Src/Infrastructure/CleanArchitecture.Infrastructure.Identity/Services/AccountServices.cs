@@ -1,3 +1,4 @@
+using Azure.Core;
 using CleanArchitecture.Application.DTOs.Account.Requests;
 using CleanArchitecture.Application.DTOs.Account.Responses;
 using CleanArchitecture.Application.Helpers;
@@ -16,14 +17,13 @@ using System.Threading.Tasks;
 
 namespace CleanArchitecture.Infrastructure.Identity.Services;
 
-public class AccountServices(UserManager<ApplicationUser> userManager, IAuthenticatedUserService authenticatedUser, SignInManager<ApplicationUser> signInManager, JWTSettings jwtSettings, ITranslator translator) : IAccountServices
+public class AccountServices(UserManager<ApplicationUser> userManager, IAuthenticatedUserService authenticatedUser, SignInManager<ApplicationUser> signInManager, JwtSettings jwtSettings, ITranslator translator) : IAccountServices
 {
     public async Task<BaseResult> ChangePassword(ChangePasswordRequest model)
     {
         var user = await userManager.FindByIdAsync(authenticatedUser.UserId);
 
         var token = await userManager.GeneratePasswordResetTokenAsync(user);
-
         var identityResult = await userManager.ResetPasswordAsync(user, token, model.Password);
 
         if (identityResult.Succeeded)
@@ -51,7 +51,7 @@ public class AccountServices(UserManager<ApplicationUser> userManager, IAuthenti
         var user = await userManager.FindByNameAsync(request.UserName);
         if (user == null)
         {
-            return new BaseResult<AuthenticationResponse>(new Error(ErrorCode.NotFound, translator.GetString(TranslatorMessages.AccountMessages.Account_notfound_with_UserName(request.UserName)), nameof(request.UserName)));
+            return new BaseResult<AuthenticationResponse>(new Error(ErrorCode.NotFound, translator.GetString(TranslatorMessages.AccountMessages.Account_NotFound_with_UserName(request.UserName)), nameof(request.UserName)));
         }
 
         var signInResult = await signInManager.PasswordSignInAsync(user.UserName, request.Password, false, lockoutOnFailure: false);
@@ -70,7 +70,7 @@ public class AccountServices(UserManager<ApplicationUser> userManager, IAuthenti
         var user = await userManager.FindByNameAsync(username);
         if (user == null)
         {
-            return new BaseResult<AuthenticationResponse>(new Error(ErrorCode.NotFound, translator.GetString(TranslatorMessages.AccountMessages.Account_notfound_with_UserName(username)), nameof(username)));
+            return new BaseResult<AuthenticationResponse>(new Error(ErrorCode.NotFound, translator.GetString(TranslatorMessages.AccountMessages.Account_NotFound_with_UserName(username)), nameof(username)));
         }
         
         var result = await GetAuthenticationResponse(user);

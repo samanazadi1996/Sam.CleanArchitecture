@@ -38,7 +38,7 @@ public class GenericRepository<T>(DbContext dbContext) : IGenericRepository<T> w
              .ToListAsync();
     }
 
-    protected async Task<PagenationResponseDto<TEntity>> Paged<TEntity>(IQueryable<TEntity> query, int pageNumber, int pageSize) where TEntity : class
+    protected async Task<PaginationResponseDto<TEntity>> Paged<TEntity>(IQueryable<TEntity> query, int pageNumber, int pageSize) where TEntity : class
     {
         var count = await query.CountAsync();
 

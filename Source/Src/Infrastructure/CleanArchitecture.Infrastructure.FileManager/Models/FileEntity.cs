@@ -19,6 +19,6 @@ public class FileEntity
 
     internal void UpdateContent(byte[] content)
     {
-        Content = content ?? Array.Empty<byte>();
+        Content = content ?? [];
     }
 }

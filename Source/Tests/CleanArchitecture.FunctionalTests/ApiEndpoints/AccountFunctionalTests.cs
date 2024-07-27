@@ -18,7 +18,7 @@ public class AccountFunctionalTests(CustomWebApplicationFactory<Program> factory
         var url = ApiRoutes.V1.Account.Authenticate;
         var model = new AuthenticationRequest()
         {
-            UserName = "abcdefg",
+            UserName = "definable",
             Password = "12365478"
         };
 

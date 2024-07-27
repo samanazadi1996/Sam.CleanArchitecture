@@ -21,7 +21,7 @@ public class PagedResponse<T> : BaseResult<List<T>>
     {
     }
 
-    public PagedResponse(PagenationResponseDto<T> model)
+    public PagedResponse(PaginationResponseDto<T> model)
     {
         PageNumber = model.PageNumber;
         PageSize = model.PageSize;

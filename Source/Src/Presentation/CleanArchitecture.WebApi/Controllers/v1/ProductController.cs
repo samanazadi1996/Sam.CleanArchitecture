@@ -4,7 +4,7 @@ using CleanArchitecture.Application.Features.Products.Commands.UpdateProduct;
 using CleanArchitecture.Application.Features.Products.Queries.GetPagedListProduct;
 using CleanArchitecture.Application.Features.Products.Queries.GetProductById;
 using CleanArchitecture.Application.Wrappers;
-using CleanArchitecture.Domain.Products.Dtos;
+using CleanArchitecture.Domain.Products.DTOs;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
