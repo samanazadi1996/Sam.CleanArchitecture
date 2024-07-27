@@ -1,15 +1,8 @@
 namespace CleanArchitecture.Application.Wrappers;
 
-public class Error
+public class Error(ErrorCode errorCode, string description = null, string fieldName = null)
 {
-    public Error(ErrorCode errorCode, string description = null, string fieldName = null)
-    {
-        ErrorCode = errorCode;
-        Description = description;
-        FieldName = fieldName;
-    }
-
-    public ErrorCode ErrorCode { get; set; }
-    public string FieldName { get; set; }
-    public string Description { get; set; }
+    public ErrorCode ErrorCode { get; set; } = errorCode;
+    public string FieldName { get; set; } = fieldName;
+    public string Description { get; set; } = description;
 }

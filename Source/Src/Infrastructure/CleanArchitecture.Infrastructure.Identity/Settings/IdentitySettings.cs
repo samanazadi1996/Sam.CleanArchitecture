@@ -7,5 +7,4 @@ public class IdentitySettings
     public bool PasswordRequireNonAlphanumeric { get; set; }
     public bool PasswordRequireUppercase { get; set; }
     public bool PasswordRequireLowercase { get; set; }
-    public bool RequireUniqueEmail { get; set; }
 }

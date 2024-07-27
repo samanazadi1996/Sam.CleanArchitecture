@@ -5,7 +5,7 @@ using MediatR;
 
 namespace CleanArchitecture.Application.Features.Products.Queries.GetPagedListProduct;
 
-public class GetPagedListProductQuery : PagenationRequestParameter, IRequest<PagedResponse<ProductDto>>
+public class GetPagedListProductQuery : PaginationRequestParameter, IRequest<PagedResponse<ProductDto>>
 {
     public string Name { get; set; }
 }

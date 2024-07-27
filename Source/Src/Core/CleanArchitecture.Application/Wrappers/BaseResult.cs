@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 
 namespace CleanArchitecture.Application.Wrappers;
 
@@ -11,15 +12,13 @@ public class BaseResult
     }
     public BaseResult(Error error)
     {
-        Errors ??= new List<Error>();
-        Errors.Add(error);
+        Errors = [error];
         Success = false;
     }
 
     public BaseResult(IEnumerable<Error> errors)
     {
-        Errors ??= new List<Error>();
-        Errors.AddRange(errors);
+        Errors = errors.ToList();
         Success = false;
     }
 

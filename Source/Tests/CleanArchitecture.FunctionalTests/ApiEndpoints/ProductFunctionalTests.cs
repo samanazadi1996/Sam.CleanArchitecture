@@ -55,7 +55,7 @@ public class ProductFunctionalTests(CustomWebApplicationFactory<Program> factory
         var ghostAccount = await client.GetGhostAccount();
 
         // Act
-        var result = await client.PostAndDeserializeAsync<BaseResult<long>>(url, command, ghostAccount.JWToken);
+        var result = await client.PostAndDeserializeAsync<BaseResult<long>>(url, command, ghostAccount.JwToken);
 
         // Assert
         result.Success.ShouldBeTrue();
@@ -77,7 +77,7 @@ public class ProductFunctionalTests(CustomWebApplicationFactory<Program> factory
         var ghostAccount = await client.GetGhostAccount();
 
         // Act
-        var result = await client.PutAndDeserializeAsync<BaseResult>(url, command, ghostAccount.JWToken);
+        var result = await client.PutAndDeserializeAsync<BaseResult>(url, command, ghostAccount.JwToken);
 
         // Assert
         result.Success.ShouldBeTrue();
@@ -91,7 +91,7 @@ public class ProductFunctionalTests(CustomWebApplicationFactory<Program> factory
         var ghostAccount = await client.GetGhostAccount();
 
         // Act
-        var result = await client.DeleteAndDeserializeAsync<BaseResult>(url, ghostAccount.JWToken);
+        var result = await client.DeleteAndDeserializeAsync<BaseResult>(url, ghostAccount.JwToken);
 
         // Assert
         result.Success.ShouldBeTrue();

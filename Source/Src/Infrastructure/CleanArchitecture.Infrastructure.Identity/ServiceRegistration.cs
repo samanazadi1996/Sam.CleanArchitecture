@@ -52,6 +52,7 @@ public static class ServiceRegistration
             options.Password.RequireNonAlphanumeric = identitySettings.PasswordRequireNonAlphanumeric;
             options.Password.RequireUppercase = identitySettings.PasswordRequireUppercase;
             options.Password.RequireLowercase = identitySettings.PasswordRequireLowercase;
+
         }).AddEntityFrameworkStores<IdentityContext>().AddDefaultTokenProviders();
 
         services.AddAuthentication(options =>

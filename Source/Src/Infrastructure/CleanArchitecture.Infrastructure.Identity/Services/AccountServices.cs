@@ -109,7 +109,7 @@ public class AccountServices(UserManager<ApplicationUser> userManager, IAuthenti
         return new AuthenticationResponse()
         {
             Id = user.Id.ToString(),
-            JWToken = new JwtSecurityTokenHandler().WriteToken(jwToken),
+            JwToken = new JwtSecurityTokenHandler().WriteToken(jwToken),
             Email = user.Email,
             UserName = user.UserName,
             Roles = rolesList,
