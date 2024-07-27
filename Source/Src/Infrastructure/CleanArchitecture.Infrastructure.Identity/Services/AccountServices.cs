@@ -1,4 +1,3 @@
-using Azure.Core;
 using CleanArchitecture.Application.DTOs.Account.Requests;
 using CleanArchitecture.Application.DTOs.Account.Responses;
 using CleanArchitecture.Application.Helpers;
@@ -72,7 +71,7 @@ public class AccountServices(UserManager<ApplicationUser> userManager, IAuthenti
         {
             return new BaseResult<AuthenticationResponse>(new Error(ErrorCode.NotFound, translator.GetString(TranslatorMessages.AccountMessages.Account_NotFound_with_UserName(username)), nameof(username)));
         }
-        
+
         var result = await GetAuthenticationResponse(user);
 
         return new BaseResult<AuthenticationResponse>(result);

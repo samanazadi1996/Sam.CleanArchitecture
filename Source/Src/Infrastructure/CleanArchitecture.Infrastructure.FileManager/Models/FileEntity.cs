@@ -1,5 +1,3 @@
-using System;
-
 namespace CleanArchitecture.Infrastructure.FileManager.Models;
 
 public class FileEntity
