@@ -27,7 +27,7 @@ public class PagedResponse<T> : BaseResult<List<T>>
         TotalPages = TotalItems / PageSize;
         if (TotalItems % PageSize > 0) TotalPages++;
 
-        this.Data = model.Data;
-        this.Success = true;
+        Data = model.Data;
+        Success = true;
     }
 }
