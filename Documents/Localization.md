@@ -9,7 +9,7 @@ In ASP.NET Core, creating multilingual applications is essential to provide user
 This method is used to add localization settings to the `IServiceCollection`.
 
 ```c#
-public static class LocalizationExtentions
+public static class LocalizationExtensions
 {
     public static IServiceCollection AddCustomLocalization(this IServiceCollection services, IConfiguration configuration)
     {
@@ -53,7 +53,7 @@ Execution Steps:
 This method is used to apply localization settings to the `IApplicationBuilder`.
 
 ```c#
-public static class LocalizationExtentions
+public static class LocalizationExtensions
 {
     //..
 
