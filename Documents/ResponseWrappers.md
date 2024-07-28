@@ -136,32 +136,11 @@ The 'ErrorCode' enumeration defines a set of error codes that cover various erro
 public enum ErrorCode : short
 {
     ModelStateNotValid = 0,
-    ModelInvariantInvalid = 1,
-    FieldDataInvalid = 2,
-    MandatoryField = 3,
-    InconsistentData = 4,
-    RedundantData = 5,
-    EmptyData = 6,
-    LongData = 7,
-    ShortData = 8,
-    DataLengthInvalid = 9,
-    BirthdateIsAfterNow = 10,
-    RequestedDataNotExist = 11,
-    DuplicateData = 12,
-    DatabaseCommitException = 13,
-    DatabaseCommitNotAffected = 14,
-    NotFound = 15,
-    ModelIsNull = 16,
-    NotHaveAnyChangeInData = 17,
-    InvalidOperation = 18,
-    ThisDataAlreadyExist = 19,
-    TamperedData = 20,
-    NotInRange = 21,
-    ErrorInApiIdentity = 22,
-    AccessDenied = 23,
-    ErrorInIdentity = 24,
-    Exception = 25,
-    LicenseException = 26,
+    FieldDataInvalid = 1,
+    NotFound = 2,
+    AccessDenied = 3,
+    ErrorInIdentity = 4,
+    Exception = 5,
 }
 ```
 
@@ -180,14 +159,12 @@ public class PagedResponse<T> : BaseResult<List<T>>
     public int PageSize { get; set; }
     public int TotalPages { get; set; }
     public int TotalItems { get; set; }
-    public bool HasPreviousPage => PageNumber > 1;
-    public bool HasNextPage => PageNumber < TotalPages;
 
     public PagedResponse(Error error) : base(error)
     {
     }
 
-    public PagedResponse(PagenationResponseDto<T> model)
+    public PagedResponse(PaginationResponseDto<T> model)
     {
         PageNumber = model.PageNumber;
         PageSize = model.PageSize;
@@ -234,7 +211,7 @@ The use of C# generics in the 'PagedResponse<T>' class enables the handling of d
 1. **Handling Successful Paginated Responses**
 
    ```c#
-   var paginationRequest = new PagenationRequestParameter()
+   var paginationRequest = new PaginationRequestParameter()
    {
        PageNumber = 2,
        PageSize = 10
@@ -243,7 +220,7 @@ The use of C# generics in the 'PagedResponse<T>' class enables the handling of d
    var data = GetPagedDataFromRepository(paginationRequest.PageNumber, paginationRequest.PageSize);
    var totalCount = GetTotalCountDataFromRepository();
 
-   var paginatedModel = new PagenationResponseDto<int>(data, totalCount, paginationRequest.PageNumber, paginationRequest.PageSize); // Assume a method to  retrieve paginated data
+   var paginatedModel = new PaginationResponseDto<int>(data, totalCount, paginationRequest.PageNumber, paginationRequest.PageSize); // Assume a method to  retrieve paginated data
 
    var successResponse = new PagedResponse<int>(paginatedModel);
    // Creates a paginated response with success status,    including the paginated data and relevant pagination details
