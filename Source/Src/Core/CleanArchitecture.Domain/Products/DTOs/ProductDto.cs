@@ -1,7 +1,7 @@
-using $ext_projectname$.Domain.Products.Entities;
+using CleanArchitecture.Domain.Products.Entities;
 using System;
 
-namespace $ext_projectname$.Domain.Products.DTOs
+namespace CleanArchitecture.Domain.Products.DTOs
 {
     public class ProductDto
     {
