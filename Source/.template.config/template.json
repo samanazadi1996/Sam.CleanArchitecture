@@ -6,7 +6,7 @@
     "ASP.NET",
     "Clean Architecture"
   ],
-  "description": "The objective of this template is to provide a robust and streamlined methodology for enterprise application development, capitalizing on the strengths of Clean Architecture and ASP.NET Core.",
+  "description": "The purpose of this template is to provide a robust and streamlined methodology for enterprise application development, capitalizing on the strengths of Clean Architecture and ASP.NET Core.",
   "name": "Clean Architecture",
   "defaultName": "CleanArchitecture",
   "identity": "CleanArchitecture.CSharp",

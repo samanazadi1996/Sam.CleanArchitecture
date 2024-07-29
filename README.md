@@ -3,7 +3,7 @@
 [![NuGet](https://img.shields.io/nuget/vpre/Sam.CleanArchitecture.Template.svg)](https://www.nuget.org/packages/Sam.CleanArchitecture.Template)
 [![NuGet](https://img.shields.io/visual-studio-marketplace/v/SamanAzadi1996.ASPDotnetCoreCleanArchitecture?label=marketplace&color=green)](https://marketplace.visualstudio.com/items?itemName=SamanAzadi1996.ASPDotnetCoreCleanArchitecture)
 
-The objective of this template is to provide a robust and streamlined methodology for enterprise application development. By capitalizing on the strengths of Clean Architecture and ASP.NET Core, it ensures a maintainable, scalable, and efficient development process. This approach not only simplifies the complexity of enterprise systems but also enhances their performance and longevity.
+The purpose of this template is to provide a robust and streamlined methodology for enterprise application development. By capitalizing on the strengths of Clean Architecture and ASP.NET Core, it ensures a maintainable, scalable, and efficient development process. This approach not only simplifies the complexity of enterprise systems but also enhances their performance and longevity.
 
 # Getting Started with Dotnet cli
 
