@@ -6,7 +6,7 @@
     "ASP.NET",
     "Clean Architecture"
   ],
-  "description": "Loosely-Coupled and Inverted-Dependency Architecture in ASP.NET Core 8 WebApi Template with good design patterns and practices for enterprise application, so that you can get started in no time.",
+  "description": "The objective of this template is to provide a robust and streamlined methodology for enterprise application development, capitalizing on the strengths of Clean Architecture and ASP.NET Core.",
   "name": "Clean Architecture",
   "defaultName": "CleanArchitecture",
   "identity": "CleanArchitecture.CSharp",
