@@ -1,6 +1,6 @@
 # ASP Dotnet Core Clean Architecture
 
-An Implementation of Clean Architecture with ASP.NET Core 8 WebApi. With this Open-Source BoilerPlate Template, you will get access to the world of Loosely-Coupled and Inverted-Dependency Architecture in ASP.NET Core 8 WebApi with a lot of best practices.
+The objective of this template is to provide a robust and streamlined methodology for enterprise application development. By capitalizing on the strengths of Clean Architecture and ASP.NET Core, it ensures a maintainable, scalable, and efficient development process. This approach not only simplifies the complexity of enterprise systems but also enhances their performance and longevity.
 
 # Getting Started with Dotnet cli
 
