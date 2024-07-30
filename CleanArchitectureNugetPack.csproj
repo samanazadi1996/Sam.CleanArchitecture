@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
 		<PackageType>Template</PackageType>
-		<Version>8.4.0</Version>
+		<Version>8.4.1</Version>
 		<PackageId>Sam.CleanArchitecture.Template</PackageId>
 		<Title>Clean Architecture</Title>
 		<TargetFramework>net8.0</TargetFramework>
