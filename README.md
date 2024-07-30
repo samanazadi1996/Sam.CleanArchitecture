@@ -31,9 +31,10 @@ The MyProjectName directory and solution file will be created, and inside that w
 
 ### To increase the speed of coding, you can use the commands added in this package
 1. [Create new UseCase](./Documents/CleanArchitectureTemplates.md#create-new-usecase)
-1. [Create New Entity](./Documents/CleanArchitectureTemplates.md#create-new-entity)
-1. [Create New Resource](./Documents/CleanArchitectureTemplates.md#create-new-resource)
-1. [Easy Add Migration Tools ](./Documents/EasyAddMigrationTools.md)
+2. [Create New Entity](./Documents/CleanArchitectureTemplates.md#create-new-entity)
+3. [Create New Resource](./Documents/CleanArchitectureTemplates.md#create-new-resource)
+4. [Easy Add Migration Tools ](./Documents/EasyAddMigrationTools.md)
+5. [Configure Database ](./Documents/ConfigureDatabase.md)
 
 # Getting Started with Visual Studio
 
