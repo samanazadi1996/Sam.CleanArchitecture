@@ -56,7 +56,6 @@ Identity seeding involves populating the database with initial users and roles p
                     if (user == null)
                     {
                         await userManager.CreateAsync(defaultUser, "Sam@12345");
-                        await userManager.AddToRoleAsync(defaultUser, "Admin");
                     }
 
                 }

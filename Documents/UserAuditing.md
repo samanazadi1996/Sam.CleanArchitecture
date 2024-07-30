@@ -32,19 +32,22 @@ In the 'ApplicationDbContext' class, which serves as a DbContext for Entity Fram
 ``` c#
 public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
 {
-    var userId = Guid.Parse(authenticatedUser.UserId ?? "00000000-0000-0000-0000-000000000000");
+    var userId = string.IsNullOrEmpty(authenticatedUser.UserId)
+        ? Guid.Empty : Guid.Parse(authenticatedUser.UserId)
+
+    var currentTime = DateTime.UtcNow
+
     foreach (var entry in ChangeTracker.Entries<AuditableBaseEntity>())
     {
-        switch (entry.State)
+        if (entry.State == EntityState.Added)
         {
-            case EntityState.Added:
-                entry.Entity.Created = DateTime.Now;
-                entry.Entity.CreatedBy = userId;
-                break;
-            case EntityState.Modified:
-                entry.Entity.LastModified = DateTime.Now;
-                entry.Entity.LastModifiedBy = userId;
-                break;
+            entry.Entity.Created = currentTime;
+            entry.Entity.CreatedBy = userId;
+        }
+        else if (entry.State == EntityState.Modified)
+        {
+            entry.Entity.LastModified = currentTime;
+            entry.Entity.LastModifiedBy = userId;
         }
     }
     return base.SaveChangesAsync(cancellationToken);
@@ -55,17 +58,10 @@ public override Task<int> SaveChangesAsync(CancellationToken cancellationToken =
 In the 'AuthenticatedUserService' service, we use 'IHttpContextAccessor' to access information about the current user in ASP.NET Core. This information includes the user's ID and name, retrieved from the 'HttpContext' of the current request. Then, this information is sent as output from the service.
 
 ``` c#
-public class AuthenticatedUserService : IAuthenticatedUserService
+public class AuthenticatedUserService(IHttpContextAccessor httpContextAccessor) : IAuthenticatedUserService
 {
-    public AuthenticatedUserService(IHttpContextAccessor httpContextAccessor)
-    {
-        UserId = httpContextAccessor.HttpContext?.User?.FindFirstValue(ClaimTypes.NameIdentifier);
-        UserName = httpContextAccessor.HttpContext?.User?.Identity.Name;
-
-    }
-
-    public string UserId { get; }
-    public string UserName { get; }
+    public string UserId { get; } = httpContextAccessor.HttpContext?.User.FindFirstValue(ClaimTypes.NameIdentifier);
+    public string UserName { get; } = httpContextAccessor.HttpContext?.User.Identity?.Name;
 }
 ```
 

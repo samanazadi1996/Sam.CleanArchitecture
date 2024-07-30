@@ -27,7 +27,7 @@ public class ErrorHandlerMiddleware(RequestDelegate next)
             switch (error)
             {
                 case ValidationException e:
-                    // custom application error
+                    // validation error
                     response.StatusCode = (int)HttpStatusCode.BadRequest;
                     responseModel.Errors = e.Errors.Select(p => new Error(ErrorCode.ModelStateNotValid, p.ErrorMessage, p.PropertyName)).ToList();
                     break;
@@ -40,7 +40,10 @@ public class ErrorHandlerMiddleware(RequestDelegate next)
                     response.StatusCode = (int)HttpStatusCode.InternalServerError;
                     break;
             }
-            var result = JsonSerializer.Serialize(responseModel);
+            var result = JsonSerializer.Serialize(responseModel, new JsonSerializerOptions()
+            {
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+            });
 
             await response.WriteAsync(result);
         }
