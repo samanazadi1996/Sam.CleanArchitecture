@@ -79,6 +79,13 @@ Demonstrate Clean Monolith Architecture in ASP.NET Core 8
 - Implementation that is ready for Production
 - Integrate the most essential libraries and packages
 
+## Frequently Asked Questions (FAQ)
+
+To see the frequently asked questions and find answers related to using and developing the project, please refer to the FAQ file. This file includes common questions you might encounter while working with the project and provides links to the relevant documentation.
+
+[Read the FAQ](./Documents/FAQ.md)
+
+
 # Give a Star ⭐️
 
 If you found this Implementation helpful or used it in your Projects, do give it a star. Thanks!
