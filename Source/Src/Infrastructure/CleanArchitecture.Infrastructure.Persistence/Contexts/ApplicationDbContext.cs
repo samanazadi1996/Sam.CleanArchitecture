@@ -17,7 +17,7 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
         var userId = string.IsNullOrEmpty(authenticatedUser.UserId)
             ? Guid.Empty : Guid.Parse(authenticatedUser.UserId);
 
-        var currentTime = DateTime.Now;
+        var currentTime = DateTime.UtcNow;
 
         foreach (var entry in ChangeTracker.Entries<AuditableBaseEntity>())
         {
