@@ -1,5 +1,4 @@
 ﻿using CleanArchitecture.Application.Interfaces;
-using CleanArchitecture.Infrastructure.GraphQL.Behaviors;
 using CleanArchitecture.Infrastructure.Identity.Contexts;
 using CleanArchitecture.Infrastructure.Persistence.Contexts;
 using Microsoft.Extensions.DependencyInjection;
@@ -18,7 +17,7 @@ public static class ServiceRegistration
             .AddFiltering()
             .AddSorting()
             .AddQueryableCursorPagingProvider()
-            .AddAuthorizationHandler<AuthorizationHandler>()
+            .AddAuthorization()
             .InitializeOnStartup();
 
         return services;

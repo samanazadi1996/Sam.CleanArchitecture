@@ -12,6 +12,7 @@
 
 	<ItemGroup>
 		<PackageReference Include="HotChocolate.AspNetCore" Version="13.9.11" />
+		<PackageReference Include="HotChocolate.AspNetCore.Authorization" Version="13.9.11" />
 		<PackageReference Include="HotChocolate.Data.EntityFramework" Version="13.9.11" />
 		<PackageReference Include="HotChocolate.Pagination" Version="1.0.1" />
 		<PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0.1" />
