@@ -16,6 +16,7 @@ Next, add the following NuGet packages to your [CleanArchitecture.Infrastructure
 
 ``` xml
 <PackageReference Include="HotChocolate.AspNetCore" Version="13.9.11" />
+<PackageReference Include="HotChocolate.AspNetCore.Authorization" Version="13.9.11" />
 <PackageReference Include="HotChocolate.Data.EntityFramework" Version="13.9.11" />
 <PackageReference Include="HotChocolate.Pagination" Version="1.0.1" />
 <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0.1" />
@@ -28,7 +29,6 @@ These packages are essential for setting up GraphQL with HotChocolate and integr
 Then, add the following [ServiceRegistration.cs](https://github.com/samanazadi1996/Sam.CleanArchitecture/blob/GraphQL/Source/Src/Infrastructure/CleanArchitecture.Infrastructure.GraphQL/ServiceRegistration.cs) class to configure GraphQL services in your project:
 ``` c#
 using CleanArchitecture.Application.Interfaces;
-using CleanArchitecture.Infrastructure.GraphQL.Behaviors;
 using CleanArchitecture.Infrastructure.Identity.Contexts;
 using CleanArchitecture.Infrastructure.Persistence.Contexts;
 using Microsoft.Extensions.DependencyInjection;
@@ -48,7 +48,7 @@ public static class ServiceRegistration
             .AddFiltering() // Enable filtering capabilities for queries
             .AddSorting() // Enable sorting capabilities for queries
             .AddQueryableCursorPagingProvider() // Add cursor-based pagination support
-            .AddAuthorizationHandler<AuthorizationHandler>() // Register a custom authorization handler
+            .AddAuthorization() // Add authorization capabilities
             .InitializeOnStartup(); // Ensure the GraphQL server is initialized on application startup
 
         return services;
@@ -103,53 +103,7 @@ This `Query` class defines the GraphQL queries for your application, including:
 - **GetUsers**: Retrieves all users from the identity context, with authorization required.
 
 
-### Step 5: Add the `AuthorizationHandler` Class
-Next, add the following [AuthorizationHandler.cs](https://github.com/samanazadi1996/Sam.CleanArchitecture/blob/GraphQL/Source/Src/Infrastructure/CleanArchitecture.Infrastructure.GraphQL/Behaviors/AuthorizationHandler.cs) class to manage authorization logic in your GraphQL queries:
-
-```c#
-using CleanArchitecture.Application.Interfaces;
-using HotChocolate.Authorization;
-using HotChocolate.Resolvers;
-
-namespace CleanArchitecture.Infrastructure.GraphQL.Behaviors;
-
-public class AuthorizationHandler(IAuthenticatedUserService authenticatedUserService) : IAuthorizationHandler
-{
-    public ValueTask<AuthorizeResult> AuthorizeAsync(IMiddlewareContext context, AuthorizeDirective directive, CancellationToken cancellationToken = new CancellationToken())
-    {
-        // Check if the user is authenticated by verifying if UserId is not null or empty
-        if (string.IsNullOrEmpty(authenticatedUserService.UserId))
-        {
-            // If not authenticated, return NotAllowed
-            return new ValueTask<AuthorizeResult>(AuthorizeResult.NotAllowed);
-        }
-        // If authenticated, return Allowed
-        return new ValueTask<AuthorizeResult>(AuthorizeResult.Allowed);
-    }
-
-    public ValueTask<AuthorizeResult> AuthorizeAsync(AuthorizationContext context, IReadOnlyList<AuthorizeDirective> directives, CancellationToken cancellationToken = new CancellationToken())
-    {
-        // Check if the user is authenticated by verifying if UserId is not null or empty
-        if (string.IsNullOrEmpty(authenticatedUserService.UserId))
-        {
-            // If not authenticated, return NotAllowed
-            return new ValueTask<AuthorizeResult>(AuthorizeResult.NotAllowed);
-        }
-        // If authenticated, return Allowed
-        return new ValueTask<AuthorizeResult>(AuthorizeResult.Allowed);
-    }
-}
-```
-#### Explanation
-
-- **AuthorizationHandler Class**: Implements the IAuthorizationHandler interface to handle custom authorization logic. 
-- **AuthorizeAsync(IMiddlewareContext context, AuthorizeDirective directive...)**: This method checks if the user is authenticated by verifying the UserId from the IAuthenticatedUserService. If the user is not authenticated, it returns AuthorizeResult.NotAllowed; otherwise, it returns AuthorizeResult.Allowed.
-- **AuthorizeAsync(AuthorizationContext context, IReadOnlyList<AuthorizeDirective> directives...)**: Similar to the previous method, this checks the user's authentication status and returns the appropriate authorization result.
-
-This class ensures that only authenticated users are allowed to access certain GraphQL operations.
-
-
-### Step 6: Modify `Program.cs`
+### Step 5: Modify `Program.cs`
 Next, update the [Program.cs](https://github.com/samanazadi1996/Sam.CleanArchitecture/blob/GraphQL/Source/Src/Presentation/CleanArchitecture.WebApi/Program.cs) file to include the GraphQL infrastructure and configure the endpoints:
 
 1. **Register GraphQL Services**: 
