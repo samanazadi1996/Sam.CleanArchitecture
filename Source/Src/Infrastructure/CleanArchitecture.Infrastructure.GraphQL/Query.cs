@@ -20,7 +20,7 @@ public class Query
     [UseFiltering]
     [UseSorting]
     [Authorize]
-    public IQueryable<Product> GetOwnProduct(ApplicationDbContext db, IAuthenticatedUserService authenticatedUserService)
+    public IQueryable<Product> GetUserProducts(ApplicationDbContext db, IAuthenticatedUserService authenticatedUserService)
     {
         var userId = Guid.Parse(authenticatedUserService.UserId);
         return db.Products.Where(p => p.CreatedBy == userId);
