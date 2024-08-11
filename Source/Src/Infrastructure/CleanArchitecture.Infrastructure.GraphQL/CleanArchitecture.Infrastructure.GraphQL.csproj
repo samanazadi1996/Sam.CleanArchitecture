@@ -1,9 +1,27 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>net8.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<None Remove="SERVICEREGISTRATION.CS~RF284944A7.TMP.tmp" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="HotChocolate.AspNetCore" Version="13.9.11" />
+		<PackageReference Include="HotChocolate.Data.EntityFramework" Version="13.9.11" />
+		<PackageReference Include="HotChocolate.Pagination" Version="1.0.1" />
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0.1" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\..\Core\CleanArchitecture.Application\CleanArchitecture.Application.csproj" />
+		<ProjectReference Include="..\..\Core\CleanArchitecture.Domain\CleanArchitecture.Domain.csproj" />
+		<ProjectReference Include="..\CleanArchitecture.Infrastructure.Identity\CleanArchitecture.Infrastructure.Identity.csproj" />
+		<ProjectReference Include="..\CleanArchitecture.Infrastructure.Persistence\CleanArchitecture.Infrastructure.Persistence.csproj" />
+	</ItemGroup>
 
 </Project>

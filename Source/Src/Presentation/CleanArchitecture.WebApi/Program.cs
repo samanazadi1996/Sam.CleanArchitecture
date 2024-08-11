@@ -2,6 +2,7 @@ using CleanArchitecture.Application;
 using CleanArchitecture.Application.Interfaces;
 using CleanArchitecture.Infrastructure.FileManager;
 using CleanArchitecture.Infrastructure.FileManager.Contexts;
+using CleanArchitecture.Infrastructure.GraphQL;
 using CleanArchitecture.Infrastructure.Identity;
 using CleanArchitecture.Infrastructure.Identity.Contexts;
 using CleanArchitecture.Infrastructure.Identity.Models;
@@ -32,6 +33,7 @@ builder.Services.AddFileManagerInfrastructure(builder.Configuration, useInMemory
 builder.Services.AddIdentityInfrastructure(builder.Configuration, useInMemoryDatabase);
 builder.Services.AddResourcesInfrastructure();
 builder.Services.AddScoped<IAuthenticatedUserService, AuthenticatedUserService>();
+builder.Services.AddGraphQlInfrastructure();
 builder.Services.AddControllers();
 builder.Services.AddFluentValidationAutoValidation();
 builder.Services.AddSwaggerWithVersioning();
@@ -67,8 +69,12 @@ app.UseAuthorization();
 app.UseSwaggerWithVersioning();
 app.UseMiddleware<ErrorHandlerMiddleware>();
 app.UseHealthChecks("/health");
-app.MapControllers();
 app.UseSerilogRequestLogging();
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllers();
+    endpoints.MapGraphQL();
+});
 
 app.Run();
 
