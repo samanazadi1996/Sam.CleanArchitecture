@@ -81,7 +81,7 @@ public class Query
     [UseFiltering] // Enable filtering on this query
     [UseSorting] // Enable sorting on this query
     [Authorize] // Require authorization for this query
-    public IQueryable<Product> GetOwnProduct(ApplicationDbContext db, IAuthenticatedUserService authenticatedUserService)
+    public IQueryable<Product> GetUserProducts(ApplicationDbContext db, IAuthenticatedUserService authenticatedUserService)
     {
         var userId = Guid.Parse(authenticatedUserService.UserId); // Get the current user's ID
         return db.Products.Where(p => p.CreatedBy == userId); // Retrieve products created by the current user
