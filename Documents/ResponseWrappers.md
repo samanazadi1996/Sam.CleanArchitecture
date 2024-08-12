@@ -4,7 +4,6 @@
 
 In software development, robust error handling and consistent result communication are essential for building reliable and maintainable applications. This article explores the design and implementation of a result wrapper in C# to streamline the handling of operation outcomes and error reporting within the context of ASP.NET Core Clean Architecture.
 
-
 ## The BaseResult Class
 
 The `BaseResult` class serves as the foundation for handling the results of operations. It includes the following key components:
@@ -28,7 +27,10 @@ public class BaseResult
         => new() { Success = false, Errors = errors.ToList() };
 
     public static implicit operator BaseResult(Error error)
-        => Failure(error);
+        => new() { Success = false, Errors = [error] };
+
+    public static implicit operator BaseResult(List<Error> errors)
+        => new() { Success = false, Errors = errors };
 
     public BaseResult AddError(Error error)
     {
@@ -71,6 +73,8 @@ public class BaseResult<TData> : BaseResult
 
     public static BaseResult<TData> Ok(TData data)
         => new() { Success = true, Data = data };
+    public new static BaseResult<TData> Failure()
+        => new() { Success = false };
 
     public new static BaseResult<TData> Failure(Error error)
         => new() { Success = false, Errors = [error] };
@@ -78,19 +82,22 @@ public class BaseResult<TData> : BaseResult
     public new static BaseResult<TData> Failure(IEnumerable<Error> errors)
         => new() { Success = false, Errors = errors.ToList() };
 
-    public static implicit operator BaseResult<TData>(Error error)
-        => Failure(error);
-
     public static implicit operator BaseResult<TData>(TData data)
-        => Ok(data);
+        => new() { Success = true, Data = data };
+
+    public static implicit operator BaseResult<TData>(Error error)
+        => new() { Success = false, Errors = [error] };
+
+    public static implicit operator BaseResult<TData>(List<Error> errors)
+        => new() { Success = false, Errors = errors };
 }
 ```
 
 1. **Data Property**
-   - The `Data` property, of type TData, stores the actual data produced by a successful operation. This allows for flexible handling of different data types.
+   - Stores the data produced by a successful operation, allowing flexible handling of various data types.
 
 2. **Static Methods**
-   - Similar to the base class, static methods are provided for handling successful operations with or without associated data, as well as for reporting errors.
+   - Similar to `BaseResult`, with additional methods to handle successful operations with associated data.
 
 3. **Implicit Conversions**
    - Implicit conversions from Error to `BaseResult<TData>` and from TData to `BaseResult<TData>` are supported for seamless usage.
@@ -155,17 +162,30 @@ public class PagedResponse<T> : BaseResult<List<T>>
         };
     }
 
+    public new static PagedResponse<T> Failure(Error error)
+        => new() { Success = false, Errors = [error] };
+
+    public new static PagedResponse<T> Failure(IEnumerable<Error> errors)
+        => new() { Success = false, Errors = errors.ToList() };
+
     public static implicit operator PagedResponse<T>(PaginationResponseDto<T> model)
         => Ok(model);
+
+    public static implicit operator PagedResponse<T>(Error error)
+        => new() { Success = false, Errors = [error] };
+
+    public static implicit operator PagedResponse<T>(List<Error> errors)
+        => new() { Success = false, Errors = errors };
+
 }
 ```
-
 
 1. Pagination Properties
    - `PageNumber`, `PageSize`, `TotalPages`, and `TotalItems` provide a comprehensive overview of the pagination state. These properties are calculated based on the total items and page size, making it easier to handle pagination logic.
 
 2. Static Methods
-   - The `Ok` method allows creating a successful paginated response based on a `PaginationResponseDto<T>` model, including the paginated data and relevant pagination details.
+   - **Ok**: Creates a successful paginated response based on a PaginationResponseDto<T> model, including paginated data and relevant details.
+
   
 3. Implicit Conversion
    - Implicit conversion from `PaginationResponseDto<T>` to `PagedResponse<T>` is supported, allowing for straightforward and intuitive usage.
@@ -173,4 +193,3 @@ public class PagedResponse<T> : BaseResult<List<T>>
 ## Conclusion
 
 In conclusion, the `BaseResult`, `BaseResult<TData>`, and `PagedResponse<T>` classes, along with the Error class and ErrorCode enumeration, provide a comprehensive framework for handling operation outcomes and reporting errors consistently. By adopting these practices, developers can enhance the reliability and maintainability of their applications while promoting a standardized approach to error management.
-
