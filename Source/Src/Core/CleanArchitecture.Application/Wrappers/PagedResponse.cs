@@ -23,4 +23,8 @@ public class PagedResponse<T> : BaseResult<List<T>>
             TotalPages = (int)Math.Ceiling(model.Count / (double)model.PageSize)
         };
     }
+
+    public static implicit operator PagedResponse<T>(PaginationResponseDto<T> model)
+        => Ok(model);
+
 }

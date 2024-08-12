@@ -20,6 +20,9 @@ public class BaseResult
     public static BaseResult Failure(IEnumerable<Error> errors)
         => new() { Success = false, Errors = errors.ToList() };
 
+    public static implicit operator BaseResult(Error error)
+        => Failure(error);
+
     public BaseResult AddError(Error error)
     {
         Errors ??= [];
@@ -41,4 +44,10 @@ public class BaseResult<TData> : BaseResult
 
     public new static BaseResult<TData> Failure(IEnumerable<Error> errors)
         => new() { Success = false, Errors = errors.ToList() };
+
+    public static implicit operator BaseResult<TData>(Error error)
+        => Failure(error);
+
+    public static implicit operator BaseResult<TData>(TData data)
+        => Ok(data);
 }
