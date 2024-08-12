@@ -13,7 +13,7 @@ public class PagedResponse<T> : BaseResult<List<T>>
 
     public static PagedResponse<T> Ok(PaginationResponseDto<T> model)
     {
-        var result = new PagedResponse<T>
+        return new PagedResponse<T>
         {
             Success = true,
             Data = model.Data,
@@ -22,7 +22,5 @@ public class PagedResponse<T> : BaseResult<List<T>>
             TotalItems = model.Count,
             TotalPages = (int)Math.Ceiling(model.Count / (double)model.PageSize)
         };
-
-        return result;
     }
 }
