@@ -11,7 +11,7 @@ public class ApiResultFilterAttribute : ActionFilterAttribute
     {
         if (context.Result is BadRequestObjectResult badRequestObjectResult)
         {
-            var responseModel = BaseResult.Fail();
+            var responseModel = BaseResult.Failure();
 
             foreach (var item in ((ValidationProblemDetails)badRequestObjectResult.Value).Errors)
             {

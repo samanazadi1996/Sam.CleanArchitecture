@@ -11,13 +11,13 @@ public class BaseResult
     public static BaseResult Ok()
         => new() { Success = true };
 
-    public static BaseResult Fail()
+    public static BaseResult Failure()
         => new() { Success = false };
 
-    public static BaseResult Fail(Error error)
+    public static BaseResult Failure(Error error)
         => new() { Success = false, Errors = [error] };
 
-    public static BaseResult Fail(IEnumerable<Error> errors)
+    public static BaseResult Failure(IEnumerable<Error> errors)
         => new() { Success = false, Errors = errors.ToList() };
 
     public BaseResult AddError(Error error)
@@ -27,32 +27,18 @@ public class BaseResult
         Success = false;
         return this;
     }
-    public BaseResult AddErrors(IEnumerable<Error> errors)
-    {
-        Errors ??= [];
-        Errors.AddRange(errors);
-        Success = false;
-        return this;
-    }
-
 }
 
 public class BaseResult<TData> : BaseResult
 {
-
     public TData Data { get; set; }
 
     public static BaseResult<TData> Ok(TData data)
         => new() { Success = true, Data = data };
 
-    public static BaseResult<TData> Fail(TData data)
-        => new() { Success = false, Data = data };
-
-    public new static BaseResult<TData> Fail(Error error)
+    public new static BaseResult<TData> Failure(Error error)
         => new() { Success = false, Errors = [error] };
 
-    public new static BaseResult<TData> Fail(IEnumerable<Error> errors)
+    public new static BaseResult<TData> Failure(IEnumerable<Error> errors)
         => new() { Success = false, Errors = errors.ToList() };
-
-
 }

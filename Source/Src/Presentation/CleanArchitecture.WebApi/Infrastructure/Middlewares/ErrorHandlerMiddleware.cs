@@ -3,7 +3,6 @@ using FluentValidation;
 using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -22,19 +21,22 @@ public class ErrorHandlerMiddleware(RequestDelegate next)
         {
             var response = context.Response;
             response.ContentType = "application/json";
-            var responseModel = BaseResult.Fail();
+            var responseModel = BaseResult.Failure();
 
             switch (error)
             {
                 case ValidationException e:
                     // validation error
                     response.StatusCode = (int)HttpStatusCode.BadRequest;
-                    responseModel.AddErrors(e.Errors.Select(p => new Error(ErrorCode.ModelStateNotValid, p.ErrorMessage, p.PropertyName)).ToList());
+                    foreach (var validationFailure in e.Errors)
+                    {
+                        responseModel.AddError(new Error(ErrorCode.ModelStateNotValid, validationFailure.ErrorMessage, validationFailure.PropertyName));
+                    }
                     break;
                 case KeyNotFoundException e:
                     // not found error
                     response.StatusCode = (int)HttpStatusCode.NotFound;
-                    responseModel.AddError(new Error(ErrorCode.NotFound, error.Message));
+                    responseModel.AddError(new Error(ErrorCode.NotFound, e.Message));
                     break;
                 default:
                     // unhandled error
