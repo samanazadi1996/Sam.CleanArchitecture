@@ -22,7 +22,7 @@ public class AccountServices(UserManager<ApplicationUser> userManager, IAuthenti
     {
         var user = await userManager.FindByIdAsync(authenticatedUser.UserId);
 
-        var token = await userManager.GeneratePasswordResetTokenAsync(user);
+        var token = await userManager.GeneratePasswordResetTokenAsync(user!);
         var identityResult = await userManager.ResetPasswordAsync(user, token, model.Password);
 
         if (identityResult.Succeeded)
@@ -98,7 +98,9 @@ public class AccountServices(UserManager<ApplicationUser> userManager, IAuthenti
 
     private async Task<AuthenticationResponse> GetAuthenticationResponse(ApplicationUser user)
     {
-        var jwToken = await GenerateJwtToken(user);
+        await userManager.UpdateSecurityStampAsync(user);
+
+        var jwToken = await GenerateJwtToken();
 
         var rolesList = await userManager.GetRolesAsync(user);
 
@@ -112,10 +114,8 @@ public class AccountServices(UserManager<ApplicationUser> userManager, IAuthenti
             IsVerified = user.EmailConfirmed,
         };
 
-        async Task<JwtSecurityToken> GenerateJwtToken(ApplicationUser user)
+        async Task<JwtSecurityToken> GenerateJwtToken()
         {
-            await userManager.UpdateSecurityStampAsync(user);
-
             var symmetricSecurityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.Key));
             var signingCredentials = new SigningCredentials(symmetricSecurityKey, SecurityAlgorithms.HmacSha256);
 
