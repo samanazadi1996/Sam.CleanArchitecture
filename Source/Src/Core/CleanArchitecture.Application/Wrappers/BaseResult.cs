@@ -21,7 +21,10 @@ public class BaseResult
         => new() { Success = false, Errors = errors.ToList() };
 
     public static implicit operator BaseResult(Error error)
-        => Failure(error);
+        => new() { Success = false, Errors = [error] };
+
+    public static implicit operator BaseResult(List<Error> errors)
+        => new() { Success = false, Errors = errors };
 
     public BaseResult AddError(Error error)
     {
@@ -38,6 +41,8 @@ public class BaseResult<TData> : BaseResult
 
     public static BaseResult<TData> Ok(TData data)
         => new() { Success = true, Data = data };
+    public new static BaseResult<TData> Failure()
+        => new() { Success = false };
 
     public new static BaseResult<TData> Failure(Error error)
         => new() { Success = false, Errors = [error] };
@@ -45,9 +50,12 @@ public class BaseResult<TData> : BaseResult
     public new static BaseResult<TData> Failure(IEnumerable<Error> errors)
         => new() { Success = false, Errors = errors.ToList() };
 
-    public static implicit operator BaseResult<TData>(Error error)
-        => Failure(error);
-
     public static implicit operator BaseResult<TData>(TData data)
-        => Ok(data);
+        => new() { Success = true, Data = data };
+
+    public static implicit operator BaseResult<TData>(Error error)
+        => new() { Success = false, Errors = [error] };
+
+    public static implicit operator BaseResult<TData>(List<Error> errors)
+        => new() { Success = false, Errors = errors };
 }

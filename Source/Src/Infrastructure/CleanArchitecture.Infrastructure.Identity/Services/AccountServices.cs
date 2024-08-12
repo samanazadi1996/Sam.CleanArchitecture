@@ -50,18 +50,16 @@ public class AccountServices(UserManager<ApplicationUser> userManager, IAuthenti
         var user = await userManager.FindByNameAsync(request.UserName);
         if (user == null)
         {
-            return BaseResult<AuthenticationResponse>.Failure(new Error(ErrorCode.NotFound, translator.GetString(TranslatorMessages.AccountMessages.Account_NotFound_with_UserName(request.UserName)), nameof(request.UserName)));
+            return new Error(ErrorCode.NotFound, translator.GetString(TranslatorMessages.AccountMessages.Account_NotFound_with_UserName(request.UserName)), nameof(request.UserName));
         }
 
         var signInResult = await signInManager.PasswordSignInAsync(user.UserName, request.Password, false, lockoutOnFailure: false);
         if (!signInResult.Succeeded)
         {
-            return BaseResult<AuthenticationResponse>.Failure(new Error(ErrorCode.FieldDataInvalid, translator.GetString(TranslatorMessages.AccountMessages.Invalid_password()), nameof(request.Password)));
+            return new Error(ErrorCode.FieldDataInvalid, translator.GetString(TranslatorMessages.AccountMessages.Invalid_password()), nameof(request.Password));
         }
 
-        var result = await GetAuthenticationResponse(user);
-
-        return BaseResult<AuthenticationResponse>.Ok(result);
+        return await GetAuthenticationResponse(user);
     }
 
     public async Task<BaseResult<AuthenticationResponse>> AuthenticateByUserName(string username)
@@ -69,12 +67,10 @@ public class AccountServices(UserManager<ApplicationUser> userManager, IAuthenti
         var user = await userManager.FindByNameAsync(username);
         if (user == null)
         {
-            return BaseResult<AuthenticationResponse>.Failure(new Error(ErrorCode.NotFound, translator.GetString(TranslatorMessages.AccountMessages.Account_NotFound_with_UserName(username)), nameof(username)));
+            return new Error(ErrorCode.NotFound, translator.GetString(TranslatorMessages.AccountMessages.Account_NotFound_with_UserName(username)), nameof(username));
         }
 
-        var result = await GetAuthenticationResponse(user);
-
-        return BaseResult<AuthenticationResponse>.Ok(result);
+        return await GetAuthenticationResponse(user);
     }
 
     public async Task<BaseResult<string>> RegisterGhostAccount()
@@ -87,14 +83,14 @@ public class AccountServices(UserManager<ApplicationUser> userManager, IAuthenti
         var identityResult = await userManager.CreateAsync(user);
 
         if (identityResult.Succeeded)
-            return BaseResult<string>.Ok(user.UserName);
+            return user.UserName;
 
         return BaseResult<string>.Failure(identityResult.Errors.Select(p => new Error(ErrorCode.ErrorInIdentity, p.Description)));
 
         string GenerateRandomString(int length)
         {
             const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
-            Random random = new Random();
+            var random = new Random();
             return new string(Enumerable.Repeat(chars, length)
                     .Select(s => s[random.Next(s.Length)]).ToArray());
         }

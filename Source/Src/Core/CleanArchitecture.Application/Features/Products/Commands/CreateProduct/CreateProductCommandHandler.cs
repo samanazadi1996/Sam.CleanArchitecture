@@ -17,6 +17,6 @@ public class CreateProductCommandHandler(IProductRepository productRepository, I
         await productRepository.AddAsync(product);
         await unitOfWork.SaveChangesAsync();
 
-        return BaseResult<long>.Ok(product.Id);
+        return product.Id;
     }
 }

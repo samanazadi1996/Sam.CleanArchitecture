@@ -32,11 +32,11 @@ public class GetUserServices(IdentityContext identityContext) : IGetUserServices
             users = users.Where(p => p.Name.Contains(model.Name));
         }
 
-        var result = new PaginationResponseDto<UserDto>(
+        return new PaginationResponseDto<UserDto>(
             await users.Skip(skip).Take(model.PageSize).ToListAsync(),
             await users.CountAsync(),
-            model.PageNumber, model.PageSize);
+            model.PageNumber,
+            model.PageSize);
 
-        return PagedResponse<UserDto>.Ok(result);
     }
 }

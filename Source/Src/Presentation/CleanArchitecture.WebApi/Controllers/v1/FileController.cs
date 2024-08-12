@@ -22,12 +22,12 @@ public class FileController(IFileManagerService fileManagerService) : BaseApiCon
     [HttpPost]
     public async Task<BaseResult<string>> UploadFile(string name, IFormFile file)
     {
-        using MemoryStream memoryStream = new MemoryStream();
+        using var memoryStream = new MemoryStream();
 
         await file.CopyToAsync(memoryStream);
         await fileManagerService.Create(name, memoryStream.ToArray());
         await fileManagerService.SaveChangesAsync();
 
-        return BaseResult<string>.Ok(name);
+        return name;
     }
 }
