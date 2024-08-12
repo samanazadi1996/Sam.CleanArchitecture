@@ -13,6 +13,6 @@ public class GetPagedListProductQueryHandler(IProductRepository productRepositor
     {
         var result = await productRepository.GetPagedListAsync(request.PageNumber, request.PageSize, request.Name);
 
-        return  PagedResponse<ProductDto>.Ok(result);
+        return PagedResponse<ProductDto>.Ok(result);
     }
 }
