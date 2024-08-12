@@ -22,25 +22,27 @@ public class ErrorHandlerMiddleware(RequestDelegate next)
         {
             var response = context.Response;
             response.ContentType = "application/json";
-            var responseModel = new BaseResult<string>(new Error(ErrorCode.Exception, error?.Message));
+            var responseModel = BaseResult.Fail();
 
             switch (error)
             {
                 case ValidationException e:
                     // validation error
                     response.StatusCode = (int)HttpStatusCode.BadRequest;
-                    responseModel.Errors = e.Errors.Select(p => new Error(ErrorCode.ModelStateNotValid, p.ErrorMessage, p.PropertyName)).ToList();
+                    responseModel.AddErrors(e.Errors.Select(p => new Error(ErrorCode.ModelStateNotValid, p.ErrorMessage, p.PropertyName)).ToList());
                     break;
                 case KeyNotFoundException e:
                     // not found error
                     response.StatusCode = (int)HttpStatusCode.NotFound;
+                    responseModel.AddError(new Error(ErrorCode.NotFound, error.Message));
                     break;
                 default:
                     // unhandled error
                     response.StatusCode = (int)HttpStatusCode.InternalServerError;
+                    responseModel.AddError(new Error(ErrorCode.Exception, error.Message));
                     break;
             }
-            var result = JsonSerializer.Serialize(responseModel, new JsonSerializerOptions()
+            var result = JsonSerializer.Serialize(responseModel, new JsonSerializerOptions
             {
                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase
             });

@@ -37,6 +37,6 @@ public class GetUserServices(IdentityContext identityContext) : IGetUserServices
             await users.CountAsync(),
             model.PageNumber, model.PageSize);
 
-        return new PagedResponse<UserDto>(result);
+        return PagedResponse<UserDto>.Ok(result);
     }
 }

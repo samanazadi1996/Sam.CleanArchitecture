@@ -81,12 +81,12 @@ public static class ServiceRegistration
                     {
                         context.HandleResponse();
                         context.Response.StatusCode = 401;
-                        await context.Response.WriteAsJsonAsync(new BaseResult(new Error(ErrorCode.AccessDenied, "You are not Authorized")));
+                        await context.Response.WriteAsJsonAsync(BaseResult.Fail(new Error(ErrorCode.AccessDenied, "You are not Authorized")));
                     },
                     OnForbidden = async context =>
                     {
                         context.Response.StatusCode = 403;
-                        await context.Response.WriteAsJsonAsync(new BaseResult(new Error(ErrorCode.AccessDenied, "You are not authorized to access this resource")));
+                        await context.Response.WriteAsJsonAsync(BaseResult.Fail(new Error(ErrorCode.AccessDenied, "You are not authorized to access this resource")));
                     },
                     OnTokenValidated = async context =>
                     {

@@ -17,11 +17,11 @@ public class GetProductByIdQueryHandler(IProductRepository productRepository, IT
 
         if (product is null)
         {
-            return new BaseResult<ProductDto>(new Error(ErrorCode.NotFound, translator.GetString(TranslatorMessages.ProductMessages.Product_NotFound_with_id(request.Id)), nameof(request.Id)));
+            return BaseResult<ProductDto>.Fail(new Error(ErrorCode.NotFound, translator.GetString(TranslatorMessages.ProductMessages.Product_NotFound_with_id(request.Id)), nameof(request.Id)));
         }
 
         var result = new ProductDto(product);
 
-        return new BaseResult<ProductDto>(result);
+        return BaseResult<ProductDto>.Ok(result);
     }
 }

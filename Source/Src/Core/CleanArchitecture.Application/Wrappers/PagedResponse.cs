@@ -10,24 +10,22 @@ public class PagedResponse<T> : BaseResult<List<T>>
     public int TotalPages { get; set; }
     public int TotalItems { get; set; }
 
-    public PagedResponse()
+    public static PagedResponse<T> Ok(PaginationResponseDto<T> model)
     {
+        var result = new PagedResponse<T>
+        {
+            PageNumber = model.PageNumber,
+            PageSize = model.PageSize,
+            TotalItems = model.Count,
+            Data = model.Data,
+            Success = true
 
-    }
+        };
 
-    public PagedResponse(Error error) : base(error)
-    {
-    }
+        result.TotalPages = result.TotalItems / result.PageSize;
 
-    public PagedResponse(PaginationResponseDto<T> model)
-    {
-        PageNumber = model.PageNumber;
-        PageSize = model.PageSize;
-        TotalItems = model.Count;
-        TotalPages = TotalItems / PageSize;
-        if (TotalItems % PageSize > 0) TotalPages++;
+        if (result.TotalItems % result.PageSize > 0) result.TotalPages++;
 
-        Data = model.Data;
-        Success = true;
+        return result;
     }
 }

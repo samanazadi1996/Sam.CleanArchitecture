@@ -16,12 +16,12 @@ public class UpdateProductCommandHandler(IProductRepository productRepository, I
 
         if (product is null)
         {
-            return new BaseResult(new Error(ErrorCode.NotFound, translator.GetString(TranslatorMessages.ProductMessages.Product_NotFound_with_id(request.Id)), nameof(request.Id)));
+            return BaseResult.Fail(new Error(ErrorCode.NotFound, translator.GetString(TranslatorMessages.ProductMessages.Product_NotFound_with_id(request.Id)), nameof(request.Id)));
         }
 
         product.Update(request.Name, request.Price, request.BarCode);
         await unitOfWork.SaveChangesAsync();
 
-        return new BaseResult();
+        return BaseResult.Ok();
     }
 }

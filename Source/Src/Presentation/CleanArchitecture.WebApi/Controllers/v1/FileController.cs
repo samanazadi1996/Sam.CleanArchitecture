@@ -28,6 +28,6 @@ public class FileController(IFileManagerService fileManagerService) : BaseApiCon
         await fileManagerService.Create(name, memoryStream.ToArray());
         await fileManagerService.SaveChangesAsync();
 
-        return new(name);
+        return BaseResult<string>.Ok(name);
     }
 }

@@ -26,9 +26,9 @@ public class AccountServices(UserManager<ApplicationUser> userManager, IAuthenti
         var identityResult = await userManager.ResetPasswordAsync(user, token, model.Password);
 
         if (identityResult.Succeeded)
-            return new BaseResult();
+            return BaseResult.Ok();
 
-        return new BaseResult(identityResult.Errors.Select(p => new Error(ErrorCode.ErrorInIdentity, p.Description)));
+        return BaseResult.Fail(identityResult.Errors.Select(p => new Error(ErrorCode.ErrorInIdentity, p.Description)));
     }
 
     public async Task<BaseResult> ChangeUserName(ChangeUserNameRequest model)
@@ -40,9 +40,9 @@ public class AccountServices(UserManager<ApplicationUser> userManager, IAuthenti
         var identityResult = await userManager.UpdateAsync(user);
 
         if (identityResult.Succeeded)
-            return new BaseResult();
+            return BaseResult.Ok();
 
-        return new BaseResult(identityResult.Errors.Select(p => new Error(ErrorCode.ErrorInIdentity, p.Description)));
+        return BaseResult.Fail(identityResult.Errors.Select(p => new Error(ErrorCode.ErrorInIdentity, p.Description)));
     }
 
     public async Task<BaseResult<AuthenticationResponse>> Authenticate(AuthenticationRequest request)
@@ -50,18 +50,18 @@ public class AccountServices(UserManager<ApplicationUser> userManager, IAuthenti
         var user = await userManager.FindByNameAsync(request.UserName);
         if (user == null)
         {
-            return new BaseResult<AuthenticationResponse>(new Error(ErrorCode.NotFound, translator.GetString(TranslatorMessages.AccountMessages.Account_NotFound_with_UserName(request.UserName)), nameof(request.UserName)));
+            return BaseResult<AuthenticationResponse>.Fail(new Error(ErrorCode.NotFound, translator.GetString(TranslatorMessages.AccountMessages.Account_NotFound_with_UserName(request.UserName)), nameof(request.UserName)));
         }
 
         var signInResult = await signInManager.PasswordSignInAsync(user.UserName, request.Password, false, lockoutOnFailure: false);
         if (!signInResult.Succeeded)
         {
-            return new BaseResult<AuthenticationResponse>(new Error(ErrorCode.FieldDataInvalid, translator.GetString(TranslatorMessages.AccountMessages.Invalid_password()), nameof(request.Password)));
+            return BaseResult<AuthenticationResponse>.Fail(new Error(ErrorCode.FieldDataInvalid, translator.GetString(TranslatorMessages.AccountMessages.Invalid_password()), nameof(request.Password)));
         }
 
         var result = await GetAuthenticationResponse(user);
 
-        return new BaseResult<AuthenticationResponse>(result);
+        return BaseResult<AuthenticationResponse>.Ok(result);
     }
 
     public async Task<BaseResult<AuthenticationResponse>> AuthenticateByUserName(string username)
@@ -69,12 +69,12 @@ public class AccountServices(UserManager<ApplicationUser> userManager, IAuthenti
         var user = await userManager.FindByNameAsync(username);
         if (user == null)
         {
-            return new BaseResult<AuthenticationResponse>(new Error(ErrorCode.NotFound, translator.GetString(TranslatorMessages.AccountMessages.Account_NotFound_with_UserName(username)), nameof(username)));
+            return BaseResult<AuthenticationResponse>.Fail(new Error(ErrorCode.NotFound, translator.GetString(TranslatorMessages.AccountMessages.Account_NotFound_with_UserName(username)), nameof(username)));
         }
 
         var result = await GetAuthenticationResponse(user);
 
-        return new BaseResult<AuthenticationResponse>(result);
+        return BaseResult<AuthenticationResponse>.Ok(result);
     }
 
     public async Task<BaseResult<string>> RegisterGhostAccount()
@@ -87,9 +87,9 @@ public class AccountServices(UserManager<ApplicationUser> userManager, IAuthenti
         var identityResult = await userManager.CreateAsync(user);
 
         if (identityResult.Succeeded)
-            return new BaseResult<string>(user.UserName);
+            return BaseResult<string>.Ok(user.UserName);
 
-        return new BaseResult<string>(identityResult.Errors.Select(p => new Error(ErrorCode.ErrorInIdentity, p.Description)));
+        return BaseResult<string>.Fail(identityResult.Errors.Select(p => new Error(ErrorCode.ErrorInIdentity, p.Description)));
 
         string GenerateRandomString(int length)
         {
