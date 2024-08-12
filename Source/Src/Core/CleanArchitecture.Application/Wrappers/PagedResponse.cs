@@ -26,5 +26,4 @@ public class PagedResponse<T> : BaseResult<List<T>>
 
     public static implicit operator PagedResponse<T>(PaginationResponseDto<T> model)
         => Ok(model);
-
 }
