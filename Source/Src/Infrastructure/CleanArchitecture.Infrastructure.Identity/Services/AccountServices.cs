@@ -28,7 +28,7 @@ public class AccountServices(UserManager<ApplicationUser> userManager, IAuthenti
         if (identityResult.Succeeded)
             return BaseResult.Ok();
 
-        return BaseResult.Failure(identityResult.Errors.Select(p => new Error(ErrorCode.ErrorInIdentity, p.Description)));
+        return identityResult.Errors.Select(p => new Error(ErrorCode.ErrorInIdentity, p.Description)).ToList();
     }
 
     public async Task<BaseResult> ChangeUserName(ChangeUserNameRequest model)
@@ -42,7 +42,7 @@ public class AccountServices(UserManager<ApplicationUser> userManager, IAuthenti
         if (identityResult.Succeeded)
             return BaseResult.Ok();
 
-        return BaseResult.Failure(identityResult.Errors.Select(p => new Error(ErrorCode.ErrorInIdentity, p.Description)));
+        return identityResult.Errors.Select(p => new Error(ErrorCode.ErrorInIdentity, p.Description)).ToList();
     }
 
     public async Task<BaseResult<AuthenticationResponse>> Authenticate(AuthenticationRequest request)
@@ -85,7 +85,7 @@ public class AccountServices(UserManager<ApplicationUser> userManager, IAuthenti
         if (identityResult.Succeeded)
             return user.UserName;
 
-        return BaseResult<string>.Failure(identityResult.Errors.Select(p => new Error(ErrorCode.ErrorInIdentity, p.Description)));
+        return identityResult.Errors.Select(p => new Error(ErrorCode.ErrorInIdentity, p.Description)).ToList();
 
         string GenerateRandomString(int length)
         {
