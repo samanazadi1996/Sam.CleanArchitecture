@@ -1,4 +1,5 @@
 using CleanArchitecture.Application.DTOs;
+using System;
 using System.Collections.Generic;
 
 namespace CleanArchitecture.Application.Wrappers;
@@ -14,17 +15,13 @@ public class PagedResponse<T> : BaseResult<List<T>>
     {
         var result = new PagedResponse<T>
         {
+            Success = true,
+            Data = model.Data,
             PageNumber = model.PageNumber,
             PageSize = model.PageSize,
             TotalItems = model.Count,
-            Data = model.Data,
-            Success = true
-
+            TotalPages = (int)Math.Ceiling(model.Count / (double)model.PageSize)
         };
-
-        result.TotalPages = result.TotalItems / result.PageSize;
-
-        if (result.TotalItems % result.PageSize > 0) result.TotalPages++;
 
         return result;
     }
