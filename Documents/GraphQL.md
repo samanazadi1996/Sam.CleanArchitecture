@@ -15,6 +15,7 @@ First, create a library class named `CleanArchitecture.Infrastructure.GraphQL` w
 Next, add the following NuGet packages to your [CleanArchitecture.Infrastructure.GraphQL](https://github.com/samanazadi1996/Sam.CleanArchitecture/blob/GraphQL/Source/Src/Infrastructure/CleanArchitecture.Infrastructure.GraphQL/CleanArchitecture.Infrastructure.GraphQL.csproj) library:
 
 ``` xml
+<PackageReference Include="AppAny.HotChocolate.FluentValidation" Version="0.11.1" />
 <PackageReference Include="HotChocolate.AspNetCore" Version="13.9.11" />
 <PackageReference Include="HotChocolate.AspNetCore.Authorization" Version="13.9.11" />
 <PackageReference Include="HotChocolate.Data.EntityFramework" Version="13.9.11" />
@@ -40,10 +41,12 @@ public static class ServiceRegistration
     public static IServiceCollection AddGraphQlInfrastructure(this IServiceCollection services)
     {
         services.AddGraphQLServer() // Initialize the GraphQL server with HotChocolate
-            .AddTypes(typeof(Query)) // Register the GraphQL query types
+            .AddFluentValidation() // Add FluentValidation for validation
+            .AddTypes(typeof(Query), typeof(Mutation)) // Register GraphQL query and mutation types
             .RegisterDbContext<ApplicationDbContext>() // Register the application database context
             .RegisterDbContext<IdentityContext>() // Register the identity database context
             .RegisterService<IAuthenticatedUserService>() // Register the authenticated user service for dependency injection
+            .RegisterService<IMediator>() // Register the IMediator service for handling requests and responses
             .AddProjections() // Add support for query projections
             .AddFiltering() // Enable filtering capabilities for queries
             .AddSorting() // Enable sorting capabilities for queries
@@ -102,8 +105,37 @@ This `Query` class defines the GraphQL queries for your application, including:
 - **GetOwnProduct**: Retrieves products created by the authenticated user, with the same features and authorization.
 - **GetUsers**: Retrieves all users from the identity context, with authorization required.
 
+### Step 5: Add the Mutation Class
+After defining the queries, add the following [Mutation.cs](https://github.com/samanazadi1996/Sam.CleanArchitecture/blob/GraphQL/Source/Src/Infrastructure/CleanArchitecture.Infrastructure.GraphQL/Mutation.cs) class to handle GraphQL mutations:
+```c#
+using AppAny.HotChocolate.FluentValidation;
+using CleanArchitecture.Application.Features.Products.Commands.CreateProduct;
+using CleanArchitecture.Application.Features.Products.Commands.DeleteProduct;
+using CleanArchitecture.Application.Features.Products.Commands.UpdateProduct;
+using CleanArchitecture.Application.Wrappers;
+using HotChocolate.Authorization;
+using MediatR;
 
-### Step 5: Modify `Program.cs`
+namespace CleanArchitecture.Infrastructure.GraphQL;
+
+public class Mutation
+{
+    [Authorize]
+    public async Task<BaseResult<long>> CreateProduct([UseFluentValidation] CreateProductCommand model, IMediator mediator)
+        => await mediator.Send(model); // Create a new product using the provided command and mediator
+
+    [Authorize]
+    public async Task<BaseResult> UpdateProduct([UseFluentValidation] UpdateProductCommand model, IMediator mediator)
+        => await mediator.Send(model); // Update an existing product using the provided command and mediator
+
+    [Authorize]
+    public async Task<BaseResult> DeleteProduct([UseFluentValidation] DeleteProductCommand model, IMediator mediator)
+        => await mediator.Send(model); // Delete an existing product using the provided command and mediator
+}
+```
+This Mutation class defines the GraphQL mutations for creating, updating, and deleting products, all of which require authorization and use FluentValidation for validating the input models.
+
+### Step 6: Modify `Program.cs`
 Next, update the [Program.cs](https://github.com/samanazadi1996/Sam.CleanArchitecture/blob/GraphQL/Source/Src/Presentation/CleanArchitecture.WebApi/Program.cs) file to include the GraphQL infrastructure and configure the endpoints:
 
 1. **Register GraphQL Services**: 
