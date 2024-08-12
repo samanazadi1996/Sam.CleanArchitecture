@@ -16,8 +16,7 @@ namespace CleanArchitecture.Application.Features.FeatureName.Queries.UseCaseName
             List<object> data = [];
             int totalCount = 100;
 
-            var result = new PaginationResponseDto<object>(data, totalCount, request.PageNumber, request.PageSize);
-            return new PagedResponse<object>(result);
+            return new PaginationResponseDto<object>(data, totalCount, request.PageNumber, request.PageSize);
         }
     }
 }

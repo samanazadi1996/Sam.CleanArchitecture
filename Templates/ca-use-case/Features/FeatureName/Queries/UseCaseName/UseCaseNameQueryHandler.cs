@@ -11,7 +11,7 @@ namespace CleanArchitecture.Application.Features.FeatureName.Queries.UseCaseName
         {
             // Handler
 
-            return new BaseResult<object>(request.MyProperty);
+            return request.MyProperty;
         }
     }
 }
