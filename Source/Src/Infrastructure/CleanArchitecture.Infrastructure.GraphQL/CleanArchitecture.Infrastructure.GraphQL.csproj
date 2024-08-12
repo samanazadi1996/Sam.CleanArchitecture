@@ -7,10 +7,7 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<None Remove="SERVICEREGISTRATION.CS~RF284944A7.TMP.tmp" />
-	</ItemGroup>
-
-	<ItemGroup>
+		<PackageReference Include="AppAny.HotChocolate.FluentValidation" Version="0.11.1" />
 		<PackageReference Include="HotChocolate.AspNetCore" Version="13.9.11" />
 		<PackageReference Include="HotChocolate.AspNetCore.Authorization" Version="13.9.11" />
 		<PackageReference Include="HotChocolate.Data.EntityFramework" Version="13.9.11" />
