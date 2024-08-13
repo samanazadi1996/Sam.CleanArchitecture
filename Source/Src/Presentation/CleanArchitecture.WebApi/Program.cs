@@ -2,6 +2,7 @@ using CleanArchitecture.Application;
 using CleanArchitecture.Application.Interfaces;
 using CleanArchitecture.Infrastructure.FileManager;
 using CleanArchitecture.Infrastructure.FileManager.Contexts;
+using CleanArchitecture.Infrastructure.GRPC;
 using CleanArchitecture.Infrastructure.Identity;
 using CleanArchitecture.Infrastructure.Identity.Contexts;
 using CleanArchitecture.Infrastructure.Identity.Models;
@@ -38,6 +39,7 @@ builder.Services.AddSwaggerWithVersioning();
 builder.Services.AddAnyCors();
 builder.Services.AddCustomLocalization(builder.Configuration);
 builder.Services.AddHealthChecks();
+builder.Services.AddGrpcInfrastructure();
 builder.Host.UseSerilog((context, configuration) => configuration.ReadFrom.Configuration(context.Configuration));
 
 var app = builder.Build();
@@ -67,8 +69,13 @@ app.UseAuthorization();
 app.UseSwaggerWithVersioning();
 app.UseMiddleware<ErrorHandlerMiddleware>();
 app.UseHealthChecks("/health");
-app.MapControllers();
 app.UseSerilogRequestLogging();
+
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapGrpcServices();
+    endpoints.MapControllers();
+});
 
 app.Run();
 

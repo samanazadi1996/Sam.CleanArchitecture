@@ -1,0 +1,49 @@
+syntax = "proto3";
+
+option csharp_namespace = "CleanArchitecture.Infrastructure.GRPC.Protos";
+
+package product;
+
+service ProductService {
+  rpc GetProductById (GetProductByIdRequest) returns (GetProductByIdResponse);
+  rpc GetPagedListProduct (GetPagedListProductRequest) returns (GetPagedListProductResponse);
+}
+
+message GetProductByIdRequest {
+  int64 id = 1;
+}
+
+message GetProductByIdResponse {
+  bool success = 1;
+  repeated Error errors = 2;
+  ProductModel data = 3;
+}
+
+message Error {
+  string errorCode = 1;
+  string description = 2;
+  string fieldName = 3;
+}
+
+message ProductModel {
+  string name = 1;
+  double price = 2;
+  string barCode = 3;
+  string createdDateTime = 4;
+}
+
+message GetPagedListProductRequest {
+  string name = 1;
+  int32 pageNumber = 2;
+  int32 pageSize = 3;
+}
+
+message GetPagedListProductResponse {
+  bool success = 1;
+  repeated Error errors = 2;
+  repeated ProductModel data = 3;
+  int32 pageNumber = 4;
+  int32 pageSize = 5;
+  int32 totalPages = 6;
+  int32 totalItems = 7;
+}
