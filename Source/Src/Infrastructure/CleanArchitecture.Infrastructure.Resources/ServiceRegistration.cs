@@ -6,8 +6,10 @@ namespace CleanArchitecture.Infrastructure.Resources;
 
 public static class ServiceRegistration
 {
-    public static void AddResourcesInfrastructure(this IServiceCollection services)
+    public static IServiceCollection AddResourcesInfrastructure(this IServiceCollection services)
     {
         services.AddSingleton<ITranslator, Translator>();
+
+        return services;
     }
 }
