@@ -1,35 +1,17 @@
 syntax = "proto3";
 
+import "Protos/common.proto";
+
 option csharp_namespace = "GrpcClient.Protos";
 
 package product;
 
 service ProductService {
-  rpc GetProductById (GetProductByIdRequest) returns (GetProductByIdResponse);
+  rpc GetProductById (common.GrpcBaseRequestWithIdParameter) returns (GetProductByIdResponse);
   rpc GetPagedListProduct (GetPagedListProductRequest) returns (GetPagedListProductResponse);
-}
-
-message GetProductByIdRequest {
-  int64 id = 1;
-}
-
-message GetProductByIdResponse {
-  bool success = 1;
-  repeated Error errors = 2;
-  ProductModel data = 3;
-}
-
-message Error {
-  string errorCode = 1;
-  string description = 2;
-  string fieldName = 3;
-}
-
-message ProductModel {
-  string name = 1;
-  double price = 2;
-  string barCode = 3;
-  string createdDateTime = 4;
+  rpc CreateProduct (CreateProductRequest) returns (common.GrpcBaseResultWithIntData);
+  rpc UpdateProduct (UpdateProductRequest) returns (common.GrpcBaseResult);
+  rpc DeleteProduct (common.GrpcBaseRequestWithIdParameter) returns (common.GrpcBaseResult);
 }
 
 message GetPagedListProductRequest {
@@ -38,12 +20,38 @@ message GetPagedListProductRequest {
   int32 pageSize = 3;
 }
 
+message CreateProductRequest {
+  string name = 1;
+  double price = 2;
+  string barCode = 3;
+}
+
+message UpdateProductRequest {
+  int64 id = 1;
+  string name = 2;
+  double price = 3;
+  string barCode = 4;
+}
+
+message GetProductByIdResponse {
+  bool success = 1;
+  repeated common.GrpcError errors = 2;
+  ProductModel data = 3;
+}
+
 message GetPagedListProductResponse {
   bool success = 1;
-  repeated Error errors = 2;
+  repeated common.GrpcError errors = 2;
   repeated ProductModel data = 3;
   int32 pageNumber = 4;
   int32 pageSize = 5;
   int32 totalPages = 6;
   int32 totalItems = 7;
+}
+
+message ProductModel {
+  string name = 1;
+  double price = 2;
+  string barCode = 3;
+  string createdDateTime = 4;
 }

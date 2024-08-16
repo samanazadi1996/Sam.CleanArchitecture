@@ -1,15 +1,19 @@
-﻿using CleanArchitecture.Application.Features.Products.Queries.GetPagedListProduct;
+﻿using CleanArchitecture.Application.Features.Products.Commands.CreateProduct;
+using CleanArchitecture.Application.Features.Products.Commands.DeleteProduct;
+using CleanArchitecture.Application.Features.Products.Commands.UpdateProduct;
+using CleanArchitecture.Application.Features.Products.Queries.GetPagedListProduct;
 using CleanArchitecture.Application.Features.Products.Queries.GetProductById;
 using CleanArchitecture.Infrastructure.GRPC.Common;
 using CleanArchitecture.Infrastructure.GRPC.Protos;
 using Grpc.Core;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CleanArchitecture.Infrastructure.GRPC.Services;
 
 public class ProductServiceImpl(IMediator mediator) : ProductService.ProductServiceBase
 {
-    public override async Task<GetProductByIdResponse> GetProductById(GetProductByIdRequest request, ServerCallContext context)
+    public override async Task<GetProductByIdResponse> GetProductById(GrpcBaseRequestWithIdParameter request, ServerCallContext context)
     {
         var result = await mediator.Send(new GetProductByIdQuery
         {
@@ -69,5 +73,43 @@ public class ProductServiceImpl(IMediator mediator) : ProductService.ProductServ
         }
 
         return response;
+    }
+
+    [Authorize]
+    public override async Task<GrpcBaseResultWithIntData> CreateProduct(CreateProductRequest request, ServerCallContext context)
+    {
+        var result = await mediator.Send(new CreateProductCommand()
+        {
+            Name = request.Name,
+            Price = request.Price,
+            BarCode =request.BarCode
+        });
+
+        return result.ToGrpcBaseResultWithIntData();
+    }
+
+    [Authorize]
+    public override async Task<GrpcBaseResult> UpdateProduct(UpdateProductRequest request, ServerCallContext context)
+    {
+        var result = await mediator.Send(new UpdateProductCommand()
+        {
+            Id = request.Id,
+            Name = request.Name,
+            Price = request.Price,
+            BarCode = request.BarCode
+        });
+
+        return result.ToGrpcBaseResult();
+    }
+    
+    [Authorize]
+    public override async Task<GrpcBaseResult> DeleteProduct(GrpcBaseRequestWithIdParameter request, ServerCallContext context)
+    {
+        var result = await mediator.Send(new DeleteProductCommand()
+        {
+            Id = request.Id,
+        });
+
+        return result.ToGrpcBaseResult();
     }
 }

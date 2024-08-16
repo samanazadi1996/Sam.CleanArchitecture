@@ -1,4 +1,5 @@
-﻿using Grpc.Net.Client;
+﻿using Grpc.Core;
+using Grpc.Net.Client;
 using GrpcClient.Protos;
 using System.Text.Json;
 
@@ -15,6 +16,16 @@ var client = new ProductService.ProductServiceClient(channel);
 // Create the request with pagination parameters
 var request = new GetPagedListProductRequest { PageNumber = 1, PageSize = 10 };
 
+// Prompt user to input Bearer token
+Console.Write("Enter Bearer token: ");
+var bearerToken = Console.ReadLine(); // Read the Bearer token from the console
+
+// Create metadata with the Bearer token
+var headers = string.IsNullOrEmpty(bearerToken) ? null : new Metadata
+{
+    { "Authorization", $"Bearer {bearerToken}" }
+};
+
 // Infinite loop to repeatedly make requests
 while (true)
 {
@@ -26,8 +37,8 @@ while (true)
         // Record the start time
         var start = DateTime.Now;
 
-        // Make the gRPC call asynchronously
-        var response = await client.GetPagedListProductAsync(request);
+        // Make the gRPC call asynchronously with the metadata
+        var response = await client.GetPagedListProductAsync(request, headers);
 
         // Log the request time, response time, and the response data
         var end = DateTime.Now;
@@ -38,7 +49,7 @@ while (true)
         Console.WriteLine($"Elapsed Time: {elapsed.TotalMilliseconds} ms");
         Console.WriteLine("Response:");
         Console.WriteLine(JsonSerializer.Serialize(response));
-        Console.WriteLine(new string('-', 50)); // 40 dashes to create a clear separation line
+        Console.WriteLine(new string('-', 50)); // 50 dashes to create a clear separation line
     }
     catch (Exception ex)
     {

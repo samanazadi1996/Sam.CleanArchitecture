@@ -1,0 +1,26 @@
+syntax = "proto3";
+
+option csharp_namespace = "GrpcClient.Protos";
+
+package common;
+
+message GrpcError {
+  string errorCode = 1;
+  string description = 2;
+  string fieldName = 3;
+}
+
+message GrpcBaseResult {
+  bool success = 1;
+  repeated GrpcError errors = 2;
+}
+
+message GrpcBaseResultWithIntData {
+  bool success = 1;
+  repeated GrpcError errors = 2;
+  int64 Data = 3;
+}
+
+message GrpcBaseRequestWithIdParameter {
+  int64 id = 1;
+}
