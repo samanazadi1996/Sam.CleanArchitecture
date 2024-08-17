@@ -93,6 +93,17 @@ You can find an article on this topic at this [link](./GraphQL.md), and the samp
 <details>
   <summary>
     <strong>
+How can I best integrate gRPC into my project?
+    </strong>
+  </summary>
+
+You can find an article on this topic at this [link](./GRPC.md), and the sample project for the article is available in [this branch](https://github.com/samanazadi1996/Sam.CleanArchitecture/tree/GRPC).
+</details>
+<br>
+
+<details>
+  <summary>
+    <strong>
 How is exception handling implemented?
     </strong>
   </summary>
