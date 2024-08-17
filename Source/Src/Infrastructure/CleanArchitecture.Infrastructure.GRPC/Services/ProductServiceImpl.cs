@@ -23,19 +23,16 @@ public class ProductServiceImpl(IMediator mediator) : ProductService.ProductServ
         var response = new GetProductByIdResponse
         {
             Success = result.Success,
-            Errors = { result.Errors.ToProtobufErrors() }
-        };
-
-        if (result is { Success: true, Data: not null })
-        {
-            response.Data = new ProductModel
+            Errors = { result.Errors.ToProtobufErrors() },
+            Data = result.Data is null ? null : new ProductModel
             {
+                Id = result.Data.Id,
                 Name = result.Data.Name,
                 Price = result.Data.Price,
                 BarCode = result.Data.BarCode,
                 CreatedDateTime = result.Data.CreatedDateTime.ToLongDateString()
-            };
-        }
+            }
+        };
 
         return response;
     }
@@ -57,20 +54,18 @@ public class ProductServiceImpl(IMediator mediator) : ProductService.ProductServ
             PageNumber = result.PageNumber,
             TotalItems = result.TotalItems,
             TotalPages = result.TotalPages,
-        };
-
-        if (result is { Success: true, Data: not null })
-        {
-            var data = result.Data?.Select(p => new ProductModel()
+            Data =
             {
-                Name = p.Name,
-                Price = p.Price,
-                BarCode = p.BarCode,
-                CreatedDateTime = p.CreatedDateTime.ToLongDateString()
-            }).ToList() ?? [];
-
-            response.Data.AddRange(data);
-        }
+                result.Data?.Select(p => new ProductModel()
+                {
+                    Id = p.Id,
+                    Name = p.Name,
+                    Price = p.Price,
+                    BarCode = p.BarCode,
+                    CreatedDateTime = p.CreatedDateTime.ToLongDateString()
+                }) ?? []
+            }
+        };
 
         return response;
     }
@@ -82,7 +77,7 @@ public class ProductServiceImpl(IMediator mediator) : ProductService.ProductServ
         {
             Name = request.Name,
             Price = request.Price,
-            BarCode =request.BarCode
+            BarCode = request.BarCode
         });
 
         return result.ToGrpcBaseResultWithIntData();
@@ -101,7 +96,7 @@ public class ProductServiceImpl(IMediator mediator) : ProductService.ProductServ
 
         return result.ToGrpcBaseResult();
     }
-    
+
     [Authorize]
     public override async Task<GrpcBaseResult> DeleteProduct(GrpcBaseRequestWithIdParameter request, ServerCallContext context)
     {

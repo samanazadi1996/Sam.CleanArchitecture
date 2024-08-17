@@ -5,14 +5,14 @@ namespace CleanArchitecture.Infrastructure.GRPC.Common;
 
 public static class MapperExtensions
 {
-    public static List<GrpcError> ToProtobufErrors(this List<CleanArchitecture.Application.Wrappers.Error> errors)
+    public static IEnumerable<GrpcError> ToProtobufErrors(this List<Error>? errors)
     {
         return errors?.Select(e => new GrpcError
         {
             Description = e.Description,
             ErrorCode = e.ErrorCode.ToString(),
             FieldName = e.FieldName
-        }).ToList() ?? [];
+        }) ?? [];
     }
     public static GrpcBaseResultWithIntData ToGrpcBaseResultWithIntData(this BaseResult<long> result)
     {
