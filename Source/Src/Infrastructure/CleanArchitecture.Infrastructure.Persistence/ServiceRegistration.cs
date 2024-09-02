@@ -32,18 +32,18 @@ public static class ServiceRegistration
     }
     private static void RegisterRepositories(this IServiceCollection services)
     {
-        services.AddTransient(typeof(IGenericRepository<>), typeof(GenericRepository<>));
-
         var interfaceType = typeof(IGenericRepository<>);
-        var interfaces = Assembly.GetAssembly(interfaceType).GetTypes()
+        var interfaces = Assembly.GetAssembly(interfaceType)!.GetTypes()
             .Where(p => p.GetInterface(interfaceType.Name) != null);
 
-        var implementations = Assembly.GetAssembly(typeof(GenericRepository<>)).GetTypes();
+        var implementations = Assembly.GetAssembly(typeof(GenericRepository<>))!.GetTypes();
 
         foreach (var item in interfaces)
         {
             var implementation = implementations.FirstOrDefault(p => p.GetInterface(item.Name) != null);
-            services.AddTransient(item, implementation);
+          
+            if (implementation is not null)
+                services.AddTransient(item, implementation);
         }
     }
 }

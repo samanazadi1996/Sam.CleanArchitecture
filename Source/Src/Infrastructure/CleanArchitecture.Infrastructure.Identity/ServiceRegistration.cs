@@ -90,11 +90,11 @@ public static class ServiceRegistration
                     },
                     OnTokenValidated = async context =>
                     {
-                        var claimsIdentity = context.Principal.Identity as ClaimsIdentity;
-                        if (claimsIdentity.Claims?.Any() is not true)
+                        var claimsIdentity = context.Principal?.Identity as ClaimsIdentity;
+                        if (claimsIdentity?.Claims.Any() is not true)
                             context.Fail("This token has no claims.");
 
-                        var securityStamp = claimsIdentity.FindFirst("AspNet.Identity.SecurityStamp");
+                        var securityStamp = claimsIdentity?.FindFirst("AspNet.Identity.SecurityStamp");
                         if (securityStamp is null)
                             context.Fail("This token has no security stamp");
 
