@@ -20,7 +20,7 @@ public class GetProductByIdQueryHandlerTests
         var productBarCode = "123456789";
 
         var productRepositoryMock = new Mock<IProductRepository>();
-        productRepositoryMock.Setup(repo => repo.GetByIdAsync(productId))
+        productRepositoryMock.Setup(repo => repo.GetByIdAsync(It.IsAny<long>()))
                              .ReturnsAsync(new Product(productName, productPrice, productBarCode) { Id = productId });
 
         var translatorMock = new Mock<ITranslator>();

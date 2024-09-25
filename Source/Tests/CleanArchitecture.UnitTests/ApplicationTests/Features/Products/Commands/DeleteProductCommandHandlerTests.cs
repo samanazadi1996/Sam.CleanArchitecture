@@ -16,7 +16,7 @@ public class DeleteProductCommandHandlerTests
         // Arrange
         var productId = 1;
         var productRepositoryMock = new Mock<IProductRepository>();
-        productRepositoryMock.Setup(repo => repo.GetByIdAsync(productId))
+        productRepositoryMock.Setup(repo => repo.GetByIdAsync(It.IsAny<long>()))
                              .ReturnsAsync(new Product("", 100, "") { Id = productId });
 
         var unitOfWorkMock = new Mock<IUnitOfWork>();
