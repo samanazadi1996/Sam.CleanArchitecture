@@ -1,7 +1,7 @@
 # ASP Dotnet Core Clean Architecture
 
 [![NuGet](https://img.shields.io/nuget/vpre/Sam.CleanArchitecture.Template.svg)](https://www.nuget.org/packages/Sam.CleanArchitecture.Template)
-[![Marketplace](https://img.shields.io/visual-studio-marketplace/v/SamanAzadi1996.ASPDotnetCoreCleanArchitecture?label=marketplace&color=magenta)](https://marketplace.visualstudio.com/items?itemName=SamanAzadi1996.ASPDotnetCoreCleanArchitecture)
+[![Marketplace](https://vsmarketplacebadges.dev/version/SamanAzadi1996.ASPDotnetCoreCleanArchitecture.svg?&colorB=magenta)](https://marketplace.visualstudio.com/items?itemName=SamanAzadi1996.ASPDotnetCoreCleanArchitecture)
 
 [![](https://github.com/samanazadi1996/Sam.CleanArchitecture/workflows/.NET/badge.svg)](https://github.com/samanazadi1996/Sam.CleanArchitecture/actions)
 [![](https://github.com/samanazadi1996/Sam.CleanArchitecture/workflows/.NET%20Core%20Desktop/badge.svg)](https://github.com/samanazadi1996/Sam.CleanArchitecture/actions)
