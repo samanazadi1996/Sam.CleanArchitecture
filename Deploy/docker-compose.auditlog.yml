@@ -1,0 +1,33 @@
+version: '3.8' # Docker Compose version
+
+services:
+  mongodb:
+    image: mongo:6.0 # Use the MongoDB version you need
+    container_name: mongodb_container
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: password
+    ports:
+      - "27017:27017" # Expose MongoDB port
+    volumes:
+      - mongo_data:/data/db # Persist data using a named volume
+
+  eventstore:
+    image: eventstore/eventstore:latest
+    container_name: eventstore_container
+    command: --insecure --run-projections=All
+    ports:
+      - "2113:2113"  # HTTP
+      - "1113:1113"  # TCP
+    volumes:
+      - ./esdb-data:/var/lib/eventstore  # Persist data to a folder
+    networks:
+      - esdb-network
+
+networks:
+  esdb-network:
+    driver: bridge
+
+volumes:
+  mongo_data:
+    driver: local

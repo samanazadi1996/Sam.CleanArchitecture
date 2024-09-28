@@ -68,7 +68,7 @@ public class MongoAuditLogService : IAuditLogService
     {
         await AuditLogs.InsertManyAsync(_events);
 
-        _events = [];
+        _events.Clear();
     }
 
 }

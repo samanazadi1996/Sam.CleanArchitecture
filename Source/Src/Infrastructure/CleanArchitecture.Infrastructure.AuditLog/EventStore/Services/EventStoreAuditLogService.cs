@@ -63,5 +63,7 @@ public class EventStoreAuditLogService : IAuditLogService
                     JsonSerializer.SerializeToUtf8Bytes(item)));
 
         await _client.AppendToStreamAsync(_streamName, StreamState.Any, eventData);
+
+        _events.Clear();
     }
 }
