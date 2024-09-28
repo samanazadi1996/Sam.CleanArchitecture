@@ -6,6 +6,8 @@
 		<Nullable>enable</Nullable>
 	</PropertyGroup>
 	<ItemGroup>
+		<PackageReference Include="EventStore.Client.Grpc" Version="23.3.5" />
+		<PackageReference Include="EventStore.Client.Grpc.Streams" Version="23.3.5" />
 		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0" />
 		<PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="8.0.0" />
 		<PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0.1" />
@@ -14,8 +16,5 @@
 	</ItemGroup>
 	<ItemGroup>
 		<ProjectReference Include="..\..\Core\CleanArchitecture.Application\CleanArchitecture.Application.csproj" />
-	</ItemGroup>
-	<ItemGroup>
-	  <Folder Include="EventStore\" />
 	</ItemGroup>
 </Project>

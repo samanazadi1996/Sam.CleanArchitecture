@@ -1,4 +1,5 @@
 ﻿using CleanArchitecture.Application.Interfaces;
+using CleanArchitecture.Infrastructure.AuditLog.EventStore.Services;
 using CleanArchitecture.Infrastructure.AuditLog.Mongo.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -19,11 +20,11 @@ public static class ServiceRegistration
     }
     public static IServiceCollection AddMongoAuditLogInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
-        var connectionString = configuration.GetConnectionString("MongoAuditLogConnection")!.Split(";");
+        var config = configuration.GetConnectionString("MongoAuditLogConnection")!.Split(";");
 
-        var connection = connectionString[0].Trim();
-        var databaseName = connectionString[1].Trim();
-        var collectionName = connectionString[2].Trim();
+        var connection = config[0].Trim();
+        var databaseName = config[1].Trim();
+        var collectionName = config[2].Trim();
 
         services.AddSingleton<IAuditLogService>(new MongoAuditLogService(connection, databaseName, collectionName));
 
@@ -31,9 +32,12 @@ public static class ServiceRegistration
     }
     public static IServiceCollection AddEventStoreAuditLogInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
-        var connectionString = configuration.GetConnectionString("EventStoreAuditLogConnection");
+        var config = configuration.GetConnectionString("EventStoreAuditLogConnection")!.Split(";");
 
-        //Todo
+        var connectionString = config[0].Trim();
+        var streamName = config[1].Trim();
+
+        services.AddSingleton<IAuditLogService>(new EventStoreAuditLogService(connectionString, streamName));
 
         return services;
     }
