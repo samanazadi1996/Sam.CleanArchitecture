@@ -1,5 +1,6 @@
 using CleanArchitecture.Application;
 using CleanArchitecture.Application.Interfaces;
+using CleanArchitecture.Infrastructure.AuditLog;
 using CleanArchitecture.Infrastructure.FileManager;
 using CleanArchitecture.Infrastructure.FileManager.Contexts;
 using CleanArchitecture.Infrastructure.Identity;
@@ -21,7 +22,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Serilog;
 
-
 var builder = WebApplication.CreateBuilder(args);
 
 bool useInMemoryDatabase = builder.Configuration.GetValue<bool>("UseInMemoryDatabase");
@@ -30,6 +30,7 @@ builder.Services.AddApplicationLayer();
 builder.Services.AddPersistenceInfrastructure(builder.Configuration, useInMemoryDatabase);
 builder.Services.AddFileManagerInfrastructure(builder.Configuration, useInMemoryDatabase);
 builder.Services.AddIdentityInfrastructure(builder.Configuration, useInMemoryDatabase);
+builder.Services.AddAuditLogInfrastructure(builder.Configuration, AuditLogType.Mongo);
 builder.Services.AddResourcesInfrastructure();
 builder.Services.AddScoped<IAuthenticatedUserService, AuthenticatedUserService>();
 builder.Services.AddControllers();

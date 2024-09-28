@@ -3,18 +3,14 @@ using CleanArchitecture.Domain.Common;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace CleanArchitecture.Infrastructure.Persistence.Extensions;
 
 public static class EntityFrameworkExtensions
 {
-    /// <summary>
-    /// Applies auditing information to entities that implement AuditableBaseEntity.
-    /// </summary>
-    /// <param name="changeTracker">The ChangeTracker instance to track entity changes.</param>
-    /// <param name="authenticatedUser">The authenticated user service to get user information.</param>
-    public static void ApplyAuditing(this ChangeTracker changeTracker, IAuthenticatedUserService authenticatedUser)
+    public static void ApplyAuditing(this ChangeTracker changeTracker, IAuthenticatedUserService authenticatedUser, IAuditLogService auditLog)
     {
         var userId = string.IsNullOrEmpty(authenticatedUser.UserId)
             ? Guid.Empty
@@ -25,32 +21,59 @@ public static class EntityFrameworkExtensions
         foreach (var entry in changeTracker.Entries())
         {
             var entityType = entry.Entity.GetType();
-
-            if (typeof(AuditableBaseEntity).IsAssignableFrom(entityType) ||
-                (entityType.BaseType?.IsGenericType ?? false) &&
-                entityType.BaseType.GetGenericTypeDefinition() == typeof(AuditableBaseEntity<>))
+            if (entry.State == EntityState.Added)
             {
-                dynamic auditableEntity = entry.Entity;
-
-                if (entry.State == EntityState.Added)
+                if (typeof(BaseEntity).IsAssignableFrom(entityType) ||
+                    (entityType.BaseType?.IsGenericType ?? false) &&
+                    entityType.BaseType.GetGenericTypeDefinition() == typeof(BaseEntity<>))
                 {
+                    dynamic auditableEntity = entry.Entity;
+
+
                     auditableEntity.Created = currentTime;
                     auditableEntity.CreatedBy = userId;
                 }
-                else if (entry.State == EntityState.Modified)
+            }
+            else if (entry.State == EntityState.Modified)
+            {
+
+                if (TryGetModifiedPropertiesWithOldValues(entry, out var oldValue, out var newVale))
                 {
-                    auditableEntity.LastModified = currentTime;
-                    auditableEntity.LastModifiedBy = userId;
+                    var primaryKey = entry.Properties.FirstOrDefault(p => p.Metadata.IsPrimaryKey());
+                    var id = primaryKey?.CurrentValue?.ToString() ?? "Unknown ID";
+                    auditLog.Append(id, entityType, oldValue, newVale, authenticatedUser.UserId);
                 }
             }
         }
+
+        auditLog.SaveLogsAsync();
     }
 
-    /// <summary>
-    /// Configures decimal properties for the given DbContext to have a specific precision and scale.
-    /// </summary>
-    /// <param name="context">The DbContext to apply configurations to.</param>
-    /// <param name="builder">The ModelBuilder to configure entity properties.</param>
+    private static bool TryGetModifiedPropertiesWithOldValues(EntityEntry entry, out Dictionary<string, object> oldValue, out Dictionary<string, object> newValue)
+    {
+        var hasChange = false;
+        var originalValues = entry.OriginalValues;
+        var currentValues = entry.CurrentValues;
+
+        oldValue = [];
+        newValue = [];
+
+        foreach (var property in originalValues.Properties)
+        {
+            var originalValue = originalValues[property];
+            var currentValue = currentValues[property];
+
+            if (!Equals(originalValue, currentValue))  // Only capture changed properties
+            {
+                oldValue.Add(property.Name, originalValue);  // Store the original value for changed properties
+                newValue.Add(property.Name, currentValue);  // Store the original value for changed properties
+                hasChange = true;
+            }
+        }
+
+        return hasChange;
+    }
+
     public static void ConfigureDecimalProperties(this DbContext context, ModelBuilder builder)
     {
         foreach (var property in builder.Model.GetEntityTypes()

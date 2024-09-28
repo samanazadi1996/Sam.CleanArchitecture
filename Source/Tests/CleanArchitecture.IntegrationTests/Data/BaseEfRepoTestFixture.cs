@@ -13,8 +13,7 @@ public abstract class BaseEfRepoTestFixture
     {
         var options = CreateNewContextOptions();
         IAuthenticatedUserService authenticatedUserService = new AuthenticatedUserService(Guid.NewGuid().ToString(), "UserName");
-
-        dbContext = new ApplicationDbContext(options, authenticatedUserService);
+        dbContext = new ApplicationDbContext(options, authenticatedUserService,null);
     }
 
     protected static DbContextOptions<ApplicationDbContext> CreateNewContextOptions()
