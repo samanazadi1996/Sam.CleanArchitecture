@@ -170,6 +170,19 @@ For more detailed instructions, you can refer to [this](./UserAuditing.md) docum
 </details>
 <br>
 
+<details>
+  <summary>
+    <strong>
+How is Audit Log integrated into the project?
+    </strong>
+  </summary>
+
+The Audit Log feature allows you to track and store changes made to your application's critical entities. In this project, you can choose between two storage options for audit logs: MongoDB or EventStore, providing flexibility based on your system's requirements.
+
+For a comprehensive guide on configuring and using the audit logging feature, refer to the [Audit Log documentation](./AuditLog.md).
+</details>
+<br>
+
 
 <details>
   <summary>
