@@ -1,52 +1,152 @@
-# [ASP Dotnet Core Clean Architecture](../README.md) - Functional Tests
+# [ASP Dotnet Core Clean Architecture](../README.md) - Audit Log
 
-## Introduction
+In this article, we’ll discuss the implementation of audit log functionality within a Clean Architecture project. The goal was to provide flexibility by allowing the application to store audit logs either in MongoDB or EventStore, depending on the user's preference.
 
-In the realm of software development, ensuring the quality and proper functionality of systems is of paramount importance. One common approach to ensuring the correctness of systems is through software testing. Among these, Functional Tests are a type of software testing that scrutinizes the overall behavior and functionality of the system from the perspective of users and their expected behaviors.
+## Overview
 
-## Definition of Concept
+Audit logging is essential for tracking changes in critical business entities. In this project, I implemented two separate audit log services—one for MongoDB and the other for EventStore. This gives developers the flexibility to choose their preferred storage mechanism by specifying the log type in the configuration. This implementation is available in the [audit-log](https://github.com/samanazadi1996/Sam.CleanArchitecture/tree/audit-log) branch.
 
-Functional Tests represent one of the layers of software testing that assesses the system's functionality and behavior based on user interactions and expected outcomes. They are recognized as a form of Black Box Testing, as they do not concern themselves with internal implementation details of the system but rather focus solely on its observable behavior.
+## Audit Log Infrastructure Setup
 
-In Functional Testing, various inputs are sent to the system, and their outputs are compared against expected outcomes. This ensures that the system functions correctly and delivers all the expected features.
+The setup is done through extension methods in the [ServiceRegistration](https://github.com/samanazadi1996/Sam.CleanArchitecture/blob/audit-log/Source/Src/Infrastructure/CleanArchitecture.Infrastructure.AuditLog/ServiceRegistration.cs) class, which allows the application to conditionally register either MongoDB or EventStore audit logging services based on the [AuditLogType](https://github.com/samanazadi1996/Sam.CleanArchitecture/blob/audit-log/Source/Src/Infrastructure/CleanArchitecture.Infrastructure.AuditLog/ServiceRegistration.cs#L45-L49) specified.
 
-## Introduction to Helper Classes
+## Here’s how the services are registered:
 
-In addition to writing test cases, creating helper classes can significantly streamline the process of writing and executing Functional Tests. These classes contain reusable methods and utilities that facilitate common testing tasks, such as interacting with APIs, generating test data, and managing test environments. Let's take a closer look at some of the key helper classes used in Functional Testing
+```c#
+public static IServiceCollection AddAuditLogInfrastructure(this IServiceCollection services, IConfiguration configuration, AuditLogType auditLogType)
+{
+    if (auditLogType == AuditLogType.Mongo)
+    {
+        return services.AddMongoAuditLogInfrastructure(configuration);
+    }
 
-### [CustomWebApplicationFactory](../Source/Tests/CleanArchitecture.FunctionalTests/Common/CustomWebApplicationFactory.cs)
-  This class extends the WebApplicationFactory class provided by ASP.NET Core to create a custom test host environment. By configuring the test environment to mimic the production environment, CustomWebApplicationFactory ensures that Functional Tests accurately reflect the behavior of the deployed application.
+    return services.AddEventStoreAuditLogInfrastructure(configuration);
+}
+```
 
-### [ApiRoutes](../Source/Tests/CleanArchitecture.FunctionalTests/Common/ApiRoutes.cs)
-  This class defines the API endpoints used in the application under test. By centralizing endpoint definitions in one location, ApiRoutes promotes consistency and ease of maintenance in test code. For example, the AddQueryString method simplifies the process of adding query parameters to API requests.
+## MongoDB Audit Log Service
+For MongoDB, the connection string includes the connection details, database name, and the collection name where audit logs will be stored:
 
-### [AuthenticationExtensionMethods](../Source/Tests/CleanArchitecture.FunctionalTests/Common/AuthenticationExtensionMethods.cs)
-  This class contains extension methods for the HttpClient class to facilitate authentication-related tasks in Functional Tests. The GetGhostAccount method, for instance, retrieves a ghost account for testing purposes, allowing testers to simulate user authentication without relying on real user credentials.
+```c#
+public static IServiceCollection AddMongoAuditLogInfrastructure(this IServiceCollection services, IConfiguration configuration)
+{
+    var config = configuration.GetConnectionString("MongoAuditLogConnection")!.Split(";");
 
-### [RandomDataExtensionMethods](../Source/Tests/CleanArchitecture.FunctionalTests/Common/RandomDataExtensionMethods.cs)
-  This class provides methods for generating random test data, such as random strings and numbers. These methods are invaluable for creating diverse test scenarios and covering edge cases in Functional Tests.
+    var connection = config[0].Trim();
+    var databaseName = config[1].Trim();
+    var collectionName = config[2].Trim();
 
-### [HttpClientGetExtensionMethods](../Source/Tests/CleanArchitecture.FunctionalTests/Common/HttpClientGetExtensionMethods.cs)
-  This class enhances the HttpClient class by providing additional methods to simplify common HTTP operations used in Functional Tests. It includes methods for sending HTTP GET, POST, PUT, and DELETE requests and automatically deserializing JSON responses into specified types. By abstracting common tasks such as setting headers and serializing request bodies, it reduces repetitive code and improves the readability and maintainability of test cases.
+    services.AddSingleton<IAuditLogService>(new MongoAuditLogService(connection, databaseName, collectionName));
 
-  - GetAndDeserializeAsync: Sends an HTTP GET request to the specified URI, optionally including an authorization token, and deserializes the JSON response into a specified type.
+    return services;
+}
+```
 
-  - PostAndDeserializeAsync: Sends an HTTP POST request with a provided model as the request body, optionally including an authorization token, and deserializes the JSON response into a specified type.
+## EventStore Audit Log Service
+Similarly, the EventStore connection is handled with the required stream name, allowing the application to stream audit events efficiently:
 
-  - PutAndDeserializeAsync: Sends an HTTP PUT request with a provided model as the request body, optionally including an authorization token, and deserializes the JSON response into a specified type.
+```c#
+public static IServiceCollection AddEventStoreAuditLogInfrastructure(this IServiceCollection services, IConfiguration configuration)
+{
+    var config = configuration.GetConnectionString("EventStoreAuditLogConnection")!.Split(";");
 
-  - DeleteAndDeserializeAsync: Sends an HTTP DELETE request to the specified URI, optionally including an authorization token, and deserializes the JSON response into a specified type.
+    var connectionString = config[0].Trim();
+    var streamName = config[1].Trim();
 
-By leveraging these helper classes, testers can write more efficient and maintainable Functional Tests, leading to improved test coverage and software quality.
+    services.AddSingleton<IAuditLogService>(new EventStoreAuditLogService(connectionString, streamName));
+
+    return services;
+}
+```
+
+## Enum for Log Type
+An enumeration, AuditLogType, is used to switch between the two audit log services:
+
+```c#
+public enum AuditLogType
+{
+    Mongo,
+    EventStore
+}
+```
+
+## Usage
+To use this feature in your project, you need to specify the audit log type in the configuration and call the appropriate registration method:
+
+```c#
+services.AddAuditLogInfrastructure(Configuration, AuditLogType.Mongo);
+```
+
+Alternatively, if you prefer EventStore:
+
+```c#
+services.AddAuditLogInfrastructure(Configuration, AuditLogType.EventStore);
+```
+
+## Explanation of Connection Strings for MongoDB and EventStore
+In your CleanArchitecture project, you've implemented two options for audit logging: MongoDB and EventStore. The connection strings used to configure these services follow specific formats for each database system. Let's break down their structure:
+
+### MongoDB Connection String:
+
+```json
+"MongoAuditLogConnection": "mongodb://root:password@localhost:27017/;CleanArchitectureAuditLog;AuditLogCollection"
+```
+
+This connection string is used to connect to a MongoDB database and consists of several parts:
+
+1. **mongodb://root@localhost:27017/**: This is the MongoDB connection URI that defines how to connect to the MongoDB server.
+
+2. **CleanArchitectureAuditLog**: This is the database name where audit logs will be stored. In this case, CleanArchitectureAuditLog is the name of the database being used for audit logging.
+
+3. **AuditLogCollection**: This is the collection name within the CleanArchitectureAuditLog database where the actual audit log data will be stored. MongoDB uses collections (similar to tables in relational databases) to store data.
+
+### EventStore Connection String
+
+```json
+"EventStoreAuditLogConnection": "esdb://localhost:2113?tls=false;AuditLog-stream"
+```
+This connection string is used to connect to an EventStore server and consists of the following parts:
+
+1. **esdb://localhost:2113?tls=false**: This is the URI for connecting to the EventStore server.
+
+2. **AuditLog-stream**: This specifies the stream name in EventStore where audit log events will be written. Streams in EventStore are analogous to tables in a relational database, but they are used to store event data in an ordered sequence.
+
+---
+
+> **_NOTE:_** _Depending on your project's requirements, you can choose to keep one implementation and remove the other, as it is not necessary to use both methods simultaneously_.
+> 
+> - _**MongoDB**: Use this option if you prefer a NoSQL database for storing audit logs. This implementation is straightforward and integrates well with applications that require flexible data models._
+> 
+> - _**EventStore**: This option is suitable for event-driven architectures, allowing you to store and manage events in a structured manner. It's ideal for scenarios where event sourcing and CQRS (Command Query Responsibility Segregation) are utilized._
+> 
+> _Feel free to select the method that best suits your application's needs!_
 
 
-## Conclusion
+## Quick Setup for Audit Log Databases with Docker Compose
 
-Functional Tests are a critical component of ensuring software quality and reliability. By validating the overall behavior and functionality of the system from a user’s perspective, these tests help identify issues that may not be apparent through unit or integration testing alone.
+To quickly set up the necessary databases for your audit log functionality, use the provided Docker Compose file:
 
-The helper classes we've discussed, such as ApiRoutes, AuthenticationExtensionMethods, CustomWebApplicationFactory, RandomDataExtensionMethods, and HttpClientGetExtensionMethods, play a vital role in streamlining the process of writing and executing Functional Tests. They reduce boilerplate code, enhance readability, and ensure consistency across test cases, making the testing process more efficient and maintainable.
+[docker-compose.yml](https://github.com/samanazadi1996/Sam.CleanArchitecture/blob/audit-log/Deploy/docker-compose.auditlog.yml)
 
-By incorporating these practices into your testing strategy, you can achieve more comprehensive test coverage, faster feedback loops, and ultimately deliver higher-quality software. As you continue to develop and refine your Functional Tests, these tools and techniques will help you maintain a robust and reliable testing framework that can adapt to the evolving needs of your application.
+Steps to Run:
+1. Install Docker: Ensure Docker and Docker Compose are installed on your machine.
 
-Functional Testing is not just about finding bugs; it's about building confidence in your software's ability to meet user expectations and perform reliably in production environments. Embrace these testing practices to ensure your software is not only functional but also user-friendly and resilient.
+2. Download the File: Clone the repository or download the docker-compose.auditlog.yml file.
 
+3. Navigate to the Directory:
+   ```sh
+   cd path/to/directory
+   ```
+4. Run the Command:
+   ```sh
+   docker-compose -f docker-compose.auditlog.yml up
+   ```
+
+After running these steps, both MongoDB and EventStore will be ready for your Clean Architecture project!
+
+
+## Branch Reference
+All changes related to this implementation are available in the [audit-log](https://github.com/samanazadi1996/Sam.CleanArchitecture/tree/audit-log) branch. You can explore the code and review the flexibility this approach offers for audit logging in Clean Architecture.
+
+---
+This article can be included in your documentation to help team members and collaborators understand how audit logging works in the project and how to configure it based on their needs.
