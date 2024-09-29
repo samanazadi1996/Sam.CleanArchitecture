@@ -1,6 +1,8 @@
 ﻿using CleanArchitecture.Application.Interfaces;
 using CleanArchitecture.Infrastructure.AuditLog.EventStore.Services;
+using CleanArchitecture.Infrastructure.AuditLog.EventStore.Settings;
 using CleanArchitecture.Infrastructure.AuditLog.Mongo.Services;
+using CleanArchitecture.Infrastructure.AuditLog.Mongo.Settings;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -8,42 +10,21 @@ namespace CleanArchitecture.Infrastructure.AuditLog;
 
 public static class ServiceRegistration
 {
-    public static IServiceCollection AddAuditLogInfrastructure(this IServiceCollection services, IConfiguration configuration, AuditLogType auditLogType)
+    public static IServiceCollection AddAuditLogInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
-        if (auditLogType == AuditLogType.Mongo)
+        var writeTo = configuration["AuditLog:WriteTo"]!;
+
+        if (writeTo.Equals("Mongo", StringComparison.OrdinalIgnoreCase))
         {
-            return services.AddMongoAuditLogInfrastructure(configuration);
+            var mongoSettings = configuration.GetSection("AuditLog:Mongo").Get<MongoSettings>();
+            services.AddSingleton<IAuditLogService>(new MongoAuditLogService(mongoSettings!));
+        }
+        else if (writeTo.Equals("EventStore", StringComparison.OrdinalIgnoreCase))
+        {
+            var eventStoreSettings = configuration.GetSection("AuditLog:EventStore").Get<EventStoreSettings>();
+            services.AddSingleton<IAuditLogService>(new EventStoreAuditLogService(eventStoreSettings!));
         }
 
-        return services.AddEventStoreAuditLogInfrastructure(configuration);
-
-    }
-    public static IServiceCollection AddMongoAuditLogInfrastructure(this IServiceCollection services, IConfiguration configuration)
-    {
-        var config = configuration.GetConnectionString("MongoAuditLogConnection")!.Split(";");
-
-        var connection = config[0].Trim();
-        var databaseName = config[1].Trim();
-        var collectionName = config[2].Trim();
-
-        services.AddSingleton<IAuditLogService>(new MongoAuditLogService(connection, databaseName, collectionName));
-
         return services;
     }
-    public static IServiceCollection AddEventStoreAuditLogInfrastructure(this IServiceCollection services, IConfiguration configuration)
-    {
-        var config = configuration.GetConnectionString("EventStoreAuditLogConnection")!.Split(";");
-
-        var connectionString = config[0].Trim();
-        var streamName = config[1].Trim();
-
-        services.AddSingleton<IAuditLogService>(new EventStoreAuditLogService(connectionString, streamName));
-
-        return services;
-    }
-}
-public enum AuditLogType
-{
-    Mongo,
-    EventStore
 }

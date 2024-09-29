@@ -1,21 +1,22 @@
 ﻿using CleanArchitecture.Application.DTOs.AuditLog.Requests;
 using CleanArchitecture.Application.DTOs.AuditLog.Responses;
 using CleanArchitecture.Application.Interfaces;
+using CleanArchitecture.Infrastructure.AuditLog.Mongo.Settings;
 using MongoDB.Driver;
 using MongoDB.Driver.Linq;
 using System.Text.Json;
 
 namespace CleanArchitecture.Infrastructure.AuditLog.Mongo.Services;
-public class MongoAuditLogService : IAuditLogService
+internal class MongoAuditLogService : IAuditLogService
 {
     private readonly IMongoCollection<Models.MongoAuditLog> AuditLogs;
-    public MongoAuditLogService(string connection, string databaseName, string collectionName)
+    public MongoAuditLogService(MongoSettings config)
     {
-        var mongoClient = new MongoClient(connection);
+        var mongoClient = new MongoClient(config.ConnectionString);
 
-        var mongoDatabase = mongoClient.GetDatabase(databaseName);
+        var mongoDatabase = mongoClient.GetDatabase(config.DatabaseName);
 
-        AuditLogs = mongoDatabase.GetCollection<Models.MongoAuditLog>(collectionName);
+        AuditLogs = mongoDatabase.GetCollection<Models.MongoAuditLog>(config.CollectionName);
     }
 
     private List<Models.MongoAuditLog> _events = [];

@@ -2,20 +2,21 @@
 using CleanArchitecture.Application.DTOs.AuditLog.Responses;
 using CleanArchitecture.Application.Interfaces;
 using CleanArchitecture.Infrastructure.AuditLog.EventStore.Models;
+using CleanArchitecture.Infrastructure.AuditLog.EventStore.Settings;
 using EventStore.Client;
 using System.Text.Json;
 
 namespace CleanArchitecture.Infrastructure.AuditLog.EventStore.Services;
-public class EventStoreAuditLogService : IAuditLogService
+internal class EventStoreAuditLogService : IAuditLogService
 {
     private readonly string _streamName;
     private readonly EventStoreClient _client;
 
-    public EventStoreAuditLogService(string connectionString, string streamName)
+    public EventStoreAuditLogService(EventStoreSettings config)
     {
-        var settings = EventStoreClientSettings.Create(connectionString);
+        var settings = EventStoreClientSettings.Create(config.ConnectionString);
         _client = new EventStoreClient(settings);
-        _streamName = streamName;
+        _streamName = config.StreamName;
     }
     private List<Models.EventStoreAuditLog> _events = [];
     public void Append<T>(string entityId, Type entityType, T oldValue, T newValue, string modifiedBy)
