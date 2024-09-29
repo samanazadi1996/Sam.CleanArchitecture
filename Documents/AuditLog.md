@@ -13,103 +13,86 @@ The setup is done through extension methods in the [ServiceRegistration](https:/
 ## Here’s how the services are registered:
 
 ```c#
-public static IServiceCollection AddAuditLogInfrastructure(this IServiceCollection services, IConfiguration configuration, AuditLogType auditLogType)
+public static IServiceCollection AddAuditLogInfrastructure(this IServiceCollection services, IConfiguration configuration)
 {
-    if (auditLogType == AuditLogType.Mongo)
+    var writeTo = configuration["AuditLog:WriteTo"]!;
+
+    if (writeTo.Equals("Mongo", StringComparison.OrdinalIgnoreCase))
     {
-        return services.AddMongoAuditLogInfrastructure(configuration);
+        var mongoSettings = configuration.GetSection("AuditLog:Mongo").Get<MongoSettings>();
+        services.AddSingleton<IAuditLogService>(new MongoAuditLogService(mongoSettings!));
+    }
+    else if (writeTo.Equals("EventStore", StringComparison.OrdinalIgnoreCase))
+    {
+        var eventStoreSettings = configuration.GetSection("AuditLog:EventStore").Get<EventStoreSettings>();
+        services.AddSingleton<IAuditLogService>(new EventStoreAuditLogService(eventStoreSettings!));
     }
 
-    return services.AddEventStoreAuditLogInfrastructure(configuration);
+    return services;
 }
 ```
 
 ## MongoDB Audit Log Service
-For MongoDB, the connection string includes the connection details, database name, and the collection name where audit logs will be stored:
+For MongoDB, the connection details, database name, and the collection name where audit logs will be stored are configured using the `MongoSettings` class.
 
-```c#
-public static IServiceCollection AddMongoAuditLogInfrastructure(this IServiceCollection services, IConfiguration configuration)
+```json
 {
-    var config = configuration.GetConnectionString("MongoAuditLogConnection")!.Split(";");
-
-    var connection = config[0].Trim();
-    var databaseName = config[1].Trim();
-    var collectionName = config[2].Trim();
-
-    services.AddSingleton<IAuditLogService>(new MongoAuditLogService(connection, databaseName, collectionName));
-
-    return services;
+  "AuditLog": {
+    "WriteTo": "Mongo",
+    "Mongo": {
+      "ConnectionString": "mongodb://root:password@localhost:27017/",
+      "DatabaseName": "CleanArchitectureAuditLog",
+      "CollectionName": "AuditLog-Collection"
+    }
+  }
 }
 ```
 
 ## EventStore Audit Log Service
-Similarly, the EventStore connection is handled with the required stream name, allowing the application to stream audit events efficiently:
+Similarly, the EventStore connection is handled with a structured approach, specifying the connection string and stream name through the `EventStoreSettings` class.
 
-```c#
-public static IServiceCollection AddEventStoreAuditLogInfrastructure(this IServiceCollection services, IConfiguration configuration)
+```json
 {
-    var config = configuration.GetConnectionString("EventStoreAuditLogConnection")!.Split(";");
-
-    var connectionString = config[0].Trim();
-    var streamName = config[1].Trim();
-
-    services.AddSingleton<IAuditLogService>(new EventStoreAuditLogService(connectionString, streamName));
-
-    return services;
+  "AuditLog": {
+    "WriteTo": "EventStore",
+    "EventStore": {
+      "ConnectionString": "esdb://localhost:2113?tls=false",
+      "StreamName": "AuditLog-Stream"
+    }
+  }
 }
 ```
 
-## Enum for Log Type
-An enumeration, AuditLogType, is used to switch between the two audit log services:
-
-```c#
-public enum AuditLogType
-{
-    Mongo,
-    EventStore
-}
-```
-
-## Usage
-To use this feature in your project, you need to specify the audit log type in the configuration and call the appropriate registration method:
-
-```c#
-services.AddAuditLogInfrastructure(Configuration, AuditLogType.Mongo);
-```
-
-Alternatively, if you prefer EventStore:
-
-```c#
-services.AddAuditLogInfrastructure(Configuration, AuditLogType.EventStore);
-```
 
 ## Explanation of Connection Strings for MongoDB and EventStore
-In your CleanArchitecture project, you've implemented two options for audit logging: MongoDB and EventStore. The connection strings used to configure these services follow specific formats for each database system. Let's break down their structure:
 
-### MongoDB Connection String:
+In the Clean Architecture project, two options for audit logging have been implemented: MongoDB and EventStore. Let’s break down the configuration.
 
-```json
-"MongoAuditLogConnection": "mongodb://root:password@localhost:27017/;CleanArchitectureAuditLog;AuditLogCollection"
-```
 
-This connection string is used to connect to a MongoDB database and consists of several parts:
-
-1. **mongodb://root@localhost:27017/**: This is the MongoDB connection URI that defines how to connect to the MongoDB server.
-
-2. **CleanArchitectureAuditLog**: This is the database name where audit logs will be stored. In this case, CleanArchitectureAuditLog is the name of the database being used for audit logging.
-
-3. **AuditLogCollection**: This is the collection name within the CleanArchitectureAuditLog database where the actual audit log data will be stored. MongoDB uses collections (similar to tables in relational databases) to store data.
-
-### EventStore Connection String
+### MongoDB Configuration:
 
 ```json
-"EventStoreAuditLogConnection": "esdb://localhost:2113?tls=false;AuditLog-stream"
+"Mongo": {
+  "ConnectionString": "mongodb://root:password@localhost:27017/",
+  "DatabaseName": "CleanArchitectureAuditLog",
+  "CollectionName": "AuditLog-Collection"
+}
 ```
-This connection string is used to connect to an EventStore server and consists of the following parts:
+- **ConnectionString**: Defines how to connect to the MongoDB server.
+- **DatabaseName**: The name of the database where audit logs will be stored.
+- **CollectionName**: The collection within the database where audit logs will be stored.
 
-1. **esdb://localhost:2113?tls=false**: This is the URI for connecting to the EventStore server.
 
-2. **AuditLog-stream**: This specifies the stream name in EventStore where audit log events will be written. Streams in EventStore are analogous to tables in a relational database, but they are used to store event data in an ordered sequence.
+### EventStore Configuration
+
+```json
+"EventStore": {
+  "ConnectionString": "esdb://localhost:2113?tls=false",
+  "StreamName": "AuditLog-Stream"
+}
+```
+- **ConnectionString**: The URI to connect to the EventStore server.
+- **StreamName**: The stream where audit logs will be stored in EventStore.
 
 ---
 
