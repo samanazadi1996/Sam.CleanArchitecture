@@ -169,6 +169,20 @@ How is User Auditing implemented?
 For more detailed instructions, you can refer to [this](./UserAuditing.md) documentation.
 </details>
 <br>
+<details>
+  <summary>
+    <strong>
+How can I normalize character input in EF Core entities?
+    </strong>
+  </summary>
+
+In EF Core, it's common to have data inconsistency when dealing with character variations, especially in multilingual systems. To ensure consistency, character normalization can be applied before saving entities to the database.
+
+For example, you might need to normalize Persian or Arabic characters like "ي" to "ی" or "ك" to "ک". This can be done using EF Core's `ChangeTracker` to normalize string properties before data is persisted to the database.
+
+For a detailed guide and implementation on how to normalize characters in EF Core, you can refer to [this document](./CharacterNormalization.md).
+</details>
+<br>
 
 <details>
   <summary>
