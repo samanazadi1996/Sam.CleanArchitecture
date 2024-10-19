@@ -50,7 +50,7 @@ namespace CleanArchitecture.Infrastructure.Persistence.Extensions
                     var val = propertyInfo.GetValue(item.Entity)?.ToString();
                     if (!string.IsNullOrEmpty(val))
                     {
-                        var newVal = val.Replace("ي", "ی").Replace("ك", "ک").Trim();
+                        var newVal = val.NormalizeText();
                         if (newVal != val)
                         {
                             propertyInfo.SetValue(item.Entity, newVal);
@@ -63,7 +63,7 @@ namespace CleanArchitecture.Infrastructure.Persistence.Extensions
         // Method to normalize characters in a single string
         public static string NormalizeText(this string input)
         {
-            return string.IsNullOrEmpty(input) ? input : input.Replace("ي", "ی").Replace("ك", "ک").Trim();
+            return string.IsNullOrEmpty(input) ? input : input.Replace("ي", "ی").Replace("ك", "ک");
         }
     }
 }
