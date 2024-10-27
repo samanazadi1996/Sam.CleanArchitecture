@@ -38,6 +38,7 @@ builder.Services.AddSwaggerWithVersioning();
 builder.Services.AddAnyCors();
 builder.Services.AddCustomLocalization(builder.Configuration);
 builder.Services.AddHealthChecks();
+builder.Services.AddRateLimit();
 builder.Host.UseSerilog((context, configuration) => configuration.ReadFrom.Configuration(context.Configuration));
 
 var app = builder.Build();
@@ -67,6 +68,7 @@ app.UseAuthorization();
 app.UseSwaggerWithVersioning();
 app.UseMiddleware<ErrorHandlerMiddleware>();
 app.UseHealthChecks("/health");
+app.UseRateLimit();
 app.MapControllers();
 app.UseSerilogRequestLogging();
 

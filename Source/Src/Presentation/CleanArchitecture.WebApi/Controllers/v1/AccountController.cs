@@ -2,8 +2,10 @@ using CleanArchitecture.Application.DTOs.Account.Requests;
 using CleanArchitecture.Application.DTOs.Account.Responses;
 using CleanArchitecture.Application.Interfaces.UserInterfaces;
 using CleanArchitecture.Application.Wrappers;
+using CleanArchitecture.WebApi.Infrastructure.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 using System.Threading.Tasks;
 
 namespace CleanArchitecture.WebApi.Controllers.v1;
@@ -12,6 +14,7 @@ namespace CleanArchitecture.WebApi.Controllers.v1;
 public class AccountController(IAccountServices accountServices) : BaseApiController
 {
     [HttpPost]
+    [EnableRateLimiting(RateLimitExtensions.FiveTimesInOneMinute)]
     public async Task<BaseResult<AuthenticationResponse>> Authenticate(AuthenticationRequest request)
         => await accountServices.Authenticate(request);
 

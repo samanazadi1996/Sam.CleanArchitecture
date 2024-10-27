@@ -8,4 +8,5 @@ public enum ErrorCode : short
     AccessDenied = 3,
     ErrorInIdentity = 4,
     Exception = 5,
+    RateLimit = 6,
 }
