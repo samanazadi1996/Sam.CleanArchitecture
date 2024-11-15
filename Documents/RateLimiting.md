@@ -5,7 +5,7 @@
 
 Rate Limiting is an essential feature in API development, controlling the number of requests a client can make within a specific timeframe. It helps manage server load, improve performance, and enhance security by preventing abuse. This guide will walk you through adding Rate Limiting to your Clean Architecture project, enabling you to define rate limits per endpoint and handle excessive requests gracefully.
 
-For a complete implementation, check out the [Rate Limiting branch on Sam.CleanArchitecture in GitHub](https://github.com/samanazadi1996/Sam.CleanArchitecture/tree/rete-limit).
+For a complete implementation, check out the [Rate Limiting branch on Sam.CleanArchitecture in GitHub](https://github.com/samanazadi1996/Sam.CleanArchitecture/tree/rate-limit).
 
 ## Steps to Use
 
@@ -116,4 +116,4 @@ This setup restricts the `Authenticate` action to 5 requests per minute per user
 
 ## Conclusion
 
-By following these steps, you can seamlessly integrate Rate Limiting into your Clean Architecture project to manage incoming requests effectively. For a complete implementation example, visit the [Rate Limiting branch in the Sam.CleanArchitecture GitHub repository](https://github.com/samanazadi1996/Sam.CleanArchitecture/tree/rete-limit).
+By following these steps, you can seamlessly integrate Rate Limiting into your Clean Architecture project to manage incoming requests effectively. For a complete implementation example, visit the [Rate Limiting branch in the Sam.CleanArchitecture GitHub repository](https://github.com/samanazadi1996/Sam.CleanArchitecture/tree/rate-limit).
