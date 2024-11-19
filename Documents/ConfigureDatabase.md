@@ -45,7 +45,7 @@ After running the command, navigate to the Tools folder:
 
     After running the batch file, you will be prompted to enter the desired database type and the class library name:
     ```plaintext
-    Enter the type of database you want to use (SqlServer, PostgreSQL, Oracle):
+    Enter the type of database you want to use (SqlServer, PostgreSQL, Oracle, MySql, Sqlite):
     ```
     And
     ```plaintext
