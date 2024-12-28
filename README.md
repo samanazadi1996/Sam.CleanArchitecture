@@ -94,7 +94,8 @@ While the [Clean Architecture Template](https://marketplace.visualstudio.com/ite
 - **Repository Integration**: Add repositories with pre-configured templates to save time and standardize your approach.
 - **Migration Management**: Simplify database updates by managing migrations directly from Visual Studio.
 - **Multi-Language Support**: Seamlessly add new languages to your project.
-  
+- **Controller Generation**: A planned feature to allow users to quickly generate controllers with pre-configured templates, adhering to Clean Architecture principles.
+
 By combining the power of the Clean Architecture Template with the Clean Architecture Assistant, you can save valuable development time, reduce repetitive tasks, and maintain a consistent architecture across your project.
 
 
