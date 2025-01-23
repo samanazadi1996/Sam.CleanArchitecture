@@ -83,6 +83,22 @@ Demonstrate Clean Monolith Architecture in ASP.NET Core 9
 - Implementation that is ready for Production
 - Integrate the most essential libraries and packages
 
+# Enhancing Your Clean Architecture Experience with Powerful Tools
+To streamline your development process and simplify project management for Clean Architecture, we've introduced a complementary tool: [Clean Architecture Assistant](https://marketplace.visualstudio.com/items?itemName=SamanAzadi1996.CleanArchitectureAssistant).
+
+While the [Clean Architecture Template](https://marketplace.visualstudio.com/items?itemName=SamanAzadi1996.ASPDotnetCoreCleanArchitecture) enables you to kickstart your projects with a solid architecture, Clean Architecture Assistant takes your development workflow to the next level.
+
+### Key Features of Clean Architecture Assistant:
+- **Quick Use Case Creation**: Generate use case classes and interfaces with a single click, following Clean Architecture patterns.
+- **Entity Management**: Create and manage entities effortlessly, adhering to best practices.
+- **Repository Integration**: Add repositories with pre-configured templates to save time and standardize your approach.
+- **Migration Management**: Simplify database updates by managing migrations directly from Visual Studio.
+- **Multi-Language Support**: Seamlessly add new languages to your project.
+- **Controller Generation**: A planned feature to allow users to quickly generate controllers with pre-configured templates, adhering to Clean Architecture principles.
+
+By combining the power of the Clean Architecture Template with the Clean Architecture Assistant, you can save valuable development time, reduce repetitive tasks, and maintain a consistent architecture across your project.
+
+
 ## Frequently Asked Questions (FAQ)
 
 To see the frequently asked questions and find answers related to using and developing the project, please refer to the FAQ file. This file includes common questions you might encounter while working with the project and provides links to the relevant documentation.
