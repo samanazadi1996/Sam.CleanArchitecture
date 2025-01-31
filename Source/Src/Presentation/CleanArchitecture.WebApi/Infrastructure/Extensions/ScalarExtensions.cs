@@ -19,7 +19,15 @@ public static class ScalarExtensions
     {
         app.MapOpenApi();
 
-        app.MapScalarApiReference();
+        app.MapScalarApiReference(option =>
+        {
+            option
+                .WithTitle("Clean Architecture WebApi")
+                .WithTheme(ScalarTheme.Kepler)
+                .WithDownloadButton(true)
+                .WithDefaultHttpClient(ScalarTarget.CSharp, ScalarClient.HttpClient);
+        });
+
 
         return app;
     }
