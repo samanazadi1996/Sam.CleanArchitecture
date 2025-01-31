@@ -20,6 +20,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Serilog;
+using Scalar.AspNetCore;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -34,7 +35,7 @@ builder.Services.AddResourcesInfrastructure();
 builder.Services.AddScoped<IAuthenticatedUserService, AuthenticatedUserService>();
 builder.Services.AddControllers();
 builder.Services.AddFluentValidationAutoValidation();
-builder.Services.AddSwaggerWithVersioning();
+builder.Services.AddScalar();
 builder.Services.AddAnyCors();
 builder.Services.AddCustomLocalization(builder.Configuration);
 builder.Services.AddHealthChecks();
@@ -64,7 +65,7 @@ app.UseAnyCors();
 app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
-app.UseSwaggerWithVersioning();
+app.UseScalar();
 app.UseMiddleware<ErrorHandlerMiddleware>();
 app.UseHealthChecks("/health");
 app.MapControllers();
