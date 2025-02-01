@@ -34,6 +34,7 @@ builder.Services.AddResourcesInfrastructure();
 builder.Services.AddScoped<IAuthenticatedUserService, AuthenticatedUserService>();
 builder.Services.AddControllers();
 builder.Services.AddFluentValidationAutoValidation();
+builder.Services.AddVersioning();
 builder.Services.AddScalar();
 builder.Services.AddAnyCors();
 builder.Services.AddCustomLocalization(builder.Configuration);

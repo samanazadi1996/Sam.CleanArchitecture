@@ -1,6 +1,5 @@
 
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.OpenApi;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
@@ -8,6 +7,7 @@ using Scalar.AspNetCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -19,10 +19,12 @@ public static class ScalarExtensions
     {
         app.MapOpenApi();
 
+        var title = Assembly.GetCallingAssembly().GetName().Name;
+
         app.MapScalarApiReference(option =>
         {
             option
-                .WithTitle("Clean Architecture WebApi")
+                .WithTitle(title)
                 .WithTheme(ScalarTheme.Kepler)
                 .WithDownloadButton(true)
                 .WithDefaultHttpClient(ScalarTarget.CSharp, ScalarClient.HttpClient);
@@ -35,22 +37,6 @@ public static class ScalarExtensions
     public static IServiceCollection AddScalar(this IServiceCollection services)
     {
         services.AddOpenApi(options => { options.AddDocumentTransformer<BearerSecuritySchemeTransformer>(); });
-
-        services.AddOpenApi();
-
-        services.AddApiVersioning(setup =>
-        {
-            setup.DefaultApiVersion = new ApiVersion(1, 0);
-            setup.AssumeDefaultVersionWhenUnspecified = true;
-            setup.ReportApiVersions = true;
-        });
-
-        services.AddVersionedApiExplorer(setup =>
-        {
-            setup.GroupNameFormat = "'v'VVV";
-            setup.SubstituteApiVersionInUrl = true;
-        });
-
 
         return services;
     }
