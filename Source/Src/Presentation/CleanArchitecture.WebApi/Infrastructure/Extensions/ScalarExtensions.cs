@@ -21,15 +21,15 @@ public static class ScalarExtensions
 
         var title = Assembly.GetCallingAssembly().GetName().Name;
 
-        app.MapScalarApiReference(option =>
-        {
-            option
-                .WithTitle(title)
-                .WithTheme(ScalarTheme.Kepler)
-                .WithDownloadButton(true)
-                .WithDefaultHttpClient(ScalarTarget.CSharp, ScalarClient.HttpClient);
-        });
+        var defaultHttpClient = new KeyValuePair<ScalarTarget, ScalarClient>(ScalarTarget.CSharp, ScalarClient.HttpClient);
 
+        app.MapScalarApiReference(options =>
+        {
+            options.Title = title;
+            options.Theme = ScalarTheme.Kepler;
+            options.HideDownloadButton = false;
+            options.DefaultHttpClient = defaultHttpClient;
+        });
 
         return app;
     }
