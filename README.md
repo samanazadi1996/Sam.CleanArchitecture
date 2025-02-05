@@ -118,11 +118,11 @@ If you found this Implementation helpful or used it in your Projects, do give it
 # Features
 
 - [Clean Architecture](./Documents/CleanArchitecture.md)
-- CQRS with MediatR Library
-- Entity Framework Core - Code First
+- [CQRS with MediatR Library](https://github.com/jbogard/MediatR)
+- [Entity Framework Core - Code First](https://github.com/dotnet/efcore)
 - [Repository Pattern - Generic](./Documents/RepositoryPatternGeneric.md)
-- Serilog
-- Swagger UI
+- [Serilog](https://github.com/serilog/serilog)
+- [Swagger UI](https://github.com/domaindrivendev/Swashbuckle.AspNetCore)
 - [Response Wrappers](./Documents/ResponseWrappers.md)
 - [Healthchecks](./Documents/Healthchecks.md)
 - Pagination
@@ -133,7 +133,7 @@ If you found this Implementation helpful or used it in your Projects, do give it
 - [Custom Exception Handling Middlewares](./Documents/ExceptionHandlingMiddlewares.md)
 - API Versioning
 - [Localization (fa / en)](./Documents/Localization.md)
-- Fluent Validation
+- [Fluent Validation](https://github.com/FluentValidation/FluentValidation)
 - Complete User Management Module (Register / Authenticate / Change UserName / Change Password)
 - [User Auditing](./Documents/UserAuditing.md)
 - TestProjects
