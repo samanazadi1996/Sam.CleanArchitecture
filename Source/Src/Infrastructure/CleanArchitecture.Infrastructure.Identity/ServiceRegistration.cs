@@ -20,9 +20,9 @@ namespace CleanArchitecture.Infrastructure.Identity;
 
 public static class ServiceRegistration
 {
-    public static IServiceCollection AddIdentityInfrastructure(this IServiceCollection services, IConfiguration configuration, bool UseInMemoryDatabase)
+    public static IServiceCollection AddIdentityInfrastructure(this IServiceCollection services, IConfiguration configuration, bool useInMemoryDatabase)
     {
-        if (UseInMemoryDatabase)
+        if (useInMemoryDatabase)
         {
             services.AddDbContext<IdentityContext>(options =>
                 options.UseInMemoryDatabase(nameof(IdentityContext)));

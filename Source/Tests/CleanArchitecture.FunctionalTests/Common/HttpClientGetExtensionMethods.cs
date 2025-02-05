@@ -5,7 +5,7 @@ namespace CleanArchitecture.FunctionalTests.Common;
 
 public static class HttpClientGetExtensionMethods
 {
-    static readonly JsonSerializerOptions DefaultJsonOptions = new JsonSerializerOptions
+    static readonly JsonSerializerOptions DefaultJsonOptions = new()
     {
         PropertyNamingPolicy = JsonNamingPolicy.CamelCase
     };
