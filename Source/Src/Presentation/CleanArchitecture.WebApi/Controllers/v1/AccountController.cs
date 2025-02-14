@@ -14,7 +14,7 @@ namespace CleanArchitecture.WebApi.Controllers.v1;
 public class AccountController(IAccountServices accountServices) : BaseApiController
 {
     [HttpPost]
-    [EnableRateLimiting(RateLimitExtensions.FiveTimesInOneMinute)]
+    [EnableRateLimiting(RateLimitExtensions.AccountAuthenticate)]
     public async Task<BaseResult<AuthenticationResponse>> Authenticate(AuthenticationRequest request)
         => await accountServices.Authenticate(request);
 
