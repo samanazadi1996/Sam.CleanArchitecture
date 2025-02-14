@@ -1,12 +1,10 @@
 
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
-using System;
 using System.Collections.Generic;
 using System.Reflection;
 
@@ -16,8 +14,7 @@ public static class SwaggerExtensions
 {
     public static IApplicationBuilder UseSwaggerWithVersioning(this IApplicationBuilder app)
     {
-        IServiceProvider services = app.ApplicationServices;
-        var provider = services.GetRequiredService<IApiVersionDescriptionProvider>();
+        var provider = app.ApplicationServices.GetRequiredService<IApiVersionDescriptionProvider>();
 
         app.UseSwagger();
 
@@ -34,19 +31,6 @@ public static class SwaggerExtensions
 
     public static IServiceCollection AddSwaggerWithVersioning(this IServiceCollection services)
     {
-        services.AddApiVersioning(setup =>
-        {
-            setup.DefaultApiVersion = new ApiVersion(1, 0);
-            setup.AssumeDefaultVersionWhenUnspecified = true;
-            setup.ReportApiVersions = true;
-        });
-
-        services.AddVersionedApiExplorer(setup =>
-        {
-            setup.GroupNameFormat = "'v'VVV";
-            setup.SubstituteApiVersionInUrl = true;
-        });
-
         services.AddSwaggerGen(setup =>
         {
             setup.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme

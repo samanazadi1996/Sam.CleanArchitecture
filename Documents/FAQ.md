@@ -102,6 +102,15 @@ You can find an article on this topic at this [link](./GRPC.md), and the sample 
 <br>
 
 <details>
+<summary><strong>How do I add Rate Limiting to my project?</strong></summary>
+
+To add Rate Limiting to your Clean Architecture project, you can follow the steps outlined in the [Rate Limiting article](./RateLimiting.md). This article provides a comprehensive guide, including how to implement the Rate Limiting class, register it in the `Program.cs` file, and apply it to specific controller actions.
+
+The implementation has been completed in the [Rate Limiting branch of the Sam.CleanArchitecture repository](https://github.com/samanazadi1996/Sam.CleanArchitecture/tree/rete-linit).
+</details>
+<br>
+
+<details>
   <summary>
     <strong>
 How is exception handling implemented?

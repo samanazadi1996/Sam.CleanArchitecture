@@ -13,7 +13,7 @@ The purpose of this template is to provide a robust and streamlined methodology 
 
 The following prerequisites are required to build and run the solution:
 
-- [.NET 8.0 SDK](https://dotnet.microsoft.com/download/dotnet/8.0) (latest version)
+- [.NET 9.0 SDK](https://dotnet.microsoft.com/download/dotnet/9.0) (latest version)
 
 The easiest way to get started is to install the [.NET template](https://www.nuget.org/packages/Sam.CleanArchitecture.Template):
 ```
@@ -74,14 +74,30 @@ You can use these default credentials to generate valid JWTokens at the ../api/v
 # Purpose of this Project
 Does it really make sense to Setup your ASP.NET Core Solution everytime you start a new WebApi Project ? Aren't we wasting quite a lot of time in doing this over and over gain?
 
-This is the exact Problem that I intend to solve with this Full-Fledged ASP.NET Core 8 WebApi Solution Template, that also follows various principles of Clean Architecture.
+This is the exact Problem that I intend to solve with this Full-Fledged ASP.NET Core 9 WebApi Solution Template, that also follows various principles of Clean Architecture.
 
 The primary goal is to create a Full-Fledged implementation, that is well documented along with the steps taken to build this Solution from Scratch. This Solution Template will also be available within Visual Studio 2022 (by installing the required Nuget Package / Extension).
 
-Demonstrate Clean Monolith Architecture in ASP.NET Core 8
+Demonstrate Clean Monolith Architecture in ASP.NET Core 9
 - This is not a Proof of Concept
 - Implementation that is ready for Production
 - Integrate the most essential libraries and packages
+
+# Enhancing Your Clean Architecture Experience with Powerful Tools
+To streamline your development process and simplify project management for Clean Architecture, we've introduced a complementary tool: [Clean Architecture Assistant](https://marketplace.visualstudio.com/items?itemName=SamanAzadi1996.CleanArchitectureAssistant).
+
+While the [Clean Architecture Template](https://marketplace.visualstudio.com/items?itemName=SamanAzadi1996.ASPDotnetCoreCleanArchitecture) enables you to kickstart your projects with a solid architecture, Clean Architecture Assistant takes your development workflow to the next level.
+
+### Key Features of Clean Architecture Assistant:
+- **Quick Use Case Creation**: Generate use case classes and interfaces with a single click, following Clean Architecture patterns.
+- **Entity Management**: Create and manage entities effortlessly, adhering to best practices.
+- **Repository Integration**: Add repositories with pre-configured templates to save time and standardize your approach.
+- **Migration Management**: Simplify database updates by managing migrations directly from Visual Studio.
+- **Multi-Language Support**: Seamlessly add new languages to your project.
+- **Controller Generation**: A planned feature to allow users to quickly generate controllers with pre-configured templates, adhering to Clean Architecture principles.
+
+By combining the power of the Clean Architecture Template with the Clean Architecture Assistant, you can save valuable development time, reduce repetitive tasks, and maintain a consistent architecture across your project.
+
 
 ## Frequently Asked Questions (FAQ)
 
@@ -96,17 +112,17 @@ If you found this Implementation helpful or used it in your Projects, do give it
 
 # Technologies
 
-- ASP.NET Core 8 WebApi
+- ASP.NET Core 9 WebApi
 - REST Standards
 
 # Features
 
 - [Clean Architecture](./Documents/CleanArchitecture.md)
-- CQRS with MediatR Library
-- Entity Framework Core - Code First
+- [CQRS with MediatR Library](https://github.com/jbogard/MediatR)
+- [Entity Framework Core - Code First](https://github.com/dotnet/efcore)
 - [Repository Pattern - Generic](./Documents/RepositoryPatternGeneric.md)
-- Serilog
-- Swagger UI
+- [Serilog](https://github.com/serilog/serilog)
+- [Swagger UI](https://github.com/domaindrivendev/Swashbuckle.AspNetCore)
 - [Response Wrappers](./Documents/ResponseWrappers.md)
 - [Healthchecks](./Documents/Healthchecks.md)
 - Pagination
@@ -117,7 +133,7 @@ If you found this Implementation helpful or used it in your Projects, do give it
 - [Custom Exception Handling Middlewares](./Documents/ExceptionHandlingMiddlewares.md)
 - API Versioning
 - [Localization (fa / en)](./Documents/Localization.md)
-- Fluent Validation
+- [Fluent Validation](https://github.com/FluentValidation/FluentValidation)
 - Complete User Management Module (Register / Authenticate / Change UserName / Change Password)
 - [User Auditing](./Documents/UserAuditing.md)
 - TestProjects
@@ -128,7 +144,7 @@ If you found this Implementation helpful or used it in your Projects, do give it
 # Prerequisites
 
 - Visual Studio 2022 Community and above
-- .NET Core 8 SDK and above
+- .NET Core 9 SDK and above
 - Basic Understanding of Architectures and Clean Code Principles
 
 # Share it!
