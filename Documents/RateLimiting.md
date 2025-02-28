@@ -17,7 +17,6 @@ Start by creating a class named `RateLimitExtensions`. This class will contain R
 using CleanArchitecture.Application.Wrappers;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Text.Json;
@@ -27,18 +26,13 @@ namespace CleanArchitecture.WebApi.Infrastructure.Extensions;
 
 public static class RateLimitExtensions
 {
-    public const string FiveTimesInOneMinute = nameof(FiveTimesInOneMinute);
-
+    public const string AccountAuthenticate = nameof(AccountAuthenticate);
     public static IServiceCollection AddRateLimit(this IServiceCollection services)
     {
         services.AddRateLimiter(conf =>
         {
-            conf.AddFixedWindowLimiter(FiveTimesInOneMinute, options =>
-            {
-                options.PermitLimit = 5; // Number of allowed requests
-                options.Window = TimeSpan.FromMinutes(1); // Time window
-                options.QueueProcessingOrder = QueueProcessingOrder.OldestFirst;
-            });
+            conf.AddPolicy(AccountAuthenticate,
+                httpContext => GetRateLimitPartition(httpContext, 1, TimeSpan.FromSeconds(5)));
 
             conf.OnRejected = async (context, cancellationToken) =>
             {
@@ -46,7 +40,7 @@ public static class RateLimitExtensions
                 context.HttpContext.Response.ContentType = "application/json";
 
                 var contentResponse = JsonSerializer.Serialize(
-                    BaseResult.Failure(new Error(ErrorCode.RateLimit, "Rate limit exceeded. Please try again later.")), 
+                    BaseResult.Failure(new Error(ErrorCode.RateLimit, "شما به سقف محدودیت درخواست رسیدید")),
                     new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase }
                 );
 
@@ -55,11 +49,26 @@ public static class RateLimitExtensions
         });
 
         return services;
-    }
 
+        RateLimitPartition<string> GetRateLimitPartition(HttpContext httpContext, int permitLimit, TimeSpan window)
+        {
+            var token = httpContext.Request.Headers["X-Forwarded-For"].ToString();
+
+            return RateLimitPartition.GetFixedWindowLimiter(token,
+                partition => new FixedWindowRateLimiterOptions
+                {
+                    AutoReplenishment = true,
+                    PermitLimit = permitLimit,
+                    Window = window
+                });
+        }
+
+        return services;
+    }
     public static IApplicationBuilder UseRateLimit(this IApplicationBuilder app)
     {
         app.UseRateLimiter();
+
         return app;
     }
 }
@@ -68,7 +77,7 @@ public static class RateLimitExtensions
 In this class:
 - The `AddRateLimit` method configures Rate Limiting with a 5-request limit per minute.
 - If the limit is exceeded, the response includes a `429` status code and a JSON error message: `"Rate limit exceeded"`.
-
+- 
 ---
 
 ### Step 2: Register Rate Limiting in `Program.cs`
@@ -95,7 +104,7 @@ app.Run();
 
 ### Step 3: Apply Rate Limiting to Controller Actions
 
-With Rate Limiting configured, you can apply it to specific controller actions by using the `[EnableRateLimiting]` attribute. Specify the rate limit configuration name as a parameter, such as `"FiveTimesInOneMinute"`.
+With Rate Limiting configured, you can apply it to specific controller actions by using the `[EnableRateLimiting]` attribute. Specify the rate limit configuration name as a parameter, such as `"AccountAuthenticate"`.
 
 Below is an example of applying Rate Limiting to the `Authenticate` action in `AccountController`:
 
@@ -104,7 +113,7 @@ Below is an example of applying Rate Limiting to the `Authenticate` action in `A
 public class AccountController(IAccountServices accountServices) : BaseApiController
 {
     [HttpPost]
-    [EnableRateLimiting(RateLimitExtensions.FiveTimesInOneMinute)]
+    [EnableRateLimiting(RateLimitExtensions.AccountAuthenticate)]
     public async Task<BaseResult<AuthenticationResponse>> Authenticate(AuthenticationRequest request)
         => await accountServices.Authenticate(request);
 }
