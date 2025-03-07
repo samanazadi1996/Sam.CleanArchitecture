@@ -123,6 +123,16 @@ For more detailed instructions, you can refer to [this](./ExceptionHandlingMiddl
 
 
 <details>
+<summary><strong>
+How do I implement OutputCache in this project?
+</strong></summary>
+
+For more detailed instructions, you can refer to [this](./OutputCache.md) documentation.
+</details>
+<br>
+
+
+<details>
   <summary>
     <strong>
 How is Functional Tests implemented?
