@@ -6,6 +6,9 @@
 [![](https://github.com/samanazadi1996/Sam.CleanArchitecture/workflows/.NET/badge.svg)](https://github.com/samanazadi1996/Sam.CleanArchitecture/actions)
 [![](https://github.com/samanazadi1996/Sam.CleanArchitecture/workflows/.NET%20Core%20Desktop/badge.svg)](https://github.com/samanazadi1996/Sam.CleanArchitecture/actions)
 [![](https://github.com/samanazadi1996/Sam.CleanArchitecture/workflows/CodeQL%20Advanced/badge.svg)](https://github.com/samanazadi1996/Sam.CleanArchitecture/actions)
+<!--
+[![](https://i[](url)mg.shields.io/website?url=https://clean-architecture.koyeb.app/health&label=Deployment)](https://clean-architecture.koyeb.app/swagger/index.html)
+-->
 
 The purpose of this template is to provide a robust and streamlined methodology for enterprise application development. By capitalizing on the strengths of Clean Architecture and ASP.NET Core, it ensures a maintainable, scalable, and efficient development process. This approach not only simplifies the complexity of enterprise systems but also enhances their performance and longevity.
 
