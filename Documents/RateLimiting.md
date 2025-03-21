@@ -40,7 +40,7 @@ public static class RateLimitExtensions
                 context.HttpContext.Response.ContentType = "application/json";
 
                 var contentResponse = JsonSerializer.Serialize(
-                    BaseResult.Failure(new Error(ErrorCode.RateLimit, "شما به سقف محدودیت درخواست رسیدید")),
+                    BaseResult.Failure(new Error(ErrorCode.RateLimit, "You have reached the request limit.")),
                     new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase }
                 );
 
