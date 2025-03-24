@@ -8,6 +8,7 @@ using CleanArchitecture.Domain.Products.DTOs;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
+using Asp.Versioning;
 
 namespace CleanArchitecture.WebApi.Controllers.v1;
 

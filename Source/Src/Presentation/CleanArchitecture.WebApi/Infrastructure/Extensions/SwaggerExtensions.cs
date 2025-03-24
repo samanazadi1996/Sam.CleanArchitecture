@@ -7,6 +7,7 @@ using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using System.Collections.Generic;
 using System.Reflection;
+using Asp.Versioning.ApiExplorer;
 
 namespace CleanArchitecture.WebApi.Infrastructure.Extensions;
 

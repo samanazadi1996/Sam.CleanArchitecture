@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.IO;
 using System.Net.Mime;
 using System.Threading.Tasks;
+using Asp.Versioning;
 
 namespace CleanArchitecture.WebApi.Controllers.v1;
 
