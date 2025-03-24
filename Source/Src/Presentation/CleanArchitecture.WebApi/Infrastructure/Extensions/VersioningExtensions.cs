@@ -1,3 +1,4 @@
+using Asp.Versioning;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -7,17 +8,16 @@ public static class VersioningExtensions
 {
     public static IServiceCollection AddVersioning(this IServiceCollection services)
     {
-        services.AddApiVersioning(setup =>
+        services.AddApiVersioning(options =>
         {
-            setup.DefaultApiVersion = new ApiVersion(1, 0);
-            setup.AssumeDefaultVersionWhenUnspecified = true;
-            setup.ReportApiVersions = true;
-        });
+            options.DefaultApiVersion = new ApiVersion(1, 0);
+            options.AssumeDefaultVersionWhenUnspecified = true;
+            options.ReportApiVersions = true;
 
-        services.AddVersionedApiExplorer(setup =>
+        }).AddApiExplorer(options =>
         {
-            setup.GroupNameFormat = "'v'VVV";
-            setup.SubstituteApiVersionInUrl = true;
+            options.GroupNameFormat = "'v'VVV";
+            options.SubstituteApiVersionInUrl = true;
         });
 
         return services;
