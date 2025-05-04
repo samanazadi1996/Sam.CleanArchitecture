@@ -2,7 +2,6 @@ using CleanArchitecture.Application.Helpers;
 using CleanArchitecture.Application.Interfaces;
 using CleanArchitecture.Application.Interfaces.Repositories;
 using CleanArchitecture.Application.Wrappers;
-using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -10,7 +9,7 @@ namespace CleanArchitecture.Application.Features.Products.Commands.DeleteProduct
 
 public class DeleteProductCommandHandler(IProductRepository productRepository, IUnitOfWork unitOfWork, ITranslator translator) : IRequestHandler<DeleteProductCommand, BaseResult>
 {
-    public async Task<BaseResult> Handle(DeleteProductCommand request, CancellationToken cancellationToken)
+    public async Task<BaseResult> HandleAsync(DeleteProductCommand request, CancellationToken cancellationToken)
     {
         var product = await productRepository.GetByIdAsync(request.Id);
 

@@ -30,7 +30,7 @@ public class GetProductByIdQueryHandlerTests
         var query = new GetProductByIdQuery { Id = productId };
 
         // Act
-        var result = await handler.Handle(query, CancellationToken.None);
+        var result = await handler.HandleAsync(query, CancellationToken.None);
 
         // Assert
         result.ShouldNotBeNull();
@@ -60,7 +60,7 @@ public class GetProductByIdQueryHandlerTests
         var query = new GetProductByIdQuery { Id = productId };
 
         // Act
-        var result = await handler.Handle(query, CancellationToken.None);
+        var result = await handler.HandleAsync(query, CancellationToken.None);
 
         // Assert
         result.ShouldNotBeNull();

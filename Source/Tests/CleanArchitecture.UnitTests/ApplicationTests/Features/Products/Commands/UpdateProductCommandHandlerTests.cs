@@ -37,7 +37,7 @@ public class UpdateProductCommandHandlerTests
         };
 
         // Act
-        var result = await handler.Handle(command, CancellationToken.None);
+        var result = await handler.HandleAsync(command, CancellationToken.None);
 
         // Assert
         result.ShouldNotBeNull();
@@ -66,7 +66,7 @@ public class UpdateProductCommandHandlerTests
         var command = new UpdateProductCommand { Id = productId };
 
         // Act
-        var result = await handler.Handle(command, CancellationToken.None);
+        var result = await handler.HandleAsync(command, CancellationToken.None);
 
         // Assert
         result.ShouldNotBeNull();

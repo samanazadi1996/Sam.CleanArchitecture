@@ -33,6 +33,7 @@ builder.Services.AddIdentityInfrastructure(builder.Configuration, useInMemoryDat
 builder.Services.AddResourcesInfrastructure();
 builder.Services.AddScoped<IAuthenticatedUserService, AuthenticatedUserService>();
 builder.Services.AddControllers();
+builder.Services.AddMediator(typeof(CleanArchitecture.Application.ServiceRegistration).Assembly);
 builder.Services.AddVersioning();
 builder.Services.AddFluentValidationAutoValidation();
 builder.Services.AddSwaggerWithVersioning();
