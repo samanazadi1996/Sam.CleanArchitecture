@@ -1,36 +1,53 @@
 ﻿using CleanArchitecture.Application.Interfaces;
 using CleanArchitecture.WebApi.Infrastructure.Services;
 using Microsoft.Extensions.DependencyInjection;
+using System;
 using System.Linq;
 using System.Reflection;
 
 namespace CleanArchitecture.WebApi.Infrastructure.Extensions;
-
 public static class MediatorExtensions
 {
     public static IServiceCollection AddMediator(this IServiceCollection services, Assembly assembly)
     {
         var requestTypes = assembly.GetTypes()
-            .Where(type => type.GetInterface(typeof(IRequest<>).Name) != null);
+            .Where(type => !type.IsAbstract && !type.IsInterface)
+            .Select(type => new
+            {
+                Type = type,
+                Interface = type.GetInterfaces()
+                    .FirstOrDefault(i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IRequest<>))
+            })
+            .Where(x => x.Interface != null)
+            .ToList();
 
         var handlerTypes = assembly.GetTypes()
-            .Where(type => type.GetInterface(typeof(IRequestHandler<,>).Name) != null);
+            .Where(type => !type.IsAbstract && !type.IsInterface)
+            .SelectMany(type => type.GetInterfaces()
+                .Where(i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IRequestHandler<,>))
+                .Select(i => new { Handler = type, Interface = i }))
+            .ToList();
 
-        foreach (var requestType in requestTypes)
+        foreach (var request in requestTypes)
         {
-            var responseType = requestType.GetInterface(typeof(IRequest<>).Name).GenericTypeArguments[0];
+            var responseType = request.Interface!.GetGenericArguments()[0];
+            var handlerInterface = typeof(IRequestHandler<,>).MakeGenericType(request.Type, responseType);
 
-            var handler = handlerTypes.FirstOrDefault(type =>
-                type.GetInterface(typeof(IRequestHandler<,>).Name)
-                    .GetGenericArguments()[0] == requestType);
+            var handler = handlerTypes
+                .FirstOrDefault(h => h.Interface == handlerInterface)?.Handler;
 
-            var handlerInterface = typeof(IRequestHandler<,>).MakeGenericType(requestType, responseType);
-            services.AddTransient(handlerInterface, handler);
+            if (handler != null)
+            {
+                services.AddTransient(handlerInterface, handler);
+            }
+            else
+            {
+                throw new InvalidOperationException($"Handler not found for request type {request.Type.FullName}");
+            }
         }
 
         services.AddScoped<IMediator, MediatorService>();
 
         return services;
     }
-
 }

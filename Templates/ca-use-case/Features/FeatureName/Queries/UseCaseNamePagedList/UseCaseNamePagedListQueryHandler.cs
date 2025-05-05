@@ -1,4 +1,4 @@
-﻿using MediatR;
+﻿using CleanArchitecture.Application.Interfaces;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
@@ -9,7 +9,7 @@ namespace CleanArchitecture.Application.Features.FeatureName.Queries.UseCaseName
 {
     public class UseCaseNamePagedListQueryHandler : IRequestHandler<UseCaseNamePagedListQuery, PagedResponse<object>>
     {
-        public async Task<PagedResponse<object>> Handle(UseCaseNamePagedListQuery request, CancellationToken cancellationToken)
+        public async Task<PagedResponse<object>> HandleAsync(UseCaseNamePagedListQuery request, CancellationToken cancellationToken)
         {
             // Handler
 
