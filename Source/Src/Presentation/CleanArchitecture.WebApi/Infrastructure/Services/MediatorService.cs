@@ -1,8 +1,8 @@
 ﻿using CleanArchitecture.Application.Interfaces;
-using System;
-using System.Threading.Tasks;
-using System.Threading;
 using Microsoft.Extensions.DependencyInjection;
+using System;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace CleanArchitecture.WebApi.Infrastructure.Services;
 

@@ -1,3 +1,4 @@
+using Asp.Versioning;
 using CleanArchitecture.Application.Features.Products.Commands.CreateProduct;
 using CleanArchitecture.Application.Features.Products.Commands.DeleteProduct;
 using CleanArchitecture.Application.Features.Products.Commands.UpdateProduct;
@@ -8,7 +9,6 @@ using CleanArchitecture.Domain.Products.DTOs;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
-using Asp.Versioning;
 
 namespace CleanArchitecture.WebApi.Controllers.v1;
 

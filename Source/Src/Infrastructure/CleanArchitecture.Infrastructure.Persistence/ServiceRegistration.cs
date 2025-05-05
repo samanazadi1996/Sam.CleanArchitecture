@@ -41,7 +41,7 @@ public static class ServiceRegistration
         foreach (var item in interfaces)
         {
             var implementation = implementations.FirstOrDefault(p => p.GetInterface(item.Name) != null);
-          
+
             if (implementation is not null)
                 services.AddTransient(item, implementation);
         }
