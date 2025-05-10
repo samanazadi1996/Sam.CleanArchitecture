@@ -8,9 +8,20 @@ using System.Reflection;
 namespace CleanArchitecture.WebApi.Infrastructure.Extensions;
 public static class MediatorExtensions
 {
-    public static IServiceCollection AddMediator(this IServiceCollection services, Assembly assembly)
+    public static IServiceCollection AddMediator(this IServiceCollection services)
     {
-        var requestTypes = assembly.GetTypes()
+        Assembly[] assemblies =
+        {
+            typeof(Application.ServiceRegistration).Assembly
+        };
+
+        services.AddMediator(assemblies);
+
+        return services;
+    }
+    public static IServiceCollection AddMediator(this IServiceCollection services, Assembly[] assemblies)
+    {
+        var requestTypes = assemblies.SelectMany(asm => asm.GetTypes())
             .Where(type => !type.IsAbstract && !type.IsInterface)
             .Select(type => new
             {
@@ -21,7 +32,7 @@ public static class MediatorExtensions
             .Where(x => x.Interface != null)
             .ToList();
 
-        var handlerTypes = assembly.GetTypes()
+        var handlerTypes = assemblies.SelectMany(asm => asm.GetTypes())
             .Where(type => !type.IsAbstract && !type.IsInterface)
             .SelectMany(type => type.GetInterfaces()
                 .Where(i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IRequestHandler<,>))
