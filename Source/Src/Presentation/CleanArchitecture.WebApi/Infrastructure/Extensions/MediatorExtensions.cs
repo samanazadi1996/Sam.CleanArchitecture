@@ -1,4 +1,5 @@
-﻿using CleanArchitecture.Application.Interfaces;
+﻿using CleanArchitecture.Application.Behaviours;
+using CleanArchitecture.Application.Interfaces;
 using CleanArchitecture.WebApi.Infrastructure.Services;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -15,10 +16,18 @@ public static class MediatorExtensions
             typeof(Application.ServiceRegistration).Assembly
         };
 
-        services.AddMediator(assemblies);
+        services.AddMediator(assemblies)
+            .AddBehavior(typeof(ValidationBehavior<,>));
 
         return services;
     }
+    public static IServiceCollection AddBehavior(this IServiceCollection services, Type behaviorType)
+    {
+        services.AddTransient(typeof(IPipelineBehavior<,>), behaviorType);
+
+        return services;
+    }
+
     public static IServiceCollection AddMediator(this IServiceCollection services, Assembly[] assemblies)
     {
         var requestTypes = assemblies.SelectMany(asm => asm.GetTypes())

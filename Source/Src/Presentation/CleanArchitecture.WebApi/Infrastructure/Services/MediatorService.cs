@@ -1,6 +1,7 @@
 ﻿using CleanArchitecture.Application.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -16,7 +17,15 @@ public class MediatorService(IServiceProvider serviceProvider) : IMediator
         if (handler == null)
             throw new InvalidOperationException($"Handler not found for request type {request.GetType()}");
 
-        return await handler.HandleAsync(request, cancellationToken);
+        var behaviors = serviceProvider.GetServices<IPipelineBehavior<TRequest, TResponse>>().Reverse();
+        Func<Task<TResponse>> handlerDelegate = () => handler.HandleAsync(request, cancellationToken);
+        foreach (var behavior in behaviors)
+        {
+            var next = handlerDelegate;
+            handlerDelegate = () => behavior.HandleAsync(request, next, cancellationToken);
+        }
+
+        return await handlerDelegate();
 
     }
 }
