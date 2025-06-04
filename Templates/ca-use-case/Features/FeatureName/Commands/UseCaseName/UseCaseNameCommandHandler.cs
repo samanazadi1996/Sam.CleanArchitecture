@@ -7,7 +7,7 @@ namespace CleanArchitecture.Application.Features.FeatureName.Commands.UseCaseNam
 {
     public class UseCaseNameCommandHandler : IRequestHandler<UseCaseNameCommand, BaseResult<object>>
     {
-        public async Task<BaseResult<object>> HandleAsync(UseCaseNameCommand request, CancellationToken cancellationToken)
+        public async Task<BaseResult<object>> Handle(UseCaseNameCommand request, CancellationToken cancellationToken)
         {
             // Handler
 
