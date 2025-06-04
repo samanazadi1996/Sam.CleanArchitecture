@@ -8,7 +8,7 @@ namespace CleanArchitecture.Application.Features.Accounts.Commands.ChangeUserNam
 
 public class ChangeUserNameCommandHandler(IAccountServices accountServices) : IRequestHandler<ChangeUserNameCommand, BaseResult>
 {
-    public async Task<BaseResult> HandleAsync(ChangeUserNameCommand request, CancellationToken cancellationToken = default)
+    public async Task<BaseResult> Handle(ChangeUserNameCommand request, CancellationToken cancellationToken = default)
     {
         return await accountServices.ChangeUserName(request);
     }

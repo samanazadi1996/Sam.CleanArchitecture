@@ -8,7 +8,7 @@ namespace CleanArchitecture.Application.Features.Accounts.Commands.ChangePasswor
 
 public class ChangePasswordCommandHandler(IAccountServices accountServices) : IRequestHandler<ChangePasswordCommand, BaseResult>
 {
-    public async Task<BaseResult> HandleAsync(ChangePasswordCommand request, CancellationToken cancellationToken = default)
+    public async Task<BaseResult> Handle(ChangePasswordCommand request, CancellationToken cancellationToken = default)
     {
         return await accountServices.ChangePassword(request);
     }

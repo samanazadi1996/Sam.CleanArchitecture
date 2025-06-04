@@ -10,7 +10,7 @@ namespace CleanArchitecture.Application.Behaviours;
 public class ValidationBehavior<TRequest, TResponse>(IEnumerable<IValidator<TRequest>> validators) 
     : IPipelineBehavior<TRequest, TResponse>
 {
-    public async Task<TResponse> HandleAsync(TRequest request, Func<Task<TResponse>> next, CancellationToken cancellationToken = default)
+    public async Task<TResponse> Handle(TRequest request, Func<Task<TResponse>> next, CancellationToken cancellationToken = default)
     {
         if (validators.Any())
         {

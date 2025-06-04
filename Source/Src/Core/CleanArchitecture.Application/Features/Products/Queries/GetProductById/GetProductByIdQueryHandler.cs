@@ -10,7 +10,7 @@ namespace CleanArchitecture.Application.Features.Products.Queries.GetProductById
 
 public class GetProductByIdQueryHandler(IProductRepository productRepository, ITranslator translator) : IRequestHandler<GetProductByIdQuery, BaseResult<ProductDto>>
 {
-    public async Task<BaseResult<ProductDto>> HandleAsync(GetProductByIdQuery request, CancellationToken cancellationToken)
+    public async Task<BaseResult<ProductDto>> Handle(GetProductByIdQuery request, CancellationToken cancellationToken)
     {
         var product = await productRepository.GetByIdAsync(request.Id);
 

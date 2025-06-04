@@ -37,7 +37,7 @@ public class GetPagedListProductQueryHandlerTests
         };
 
         // Act
-        var result = await handler.HandleAsync(query, CancellationToken.None);
+        var result = await handler.Handle(query, CancellationToken.None);
 
         // Assert
         result.ShouldNotBeNull();

@@ -25,7 +25,7 @@ public class CreateProductCommandHandlerTests
         };
 
         // Act
-        var result = await handler.HandleAsync(command, CancellationToken.None);
+        var result = await handler.Handle(command, CancellationToken.None);
 
         // Assert
         result.ShouldNotBeNull();
