@@ -119,7 +119,7 @@ If you found this Implementation helpful or used it in your Projects, do give it
 # Features
 
 - [Clean Architecture](./Documents/CleanArchitecture.md)
-- [CQRS with MediatR Library](https://github.com/jbogard/MediatR)
+- CQRS with Mediator Pattern
 - [Entity Framework Core - Code First](https://github.com/dotnet/efcore)
 - [Repository Pattern - Generic](./Documents/RepositoryPatternGeneric.md)
 - [Serilog](https://github.com/serilog/serilog)
