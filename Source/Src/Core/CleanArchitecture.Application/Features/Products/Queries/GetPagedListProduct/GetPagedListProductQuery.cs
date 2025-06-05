@@ -1,7 +1,7 @@
+using CleanArchitecture.Application.Interfaces;
 using CleanArchitecture.Application.Parameters;
 using CleanArchitecture.Application.Wrappers;
 using CleanArchitecture.Domain.Products.DTOs;
-using MediatR;
 
 namespace CleanArchitecture.Application.Features.Products.Queries.GetPagedListProduct;
 

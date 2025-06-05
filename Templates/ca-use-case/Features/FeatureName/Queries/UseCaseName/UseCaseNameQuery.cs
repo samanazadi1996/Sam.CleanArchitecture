@@ -1,5 +1,5 @@
-﻿using CleanArchitecture.Application.Wrappers;
-using MediatR;
+﻿using CleanArchitecture.Application.Interfaces;
+using CleanArchitecture.Application.Wrappers;
 
 namespace CleanArchitecture.Application.Features.FeatureName.Queries.UseCaseName
 {

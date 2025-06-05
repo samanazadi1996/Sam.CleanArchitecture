@@ -1,5 +1,5 @@
+using CleanArchitecture.Application.Interfaces;
 using CleanArchitecture.WebApi.Infrastructure.Filters;
-using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 
