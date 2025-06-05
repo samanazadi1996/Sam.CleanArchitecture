@@ -13,7 +13,6 @@ using CleanArchitecture.Infrastructure.Resources;
 using CleanArchitecture.WebApi.Infrastructure.Extensions;
 using CleanArchitecture.WebApi.Infrastructure.Middlewares;
 using CleanArchitecture.WebApi.Infrastructure.Services;
-using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -33,8 +32,8 @@ builder.Services.AddIdentityInfrastructure(builder.Configuration, useInMemoryDat
 builder.Services.AddResourcesInfrastructure();
 builder.Services.AddScoped<IAuthenticatedUserService, AuthenticatedUserService>();
 builder.Services.AddControllers();
+builder.Services.AddMediator();
 builder.Services.AddVersioning();
-builder.Services.AddFluentValidationAutoValidation();
 builder.Services.AddSwaggerWithVersioning();
 builder.Services.AddAnyCors();
 builder.Services.AddCustomLocalization(builder.Configuration);

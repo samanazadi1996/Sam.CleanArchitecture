@@ -1,4 +1,4 @@
-﻿using MediatR;
+﻿using CleanArchitecture.Application.Interfaces;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
