@@ -20,7 +20,7 @@ public class UpdateProductCommandHandlerTests
         var productBarCode = "987654321";
 
         var productRepositoryMock = new Mock<IProductRepository>();
-        productRepositoryMock.Setup(repo => repo.GetByIdAsync(productId))
+        productRepositoryMock.Setup(repo => repo.GetByIdAsync(It.IsAny<long>()))
                              .ReturnsAsync(new Product("", 100, "") { Id = productId });
 
         var unitOfWorkMock = new Mock<IUnitOfWork>();
@@ -43,7 +43,7 @@ public class UpdateProductCommandHandlerTests
         result.ShouldNotBeNull();
         result.Success.ShouldBeTrue();
 
-        productRepositoryMock.Verify(repo => repo.GetByIdAsync(productId), Times.Once);
+        productRepositoryMock.Verify(repo => repo.GetByIdAsync(It.IsAny<long>()), Times.Once);
         unitOfWorkMock.Verify(unit => unit.SaveChangesAsync(), Times.Once);
     }
 

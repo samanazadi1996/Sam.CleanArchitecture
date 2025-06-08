@@ -4,6 +4,10 @@ using CleanArchitecture.Infrastructure.Identity.Contexts;
 using CleanArchitecture.Infrastructure.Identity.Models;
 using CleanArchitecture.Infrastructure.Persistence.Contexts;
 using HotChocolate.Authorization;
+using HotChocolate.Data;
+using HotChocolate.Types;
+using System;
+using System.Linq;
 
 namespace CleanArchitecture.Infrastructure.GraphQL;
 

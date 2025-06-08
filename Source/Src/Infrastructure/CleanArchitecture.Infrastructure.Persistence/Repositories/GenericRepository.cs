@@ -9,7 +9,7 @@ namespace CleanArchitecture.Infrastructure.Persistence.Repositories;
 
 public class GenericRepository<T>(DbContext dbContext) : IGenericRepository<T> where T : class
 {
-    public virtual async Task<T> GetByIdAsync(long id)
+    public virtual async Task<T> GetByIdAsync(object id)
     {
         return await dbContext.Set<T>().FindAsync(id);
     }

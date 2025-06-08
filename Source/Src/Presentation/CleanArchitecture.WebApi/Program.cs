@@ -14,7 +14,6 @@ using CleanArchitecture.Infrastructure.Resources;
 using CleanArchitecture.WebApi.Infrastructure.Extensions;
 using CleanArchitecture.WebApi.Infrastructure.Middlewares;
 using CleanArchitecture.WebApi.Infrastructure.Services;
-using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -33,14 +32,15 @@ builder.Services.AddFileManagerInfrastructure(builder.Configuration, useInMemory
 builder.Services.AddIdentityInfrastructure(builder.Configuration, useInMemoryDatabase);
 builder.Services.AddResourcesInfrastructure();
 builder.Services.AddScoped<IAuthenticatedUserService, AuthenticatedUserService>();
-builder.Services.AddGraphQlInfrastructure();
 builder.Services.AddControllers();
-builder.Services.AddFluentValidationAutoValidation();
+builder.Services.AddMediator();
+builder.Services.AddVersioning();
 builder.Services.AddSwaggerWithVersioning();
 builder.Services.AddAnyCors();
 builder.Services.AddCustomLocalization(builder.Configuration);
 builder.Services.AddHealthChecks();
 builder.Host.UseSerilog((context, configuration) => configuration.ReadFrom.Configuration(context.Configuration));
+builder.Services.AddGraphQlInfrastructure();
 
 var app = builder.Build();
 

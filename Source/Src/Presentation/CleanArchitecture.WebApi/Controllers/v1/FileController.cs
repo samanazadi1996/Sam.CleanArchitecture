@@ -1,3 +1,4 @@
+using Asp.Versioning;
 using CleanArchitecture.Application.Interfaces;
 using CleanArchitecture.Application.Wrappers;
 using Microsoft.AspNetCore.Http;

@@ -19,8 +19,8 @@ public class GetPagedListProductQueryHandlerTests
 
         var products = new List<ProductDto>
             {
-                new ProductDto { Id = 1, Name = "Product 1", Price = 1000 },
-                new ProductDto { Id = 2, Name = "Product 2", Price = 1500 }
+                new() { Id = 1, Name = "Product 1", Price = 1000 },
+                new() { Id = 2, Name = "Product 2", Price = 1500 }
             };
 
         var productRepositoryMock = new Mock<IProductRepository>();

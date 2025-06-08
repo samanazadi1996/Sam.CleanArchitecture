@@ -93,11 +93,41 @@ You can find an article on this topic at this [link](./GraphQL.md), and the samp
 <details>
   <summary>
     <strong>
+How can I best integrate gRPC into my project?
+    </strong>
+  </summary>
+
+You can find an article on this topic at this [link](./GRPC.md), and the sample project for the article is available in [this branch](https://github.com/samanazadi1996/Sam.CleanArchitecture/tree/GRPC).
+</details>
+<br>
+
+<details>
+<summary><strong>How do I add Rate Limiting to my project?</strong></summary>
+
+To add Rate Limiting to your Clean Architecture project, you can follow the steps outlined in the [Rate Limiting article](./RateLimiting.md). This article provides a comprehensive guide, including how to implement the Rate Limiting class, register it in the `Program.cs` file, and apply it to specific controller actions.
+
+The implementation has been completed in the [Rate Limiting branch of the Sam.CleanArchitecture repository](https://github.com/samanazadi1996/Sam.CleanArchitecture/tree/rete-linit).
+</details>
+<br>
+
+<details>
+  <summary>
+    <strong>
 How is exception handling implemented?
     </strong>
   </summary>
 
 For more detailed instructions, you can refer to [this](./ExceptionHandlingMiddlewares.md) documentation.
+</details>
+<br>
+
+
+<details>
+<summary><strong>
+How do I implement OutputCache in this project?
+</strong></summary>
+
+For more detailed instructions, you can refer to [this](./OutputCache.md) documentation.
 </details>
 <br>
 
@@ -156,6 +186,33 @@ How is User Auditing implemented?
   </summary>
 
 For more detailed instructions, you can refer to [this](./UserAuditing.md) documentation.
+</details>
+<br>
+<details>
+  <summary>
+    <strong>
+How can I normalize character input in EF Core entities?
+    </strong>
+  </summary>
+
+In EF Core, it's common to have data inconsistency when dealing with character variations, especially in multilingual systems. To ensure consistency, character normalization can be applied before saving entities to the database.
+
+For example, you might need to normalize Persian or Arabic characters like "ي" to "ی" or "ك" to "ک". This can be done using EF Core's `ChangeTracker` to normalize string properties before data is persisted to the database.
+
+For a detailed guide and implementation on how to normalize characters in EF Core, you can refer to [this document](./CharacterNormalization.md).
+</details>
+<br>
+
+<details>
+  <summary>
+    <strong>
+How is Audit Log integrated into the project?
+    </strong>
+  </summary>
+
+The Audit Log feature allows you to track and store changes made to your application's critical entities. In this project, you can choose between two storage options for audit logs: MongoDB or EventStore, providing flexibility based on your system's requirements.
+
+For a comprehensive guide on configuring and using the audit logging feature, refer to the [Audit Log documentation](./AuditLog.md).
 </details>
 <br>
 
