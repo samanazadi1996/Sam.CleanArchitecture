@@ -16,17 +16,17 @@ public class AccountController : BaseApiController
 {
     [HttpPost]
     public async Task<BaseResult<AuthenticationResponse>> Authenticate(AuthenticateCommand model)
-        => await Mediator.Send<AuthenticateCommand, BaseResult<AuthenticationResponse>>(model);
+        => await Mediator.Send(model);
 
     [HttpPut, Authorize]
     public async Task<BaseResult> ChangeUserName(ChangeUserNameCommand model)
-        => await Mediator.Send<ChangeUserNameCommand, BaseResult>(model);
+        => await Mediator.Send(model);
 
     [HttpPut, Authorize]
     public async Task<BaseResult> ChangePassword(ChangePasswordCommand model)
-        => await Mediator.Send<ChangePasswordCommand, BaseResult>(model);
+        => await Mediator.Send(model);
 
     [HttpPost]
     public async Task<BaseResult<AuthenticationResponse>> Start()
-        => await Mediator.Send<StartCommand, BaseResult<AuthenticationResponse>>(new StartCommand());
+        => await Mediator.Send(new StartCommand());
 }
