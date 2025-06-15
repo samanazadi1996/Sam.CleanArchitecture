@@ -1,3 +1,4 @@
+using Asp.Versioning;
 using CleanArchitecture.Application.Wrappers;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -12,8 +13,6 @@ public class DocController : BaseApiController
     [HttpGet]
     public Dictionary<string, string> GetErrorCodes()
     {
-        return Enum.GetValues(typeof(ErrorCode))
-             .Cast<ErrorCode>()
-             .ToDictionary(t => ((int)t).ToString(), t => t.ToString());
+        return Enum.GetValues<ErrorCode>().ToDictionary(t => ((int)t).ToString(), t => t.ToString());
     }
 }

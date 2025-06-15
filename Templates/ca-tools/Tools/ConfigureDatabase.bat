@@ -2,7 +2,7 @@
 setlocal enabledelayedexpansion
 
 :: Prompt for database type and class library name
-set /p userInput=Enter the type of database you want to use (SqlServer, PostgreSQL, Oracle):
+set /p userInput=Enter the type of database you want to use (SqlServer, PostgreSQL, Oracle, MySql, Sqlite):
 set /p classLib=Enter the name of the ClassLibrary you want to configure (Identity, Persistence, FileManager):
 
 :: Set the directory where .sln files are located
@@ -31,6 +31,16 @@ if /i "%userInput%"=="Oracle" (
     call :AddPackageAndUpdate "UseOracle" "Oracle.EntityFrameworkCore"
 )
 
+if /i "%userInput%"=="MySql" (
+    echo Configuring for Oracle...
+    call :AddPackageAndUpdate "UseMySql" "Pomelo.EntityFrameworkCore.MySql"
+)
+
+if /i "%userInput%"=="Sqlite" (
+    echo Configuring for Oracle...
+    call :AddPackageAndUpdate "UseSqlite" "Microsoft.EntityFrameworkCore.Sqlite"
+)
+
 echo Configuration complete. Please perform the following steps:
 echo 1. Set the connection string in appsettings.json.
 echo 2. Delete existing migrations.
@@ -50,6 +60,8 @@ goto :EOF
     powershell -Command "(Get-Content 'ServiceRegistration.cs') -replace 'UseSqlServer', '%1' | Set-Content 'ServiceRegistration.cs'"
     powershell -Command "(Get-Content 'ServiceRegistration.cs') -replace 'UseNpgsql', '%1' | Set-Content 'ServiceRegistration.cs'"
     powershell -Command "(Get-Content 'ServiceRegistration.cs') -replace 'UseOracle', '%1' | Set-Content 'ServiceRegistration.cs'"
+    powershell -Command "(Get-Content 'ServiceRegistration.cs') -replace 'UseMySql', '%1' | Set-Content 'ServiceRegistration.cs'"
+    powershell -Command "(Get-Content 'ServiceRegistration.cs') -replace 'UseSqlite', '%1' | Set-Content 'ServiceRegistration.cs'"
 
     echo Configuration for %1 complete.
     popd

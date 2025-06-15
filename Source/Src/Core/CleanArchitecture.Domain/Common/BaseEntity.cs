@@ -1,7 +1,10 @@
 ﻿namespace CleanArchitecture.Domain.Common
 {
-    public abstract class BaseEntity
+    public abstract class BaseEntity<TKey>
     {
-        public long Id { get; set; }
+        public TKey Id { get; set; } = default!;
+    }
+    public abstract class BaseEntity : BaseEntity<long>
+    {
     }
 }

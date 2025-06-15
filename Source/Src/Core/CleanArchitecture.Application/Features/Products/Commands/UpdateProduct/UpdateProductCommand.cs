@@ -1,5 +1,5 @@
+using CleanArchitecture.Application.Interfaces;
 using CleanArchitecture.Application.Wrappers;
-using MediatR;
 
 namespace CleanArchitecture.Application.Features.Products.Commands.UpdateProduct;
 

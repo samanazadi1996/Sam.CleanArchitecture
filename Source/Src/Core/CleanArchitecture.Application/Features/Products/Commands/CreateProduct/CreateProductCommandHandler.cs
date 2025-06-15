@@ -2,7 +2,6 @@ using CleanArchitecture.Application.Interfaces;
 using CleanArchitecture.Application.Interfaces.Repositories;
 using CleanArchitecture.Application.Wrappers;
 using CleanArchitecture.Domain.Products.Entities;
-using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
 

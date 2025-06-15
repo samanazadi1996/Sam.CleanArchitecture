@@ -3,11 +3,15 @@ using CleanArchitecture.Application.Features.Products.Commands.DeleteProduct;
 using CleanArchitecture.Application.Features.Products.Commands.UpdateProduct;
 using CleanArchitecture.Application.Features.Products.Queries.GetPagedListProduct;
 using CleanArchitecture.Application.Features.Products.Queries.GetProductById;
+using CleanArchitecture.Application.Interfaces;
+using CleanArchitecture.Application.Wrappers;
+using CleanArchitecture.Domain.Products.DTOs;
 using CleanArchitecture.Infrastructure.GRPC.Common;
 using CleanArchitecture.Infrastructure.GRPC.Protos;
 using Grpc.Core;
-using MediatR;
 using Microsoft.AspNetCore.Authorization;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace CleanArchitecture.Infrastructure.GRPC.Services;
 
@@ -15,7 +19,7 @@ public class ProductServiceImpl(IMediator mediator) : ProductService.ProductServ
 {
     public override async Task<GetProductByIdResponse> GetProductById(GrpcBaseRequestWithIdParameter request, ServerCallContext context)
     {
-        var result = await mediator.Send(new GetProductByIdQuery
+        var result = await mediator.Send<GetProductByIdQuery, BaseResult<ProductDto>>(new GetProductByIdQuery
         {
             Id = request.Id
         });
@@ -39,7 +43,7 @@ public class ProductServiceImpl(IMediator mediator) : ProductService.ProductServ
 
     public override async Task<GetPagedListProductResponse> GetPagedListProduct(GetPagedListProductRequest request, ServerCallContext context)
     {
-        var result = await mediator.Send(new GetPagedListProductQuery
+        var result = await mediator.Send<GetPagedListProductQuery, PagedResponse<ProductDto>>(new GetPagedListProductQuery
         {
             Name = request.Name,
             PageSize = request.PageSize,
@@ -73,7 +77,7 @@ public class ProductServiceImpl(IMediator mediator) : ProductService.ProductServ
     [Authorize]
     public override async Task<GrpcBaseResultWithIntData> CreateProduct(CreateProductRequest request, ServerCallContext context)
     {
-        var result = await mediator.Send(new CreateProductCommand()
+        var result = await mediator.Send<CreateProductCommand, BaseResult<long>>(new CreateProductCommand()
         {
             Name = request.Name,
             Price = request.Price,
@@ -86,7 +90,7 @@ public class ProductServiceImpl(IMediator mediator) : ProductService.ProductServ
     [Authorize]
     public override async Task<GrpcBaseResult> UpdateProduct(UpdateProductRequest request, ServerCallContext context)
     {
-        var result = await mediator.Send(new UpdateProductCommand()
+        var result = await mediator.Send<UpdateProductCommand, BaseResult>(new UpdateProductCommand()
         {
             Id = request.Id,
             Name = request.Name,
@@ -100,7 +104,7 @@ public class ProductServiceImpl(IMediator mediator) : ProductService.ProductServ
     [Authorize]
     public override async Task<GrpcBaseResult> DeleteProduct(GrpcBaseRequestWithIdParameter request, ServerCallContext context)
     {
-        var result = await mediator.Send(new DeleteProductCommand()
+        var result = await mediator.Send<DeleteProductCommand, BaseResult>(new DeleteProductCommand()
         {
             Id = request.Id,
         });

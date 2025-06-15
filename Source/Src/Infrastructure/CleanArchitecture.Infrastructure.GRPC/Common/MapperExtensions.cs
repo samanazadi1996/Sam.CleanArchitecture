@@ -1,11 +1,13 @@
 ﻿using CleanArchitecture.Application.Wrappers;
 using CleanArchitecture.Infrastructure.GRPC.Protos;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace CleanArchitecture.Infrastructure.GRPC.Common;
 
 public static class MapperExtensions
 {
-    public static IEnumerable<GrpcError> ToProtobufErrors(this List<Error>? errors)
+    public static IEnumerable<GrpcError> ToProtobufErrors(this List<Error> errors)
     {
         return errors?.Select(e => new GrpcError
         {
