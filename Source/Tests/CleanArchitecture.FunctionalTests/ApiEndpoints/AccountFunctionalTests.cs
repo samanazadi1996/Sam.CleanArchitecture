@@ -68,7 +68,7 @@ public class AccountFunctionalTests(CustomWebApplicationFactory<Program> factory
         // Assert
         result.Success.ShouldBeTrue();
         result.Errors.ShouldBeNull();
-        result.Data.JwToken.ShouldNotBeNull();
+        result.Data.JwtToken.ShouldNotBeNull();
         result.Data.UserName.ShouldBe(model.UserName);
         result.Data.IsVerified.ShouldBeTrue();
     }
@@ -86,7 +86,7 @@ public class AccountFunctionalTests(CustomWebApplicationFactory<Program> factory
         // Assert
         result.Success.ShouldBeTrue();
         result.Errors.ShouldBeNull();
-        result.Data.JwToken.ShouldNotBeNull();
+        result.Data.JwtToken.ShouldNotBeNull();
         result.Data.IsVerified.ShouldBeFalse();
     }
 
@@ -104,7 +104,7 @@ public class AccountFunctionalTests(CustomWebApplicationFactory<Program> factory
         };
 
         // Act
-        var result = await client.PutAndDeserializeAsync<BaseResult>(url, model, ghostAccount.JwToken);
+        var result = await client.PutAndDeserializeAsync<BaseResult>(url, model, ghostAccount.JwtToken);
 
         // Assert
         result.Success.ShouldBeTrue();
@@ -124,7 +124,7 @@ public class AccountFunctionalTests(CustomWebApplicationFactory<Program> factory
         };
 
         // Act
-        var result = await client.PutAndDeserializeAsync<BaseResult>(url, model, ghostAccount.JwToken);
+        var result = await client.PutAndDeserializeAsync<BaseResult>(url, model, ghostAccount.JwtToken);
 
         // Assert
         result.Success.ShouldBeTrue();
