@@ -31,11 +31,12 @@ builder.Services.AddFileManagerInfrastructure(builder.Configuration, useInMemory
 builder.Services.AddIdentityInfrastructure(builder.Configuration, useInMemoryDatabase);
 builder.Services.AddResourcesInfrastructure();
 builder.Services.AddScoped<IAuthenticatedUserService, AuthenticatedUserService>();
-builder.Services.AddControllers();
 builder.Services.AddMediator();
-builder.Services.AddVersioning();
-builder.Services.AddSwaggerWithVersioning();
+builder.Services.AddEndpointsApiExplorer();
+
+builder.Services.AddCustomSwagger();
 builder.Services.AddAnyCors();
+builder.Services.AddAuthorization();
 builder.Services.AddCustomLocalization(builder.Configuration);
 builder.Services.AddHealthChecks();
 builder.Host.UseSerilog((context, configuration) => configuration.ReadFrom.Configuration(context.Configuration));
@@ -64,10 +65,10 @@ app.UseAnyCors();
 app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
-app.UseSwaggerWithVersioning();
+app.UseCustomSwagger();
 app.UseMiddleware<ErrorHandlerMiddleware>();
 app.UseHealthChecks("/health");
-app.MapControllers();
+app.MapEndpoints();
 app.UseSerilogRequestLogging();
 
 app.Run();
