@@ -4,6 +4,7 @@ using CleanArchitecture.WebApi.Infrastructure.Extensions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
 using System.IO;
+using System.Net.Mime;
 using System.Threading.Tasks;
 
 namespace CleanArchitecture.WebApi.Endpoints;
@@ -16,15 +17,14 @@ public class FileEndpoint : EndpointGroupBase
         builder.MapPost(UploadFile);
     }
 
-    public async Task<object> GetFile(IFileManagerService fileManagerService, string name)
+    async Task<object> GetFile(IFileManagerService fileManagerService, string name)
     {
         var bytes = await fileManagerService.Download(name);
 
-        return bytes;
-        //return File(bytes, MediaTypeNames.Application.Octet, name);
+        return (bytes, MediaTypeNames.Application.Octet, name);
     }
 
-    public async Task<BaseResult<string>> UploadFile(IFileManagerService fileManagerService, string name, IFormFile file)
+    async Task<BaseResult<string>> UploadFile(IFileManagerService fileManagerService, string name, IFormFile file)
     {
         using var memoryStream = new MemoryStream();
 

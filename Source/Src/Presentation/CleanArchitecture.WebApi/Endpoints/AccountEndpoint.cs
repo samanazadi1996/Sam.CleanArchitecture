@@ -25,16 +25,16 @@ public class AccountEndpoint : EndpointGroupBase
         builder.MapPost(Start);
     }
 
-    public async Task<BaseResult<AuthenticationResponse>> Authenticate(IMediator mediator, AuthenticateCommand model)
+    async Task<BaseResult<AuthenticationResponse>> Authenticate(IMediator mediator, AuthenticateCommand model)
         => await mediator.Send<AuthenticateCommand, BaseResult<AuthenticationResponse>>(model);
 
-    public async Task<BaseResult> ChangeUserName(IMediator mediator, ChangeUserNameCommand model)
+    async Task<BaseResult> ChangeUserName(IMediator mediator, ChangeUserNameCommand model)
         => await mediator.Send<ChangeUserNameCommand, BaseResult>(model);
 
-    public async Task<BaseResult> ChangePassword(IMediator mediator, ChangePasswordCommand model)
+    async Task<BaseResult> ChangePassword(IMediator mediator, ChangePasswordCommand model)
         => await mediator.Send<ChangePasswordCommand, BaseResult>(model);
 
-    public async Task<BaseResult<AuthenticationResponse>> Start(IMediator mediator)
+    async Task<BaseResult<AuthenticationResponse>> Start(IMediator mediator)
         => await mediator.Send<StartCommand, BaseResult<AuthenticationResponse>>(new StartCommand());
 
 }

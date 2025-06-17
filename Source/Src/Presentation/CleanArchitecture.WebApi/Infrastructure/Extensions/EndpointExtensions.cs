@@ -25,7 +25,8 @@ public static class EndpointExtensions
         {
             if (Activator.CreateInstance(type) is EndpointGroupBase instance)
             {
-                instance.Map(app.MapGroup($"/api/{instance.GetType().Name.Replace("Endpoint", "")}"));
+                var prefix = $"/api/{instance.GetType().Name.Replace("Endpoint", "")}";
+                instance.Map(app.MapGroup(prefix));
             }
         }
 

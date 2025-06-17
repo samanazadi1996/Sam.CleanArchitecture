@@ -16,7 +16,7 @@ public class ProductFunctionalTests(CustomWebApplicationFactory<Program> factory
     public async Task GetPagedListProduct_ShouldReturnPagedResponse()
     {
         // Arrange
-        var url = ApiRoutes.Product.GetPagedListProduct;
+        var url = ApiRoutes.Product.GetPagedListProduct.AddQueryString("PageNumber", "1").AddQueryString("PageSize", "10");
 
         // Act
         var result = await client.GetAndDeserializeAsync<PagedResponse<ProductDto>>(url);

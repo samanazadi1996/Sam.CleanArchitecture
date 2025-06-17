@@ -29,19 +29,19 @@ public class ProductEndpoint : EndpointGroupBase
         builder.MapDelete(DeleteProduct).RequireAuthorization();
     }
 
-    public async Task<PagedResponse<ProductDto>> GetPagedListProduct(IMediator mediator, [AsParameters] GetPagedListProductQuery model)
+    async Task<PagedResponse<ProductDto>> GetPagedListProduct(IMediator mediator, [AsParameters] GetPagedListProductQuery model)
         => await mediator.Send<GetPagedListProductQuery, PagedResponse<ProductDto>>(model);
 
-    public async Task<BaseResult<ProductDto>> GetProductById(IMediator mediator, [AsParameters] GetProductByIdQuery model)
+    async Task<BaseResult<ProductDto>> GetProductById(IMediator mediator, [AsParameters] GetProductByIdQuery model)
         => await mediator.Send<GetProductByIdQuery, BaseResult<ProductDto>>(model);
 
-    public async Task<BaseResult<long>> CreateProduct(IMediator mediator, CreateProductCommand model)
+    async Task<BaseResult<long>> CreateProduct(IMediator mediator, CreateProductCommand model)
         => await mediator.Send<CreateProductCommand, BaseResult<long>>(model);
 
-    public async Task<BaseResult> UpdateProduct(IMediator mediator, UpdateProductCommand model)
+    async Task<BaseResult> UpdateProduct(IMediator mediator, UpdateProductCommand model)
         => await mediator.Send<UpdateProductCommand, BaseResult>(model);
 
-    public async Task<BaseResult> DeleteProduct(IMediator mediator, [AsParameters] DeleteProductCommand model)
+    async Task<BaseResult> DeleteProduct(IMediator mediator, [AsParameters] DeleteProductCommand model)
         => await mediator.Send<DeleteProductCommand, BaseResult>(model);
 
 }

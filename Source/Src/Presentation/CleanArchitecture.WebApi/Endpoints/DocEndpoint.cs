@@ -12,11 +12,10 @@ public class DocEndpoint : EndpointGroupBase
 {
     public override void Map(RouteGroupBuilder builder)
     {
-        builder
-            .MapGet(GetErrorCodes);
+        builder.MapGet(GetErrorCodes);
     }
 
-    public Dictionary<string, string> GetErrorCodes()
+    Dictionary<string, string> GetErrorCodes()
     {
         return Enum.GetValues<ErrorCode>().ToDictionary(t => ((int)t).ToString(), t => t.ToString());
     }
