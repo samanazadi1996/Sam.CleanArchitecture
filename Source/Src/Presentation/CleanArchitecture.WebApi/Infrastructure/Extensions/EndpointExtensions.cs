@@ -8,6 +8,7 @@ namespace CleanArchitecture.WebApi.Infrastructure.Extensions;
 
 public abstract class EndpointGroupBase
 {
+    public virtual string EndpointName { get; set; }
     public abstract void Map(RouteGroupBuilder builder);
 }
 public static class EndpointExtensions
@@ -25,7 +26,8 @@ public static class EndpointExtensions
         {
             if (Activator.CreateInstance(type) is EndpointGroupBase instance)
             {
-                var prefix = $"/api/{instance.GetType().Name.Replace("Endpoint", "")}";
+                var endpointName = instance.EndpointName ?? instance.GetType().Name.Replace("Endpoint", "");
+                var prefix = $"/api/{endpointName}";
                 instance.Map(app.MapGroup(prefix));
             }
         }
