@@ -8,7 +8,7 @@ namespace CleanArchitecture.WebApi.Infrastructure.Extensions;
 
 public abstract class EndpointGroupBase
 {
-    public virtual string EndpointName { get; set; }
+    public virtual string EndpointName { get; }
     public abstract void Map(RouteGroupBuilder builder);
 }
 public static class EndpointExtensions
