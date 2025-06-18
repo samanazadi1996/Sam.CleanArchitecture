@@ -17,11 +17,11 @@ public class FileEndpoint : EndpointGroupBase
         builder.MapPost(UploadFile);
     }
 
-    async Task<object> GetFile(IFileManagerService fileManagerService, string name)
+    async Task<IResult> GetFile(IFileManagerService fileManagerService, string name)
     {
         var bytes = await fileManagerService.Download(name);
 
-        return (bytes, MediaTypeNames.Application.Octet, name);
+        return Results.File(bytes, MediaTypeNames.Application.Octet, name);
     }
 
     async Task<BaseResult<string>> UploadFile(IFileManagerService fileManagerService, string name, IFormFile file)
