@@ -1,7 +1,5 @@
 using CleanArchitecture.Application;
 using CleanArchitecture.Application.Interfaces;
-using CleanArchitecture.Infrastructure.FileManager;
-using CleanArchitecture.Infrastructure.FileManager.Contexts;
 using CleanArchitecture.Infrastructure.Identity;
 using CleanArchitecture.Infrastructure.Identity.Contexts;
 using CleanArchitecture.Infrastructure.Identity.Models;
@@ -27,7 +25,6 @@ bool useInMemoryDatabase = builder.Configuration.GetValue<bool>("UseInMemoryData
 
 builder.Services.AddApplicationLayer();
 builder.Services.AddPersistenceInfrastructure(builder.Configuration, useInMemoryDatabase);
-builder.Services.AddFileManagerInfrastructure(builder.Configuration, useInMemoryDatabase);
 builder.Services.AddIdentityInfrastructure(builder.Configuration, useInMemoryDatabase);
 builder.Services.AddResourcesInfrastructure();
 builder.Services.AddScoped<IAuthenticatedUserService, AuthenticatedUserService>();
@@ -51,7 +48,6 @@ using (var scope = app.Services.CreateScope())
     {
         await services.GetRequiredService<IdentityContext>().Database.MigrateAsync();
         await services.GetRequiredService<ApplicationDbContext>().Database.MigrateAsync();
-        await services.GetRequiredService<FileManagerDbContext>().Database.MigrateAsync();
     }
 
     //Seed Data
