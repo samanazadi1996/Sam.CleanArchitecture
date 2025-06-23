@@ -132,7 +132,6 @@ If you found this Implementation helpful or used it in your Projects, do give it
 - [Identity Seeding](./Documents/IdentitySeeding.md)
 - [Database Seeding](./Documents/DatabaseSeeding.md)
 - [Custom Exception Handling Middlewares](./Documents/ExceptionHandlingMiddlewares.md)
-- API Versioning
 - [Localization (fa / en)](./Documents/Localization.md)
 - [Fluent Validation](https://github.com/FluentValidation/FluentValidation)
 - Complete User Management Module (Register / Authenticate / Change UserName / Change Password)
