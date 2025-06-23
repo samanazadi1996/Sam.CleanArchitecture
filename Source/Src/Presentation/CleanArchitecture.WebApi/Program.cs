@@ -1,7 +1,5 @@
 using CleanArchitecture.Application;
 using CleanArchitecture.Application.Interfaces;
-using CleanArchitecture.Infrastructure.FileManager;
-using CleanArchitecture.Infrastructure.FileManager.Contexts;
 using CleanArchitecture.Infrastructure.Identity;
 using CleanArchitecture.Infrastructure.Identity.Contexts;
 using CleanArchitecture.Infrastructure.Identity.Models;
@@ -27,15 +25,15 @@ bool useInMemoryDatabase = builder.Configuration.GetValue<bool>("UseInMemoryData
 
 builder.Services.AddApplicationLayer();
 builder.Services.AddPersistenceInfrastructure(builder.Configuration, useInMemoryDatabase);
-builder.Services.AddFileManagerInfrastructure(builder.Configuration, useInMemoryDatabase);
 builder.Services.AddIdentityInfrastructure(builder.Configuration, useInMemoryDatabase);
 builder.Services.AddResourcesInfrastructure();
 builder.Services.AddScoped<IAuthenticatedUserService, AuthenticatedUserService>();
-builder.Services.AddControllers();
 builder.Services.AddMediator();
-builder.Services.AddVersioning();
-builder.Services.AddSwaggerWithVersioning();
+builder.Services.AddEndpointsApiExplorer();
+
+builder.Services.AddCustomSwagger();
 builder.Services.AddAnyCors();
+builder.Services.AddAuthorization();
 builder.Services.AddCustomLocalization(builder.Configuration);
 builder.Services.AddHealthChecks();
 builder.Host.UseSerilog((context, configuration) => configuration.ReadFrom.Configuration(context.Configuration));
@@ -50,7 +48,6 @@ using (var scope = app.Services.CreateScope())
     {
         await services.GetRequiredService<IdentityContext>().Database.MigrateAsync();
         await services.GetRequiredService<ApplicationDbContext>().Database.MigrateAsync();
-        await services.GetRequiredService<FileManagerDbContext>().Database.MigrateAsync();
     }
 
     //Seed Data
@@ -64,10 +61,10 @@ app.UseAnyCors();
 app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
-app.UseSwaggerWithVersioning();
+app.UseCustomSwagger();
 app.UseMiddleware<ErrorHandlerMiddleware>();
 app.UseHealthChecks("/health");
-app.MapControllers();
+app.MapEndpoints();
 app.UseSerilogRequestLogging();
 
 app.Run();
