@@ -3,7 +3,7 @@ setlocal enabledelayedexpansion
 
 :: Prompt for database type and class library name
 set /p userInput=Enter the type of database you want to use (SqlServer, PostgreSQL, Oracle, MySql, Sqlite):
-set /p classLib=Enter the name of the ClassLibrary you want to configure (Identity, Persistence, FileManager):
+set /p classLib=Enter the name of the ClassLibrary you want to configure (Identity, Persistence):
 
 :: Set the directory where .sln files are located
 set "directory=../"
