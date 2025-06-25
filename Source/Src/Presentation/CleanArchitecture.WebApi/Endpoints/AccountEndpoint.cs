@@ -14,7 +14,7 @@ namespace CleanArchitecture.WebApi.Endpoints;
 
 public class AccountEndpoint : EndpointGroupBase
 {
-    public override void Map(RouteGroupBuilder builder)
+    public override void Map(IEndpointRouteBuilder builder)
     {
         builder.MapPost(Authenticate);
 

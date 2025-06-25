@@ -4,13 +4,14 @@ using Microsoft.AspNetCore.Routing;
 using System;
 using System.Linq;
 using System.Reflection;
+using System.Text.RegularExpressions;
 
 namespace CleanArchitecture.WebApi.Infrastructure.Extensions;
 
 public abstract class EndpointGroupBase
 {
     public virtual string GroupName { get; }
-    public abstract void Map(RouteGroupBuilder builder);
+    public abstract void Map(IEndpointRouteBuilder builder);
 }
 public static class EndpointExtensions
 {
@@ -50,8 +51,9 @@ public static class EndpointExtensions
 
     private static string NormalizeGroupName(string endpointName)
     {
-        return endpointName
-            .Replace("Endpoint", "")
-            .Replace("Endpoints", "");
+        if (string.IsNullOrWhiteSpace(endpointName))
+            return string.Empty;
+
+        return Regex.Replace(endpointName, "(Endpoints?)$", "", RegexOptions.IgnoreCase).Trim();
     }
 }
