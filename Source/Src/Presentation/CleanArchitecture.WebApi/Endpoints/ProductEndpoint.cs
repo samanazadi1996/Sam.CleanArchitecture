@@ -16,7 +16,7 @@ namespace CleanArchitecture.WebApi.Endpoints;
 
 public class ProductEndpoint : EndpointGroupBase
 {
-    public override void Map(IEndpointRouteBuilder builder)
+    public override void Map(RouteGroupBuilder builder)
     {
         builder.MapGet(GetPagedListProduct);
 

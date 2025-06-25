@@ -10,7 +10,7 @@ namespace CleanArchitecture.WebApi.Endpoints;
 
 public class DocEndpoint : EndpointGroupBase
 {
-    public override void Map(IEndpointRouteBuilder builder)
+    public override void Map(RouteGroupBuilder builder)
     {
         builder.MapGet(GetErrorCodes);
     }

@@ -11,7 +11,7 @@ namespace CleanArchitecture.WebApi.Infrastructure.Extensions;
 public abstract class EndpointGroupBase
 {
     public virtual string GroupName { get; }
-    public abstract void Map(IEndpointRouteBuilder builder);
+    public abstract void Map(RouteGroupBuilder builder);
 }
 public static class EndpointExtensions
 {
