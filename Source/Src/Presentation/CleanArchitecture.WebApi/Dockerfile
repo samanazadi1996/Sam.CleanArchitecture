@@ -15,7 +15,6 @@ WORKDIR /src
 COPY ["Src/Presentation/CleanArchitecture.WebApi/CleanArchitecture.WebApi.csproj", "Src/Presentation/CleanArchitecture.WebApi/"]
 COPY ["Src/Core/CleanArchitecture.Application/CleanArchitecture.Application.csproj", "Src/Core/CleanArchitecture.Application/"]
 COPY ["Src/Core/CleanArchitecture.Domain/CleanArchitecture.Domain.csproj", "Src/Core/CleanArchitecture.Domain/"]
-COPY ["Src/Infrastructure/CleanArchitecture.Infrastructure.FileManager/CleanArchitecture.Infrastructure.FileManager.csproj", "Src/Infrastructure/CleanArchitecture.Infrastructure.FileManager/"]
 COPY ["Src/Infrastructure/CleanArchitecture.Infrastructure.Identity/CleanArchitecture.Infrastructure.Identity.csproj", "Src/Infrastructure/CleanArchitecture.Infrastructure.Identity/"]
 COPY ["Src/Infrastructure/CleanArchitecture.Infrastructure.Persistence/CleanArchitecture.Infrastructure.Persistence.csproj", "Src/Infrastructure/CleanArchitecture.Infrastructure.Persistence/"]
 COPY ["Src/Infrastructure/CleanArchitecture.Infrastructure.Resources/CleanArchitecture.Infrastructure.Resources.csproj", "Src/Infrastructure/CleanArchitecture.Infrastructure.Resources/"]
