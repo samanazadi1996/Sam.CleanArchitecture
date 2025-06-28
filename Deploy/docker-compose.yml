@@ -10,7 +10,6 @@ services:
       - ASPNETCORE_ENVIRONMENT=${ENVIRONMENT}
       - ConnectionStrings__DefaultConnection=Data Source=sqlserver;Initial Catalog=CleanArchitecture;user id=sa;password=${SqlServerSaPassword};MultipleActiveResultSets=True;TrustServerCertificate=True
       - ConnectionStrings__IdentityConnection=Data Source=sqlserver;Initial Catalog=CleanArchitectureIdentity;user id=sa;password=${SqlServerSaPassword};MultipleActiveResultSets=True;TrustServerCertificate=True
-      - ConnectionStrings__FileManagerConnection=Data Source=sqlserver;Initial Catalog=CleanArchitectureFileManager;user id=sa;password=${SqlServerSaPassword};MultipleActiveResultSets=True;TrustServerCertificate=True
     ports:
       - "8080:8080"
     depends_on:

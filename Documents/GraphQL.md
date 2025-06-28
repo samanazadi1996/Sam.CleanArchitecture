@@ -15,12 +15,12 @@ First, create a library class named `CleanArchitecture.Infrastructure.GraphQL` w
 Next, add the following NuGet packages to your [CleanArchitecture.Infrastructure.GraphQL](https://github.com/samanazadi1996/Sam.CleanArchitecture/blob/GraphQL/Source/Src/Infrastructure/CleanArchitecture.Infrastructure.GraphQL/CleanArchitecture.Infrastructure.GraphQL.csproj) library:
 
 ``` xml
-<PackageReference Include="AppAny.HotChocolate.FluentValidation" Version="0.11.1" />
-<PackageReference Include="HotChocolate.AspNetCore" Version="13.9.11" />
-<PackageReference Include="HotChocolate.AspNetCore.Authorization" Version="13.9.11" />
-<PackageReference Include="HotChocolate.Data.EntityFramework" Version="13.9.11" />
+<PackageReference Include="AppAny.HotChocolate.FluentValidation" Version="0.12.0" />
+<PackageReference Include="HotChocolate.AspNetCore" Version="15.1.5" />
+<PackageReference Include="HotChocolate.AspNetCore.Authorization" Version="15.1.5" />
+<PackageReference Include="HotChocolate.Data.EntityFramework" Version="15.1.5" />
 <PackageReference Include="HotChocolate.Pagination" Version="1.0.1" />
-<PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0.1" />
+<PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.5" />
 ```
 
 These packages are essential for setting up GraphQL with HotChocolate and integrating it with Entity Framework and pagination.
@@ -29,30 +29,23 @@ These packages are essential for setting up GraphQL with HotChocolate and integr
 ### Step 3: Add the `ServiceRegistration` Class
 Then, add the following [ServiceRegistration.cs](https://github.com/samanazadi1996/Sam.CleanArchitecture/blob/GraphQL/Source/Src/Infrastructure/CleanArchitecture.Infrastructure.GraphQL/ServiceRegistration.cs) class to configure GraphQL services in your project:
 ``` c#
-using CleanArchitecture.Application.Interfaces;
-using CleanArchitecture.Infrastructure.Identity.Contexts;
-using CleanArchitecture.Infrastructure.Persistence.Contexts;
+using AppAny.HotChocolate.FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace CleanArchitecture.Infrastructure.GraphQL;
-
 public static class ServiceRegistration
 {
     public static IServiceCollection AddGraphQlInfrastructure(this IServiceCollection services)
     {
-        services.AddGraphQLServer() // Initialize the GraphQL server with HotChocolate
-            .AddFluentValidation() // Add FluentValidation for validation
-            .AddTypes(typeof(Query), typeof(Mutation)) // Register GraphQL query and mutation types
-            .RegisterDbContext<ApplicationDbContext>() // Register the application database context
-            .RegisterDbContext<IdentityContext>() // Register the identity database context
-            .RegisterService<IAuthenticatedUserService>() // Register the authenticated user service for dependency injection
-            .RegisterService<IMediator>() // Register the IMediator service for handling requests and responses
-            .AddProjections() // Add support for query projections
-            .AddFiltering() // Enable filtering capabilities for queries
-            .AddSorting() // Enable sorting capabilities for queries
-            .AddQueryableCursorPagingProvider() // Add cursor-based pagination support
-            .AddAuthorization() // Add authorization capabilities
-            .InitializeOnStartup(); // Ensure the GraphQL server is initialized on application startup
+        services.AddGraphQLServer()
+            .AddFluentValidation()
+            .AddTypes(typeof(Query), typeof(Mutation))
+            .AddProjections()
+            .AddFiltering()
+            .AddSorting()
+            .AddQueryableCursorPagingProvider()
+            .AddAuthorization()
+            .InitializeOnStartup();
 
         return services;
     }
@@ -68,35 +61,40 @@ using CleanArchitecture.Infrastructure.Identity.Contexts;
 using CleanArchitecture.Infrastructure.Identity.Models;
 using CleanArchitecture.Infrastructure.Persistence.Contexts;
 using HotChocolate.Authorization;
+using HotChocolate.Data;
+using HotChocolate.Types;
+using System;
+using System.Linq;
 
 namespace CleanArchitecture.Infrastructure.GraphQL;
 
 public class Query
 {
-    [UsePaging(MaxPageSize = 100, IncludeTotalCount = true)] // Enable pagination with a maximum page size and total count
-    [UseProjection] // Enable projection for optimizing queries based on requested fields
-    [UseFiltering] // Enable filtering on this query
-    [UseSorting] // Enable sorting on this query
-    public IQueryable<Product> GetProducts(ApplicationDbContext db) => db.Products; // Retrieve all products from the database
+    [UsePaging(MaxPageSize = 100, IncludeTotalCount = true)]
+    [UseProjection]
+    [UseFiltering]
+    [UseSorting]
+    public IQueryable<Product> GetProducts(ApplicationDbContext db) => db.Products;
 
-    [UsePaging(MaxPageSize = 100, IncludeTotalCount = true)] // Enable pagination with a maximum page size and total count
-    [UseProjection] // Enable projection for optimizing queries based on requested fields
-    [UseFiltering] // Enable filtering on this query
-    [UseSorting] // Enable sorting on this query
-    [Authorize] // Require authorization for this query
+    [UsePaging(MaxPageSize = 100, IncludeTotalCount = true)]
+    [UseProjection]
+    [UseFiltering]
+    [UseSorting]
+    [Authorize]
     public IQueryable<Product> GetUserProducts(ApplicationDbContext db, IAuthenticatedUserService authenticatedUserService)
     {
-        var userId = Guid.Parse(authenticatedUserService.UserId); // Get the current user's ID
-        return db.Products.Where(p => p.CreatedBy == userId); // Retrieve products created by the current user
+        var userId = Guid.Parse(authenticatedUserService.UserId);
+        return db.Products.Where(p => p.CreatedBy == userId);
     }
 
-    [UsePaging(MaxPageSize = 100, IncludeTotalCount = true)] // Enable pagination with a maximum page size and total count
-    [UseProjection] // Enable projection for optimizing queries based on requested fields
-    [UseFiltering] // Enable filtering on this query
-    [UseSorting] // Enable sorting on this query
-    [Authorize] // Require authorization for this query
-    public IQueryable<ApplicationUser> GetUsers(IdentityContext db) => db.Users; // Retrieve all users from the identity database
+    [UsePaging(MaxPageSize = 100, IncludeTotalCount = true)]
+    [UseProjection]
+    [UseFiltering]
+    [UseSorting]
+    [Authorize]
+    public IQueryable<ApplicationUser> GetUsers(IdentityContext db) => db.Users;
 }
+
 ```
 
 This `Query` class defines the GraphQL queries for your application, including:
@@ -112,25 +110,28 @@ using AppAny.HotChocolate.FluentValidation;
 using CleanArchitecture.Application.Features.Products.Commands.CreateProduct;
 using CleanArchitecture.Application.Features.Products.Commands.DeleteProduct;
 using CleanArchitecture.Application.Features.Products.Commands.UpdateProduct;
+using CleanArchitecture.Application.Interfaces;
 using CleanArchitecture.Application.Wrappers;
 using HotChocolate.Authorization;
-using MediatR;
+using System.Threading.Tasks;
 
 namespace CleanArchitecture.Infrastructure.GraphQL;
 
 public class Mutation
 {
+
     [Authorize]
     public async Task<BaseResult<long>> CreateProduct([UseFluentValidation] CreateProductCommand model, IMediator mediator)
-        => await mediator.Send(model); // Create a new product using the provided command and mediator
+        => await mediator.Send<CreateProductCommand, BaseResult<long>>(model);
 
     [Authorize]
     public async Task<BaseResult> UpdateProduct([UseFluentValidation] UpdateProductCommand model, IMediator mediator)
-        => await mediator.Send(model); // Update an existing product using the provided command and mediator
+        => await mediator.Send<UpdateProductCommand, BaseResult>(model);
 
     [Authorize]
     public async Task<BaseResult> DeleteProduct([UseFluentValidation] DeleteProductCommand model, IMediator mediator)
-        => await mediator.Send(model); // Delete an existing product using the provided command and mediator
+        => await mediator.Send<DeleteProductCommand, BaseResult>(model);
+
 }
 ```
 This Mutation class defines the GraphQL mutations for creating, updating, and deleting products, all of which require authorization and use FluentValidation for validating the input models.
