@@ -10,7 +10,6 @@ public class ChangePasswordCommandValidator : AbstractValidator<ChangePasswordCo
     {
         RuleFor(x => x.Password)
             .NotEmpty()
-            .NotNull()
             .MinimumLength(6)
             .Matches(Regexs.Password)
             .WithName(p => translator[nameof(p.Password)]);
