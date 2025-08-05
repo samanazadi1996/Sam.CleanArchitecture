@@ -10,7 +10,6 @@ public class ChangeUserNameCommandValidator : AbstractValidator<ChangeUserNameCo
     {
         RuleFor(x => x.UserName)
             .NotEmpty()
-            .NotNull()
             .MinimumLength(4)
             .Matches(Regexs.UserName)
             .WithName(p => translator[nameof(p.UserName)]);

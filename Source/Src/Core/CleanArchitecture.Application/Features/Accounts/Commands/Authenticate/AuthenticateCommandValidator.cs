@@ -10,12 +10,10 @@ public class AuthenticateCommandValidator : AbstractValidator<AuthenticateComman
     {
         RuleFor(x => x.UserName)
             .NotEmpty()
-            .NotNull()
             .WithName(p => translator[nameof(p.UserName)]);
 
         RuleFor(x => x.Password)
             .NotEmpty()
-            .NotNull()
             .Matches(Regexs.Password)
             .WithName(p => translator[nameof(p.Password)]);
     }
