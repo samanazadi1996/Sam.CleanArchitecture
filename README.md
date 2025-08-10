@@ -68,7 +68,7 @@ Here are the credentials for the default users.
 - UserName - Admin / Password - Sam@12345
 
 
-You can use these default credentials to generate valid JWTokens at the ../api/v1/Account/Authenticate endpoint.
+You can use these default credentials to generate valid JWTokens at the ../api/Account/Authenticate endpoint.
 
 [![](./Documents/Images/Swagger.png)](#)
 
