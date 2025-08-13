@@ -13,13 +13,17 @@ using CleanArchitecture.WebApi.Infrastructure.Middlewares;
 using CleanArchitecture.WebApi.Infrastructure.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Serilog;
 
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.AddServiceDefaults();
 
 bool useInMemoryDatabase = builder.Configuration.GetValue<bool>("UseInMemoryDatabase");
 
@@ -39,6 +43,8 @@ builder.Services.AddHealthChecks();
 builder.Host.UseSerilog((context, configuration) => configuration.ReadFrom.Configuration(context.Configuration));
 
 var app = builder.Build();
+
+app.MapDefaultEndpoints();
 
 using (var scope = app.Services.CreateScope())
 {

@@ -21,5 +21,6 @@
     <ProjectReference Include="..\..\Infrastructure\CleanArchitecture.Infrastructure.Identity\CleanArchitecture.Infrastructure.Identity.csproj" />
     <ProjectReference Include="..\..\Infrastructure\CleanArchitecture.Infrastructure.Persistence\CleanArchitecture.Infrastructure.Persistence.csproj" />
     <ProjectReference Include="..\..\Infrastructure\CleanArchitecture.Infrastructure.Resources\CleanArchitecture.Infrastructure.Resources.csproj" />
+    <ProjectReference Include="..\CleanArchitecture.AppHost.ServiceDefaults\CleanArchitecture.AppHost.ServiceDefaults.csproj" />
   </ItemGroup>
 </Project>
