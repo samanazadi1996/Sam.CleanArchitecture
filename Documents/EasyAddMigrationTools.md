@@ -9,7 +9,6 @@ To address this challenge and establish an efficient and automated process for m
 In this article, we'll introduce and demonstrate the usage of these useful tools for creating migrations in three different sections of a .NET project:
 
 - AddMigration.Identity.bat : For creating migrations related to the Identity section of the project.
-- AddMigration.FileManager.bat : For creating migrations related to the FileManager section of the project.
 - AddMigration.Persistence.bat : For creating migrations related to the Persistence section (e.g., creating tables and relationships in the main database) of the project.
 
 

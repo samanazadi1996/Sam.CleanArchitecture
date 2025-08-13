@@ -1,34 +1,32 @@
 <Project>
-	<PropertyGroup>
-		<!-- Enable central package management -->
-		<ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
-	</PropertyGroup>
-
-	<ItemGroup>
-		<!-- Package version definitions -->
-		<PackageVersion Include="FluentValidation.DependencyInjectionExtensions" Version="12.0.0" />
-		<PackageVersion Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="9.0.5" />
-		<PackageVersion Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="9.0.5" />
-		<PackageVersion Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="9.0.5" />
-		<PackageVersion Include="Microsoft.AspNetCore.Mvc.Testing" Version="9.0.5" />
-		<PackageVersion Include="Microsoft.EntityFrameworkCore" Version="9.0.5" />
-		<PackageVersion Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.5" />
-		<PackageVersion Include="Microsoft.EntityFrameworkCore.InMemory" Version="9.0.5" />
-		<PackageVersion Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.5" />
-		<PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.14.1" />
-		<PackageVersion Include="System.IdentityModel.Tokens.Jwt" Version="8.12.0" />
-		<PackageVersion Include="Asp.Versioning.Mvc.ApiExplorer" Version="8.1.0" />
-		<PackageVersion Include="Swashbuckle.AspNetCore" Version="8.1.4" />
-		<PackageVersion Include="Serilog.AspNetCore" Version="9.0.0" />
-		<PackageVersion Include="Serilog.Enrichers.ClientInfo" Version="2.1.2" />
-		<PackageVersion Include="Serilog.Enrichers.Environment" Version="3.0.1" />
-		<PackageVersion Include="Serilog.Exceptions" Version="8.4.0" />
-		<PackageVersion Include="Serilog.Extensions.Hosting" Version="9.0.0" />
-		<PackageVersion Include="Serilog.Sinks.Console" Version="6.0.0" />
-		<PackageVersion Include="Serilog.Sinks.Debug" Version="3.0.0" />
-		<PackageVersion Include="Moq" Version="4.20.72" />
-		<PackageVersion Include="Shouldly" Version="4.3.0" />
-		<PackageVersion Include="xunit" Version="2.9.3" />
-		<PackageVersion Include="xunit.runner.visualstudio" Version="3.1.0" />
-	</ItemGroup>
+  <PropertyGroup>
+    <!-- Enable central package management -->
+    <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+  </PropertyGroup>
+  <ItemGroup>
+    <!-- Package version definitions -->
+    <PackageVersion Include="FluentValidation.DependencyInjectionExtensions" Version="12.0.0" />
+    <PackageVersion Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="9.0.8" />
+    <PackageVersion Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="9.0.8" />
+    <PackageVersion Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="9.0.8" />
+    <PackageVersion Include="Microsoft.AspNetCore.Mvc.Testing" Version="9.0.8" />
+    <PackageVersion Include="Microsoft.EntityFrameworkCore" Version="9.0.8" />
+    <PackageVersion Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.8" />
+    <PackageVersion Include="Microsoft.EntityFrameworkCore.InMemory" Version="9.0.8" />
+    <PackageVersion Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.8" />
+    <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.14.1" />
+    <PackageVersion Include="System.IdentityModel.Tokens.Jwt" Version="8.13.1" />
+    <PackageVersion Include="Swashbuckle.AspNetCore" Version="9.0.3" />
+    <PackageVersion Include="Serilog.AspNetCore" Version="9.0.0" />
+    <PackageVersion Include="Serilog.Enrichers.ClientInfo" Version="2.3.0" />
+    <PackageVersion Include="Serilog.Enrichers.Environment" Version="3.0.1" />
+    <PackageVersion Include="Serilog.Exceptions" Version="8.4.0" />
+    <PackageVersion Include="Serilog.Extensions.Hosting" Version="9.0.0" />
+    <PackageVersion Include="Serilog.Sinks.Console" Version="6.0.0" />
+    <PackageVersion Include="Serilog.Sinks.Debug" Version="3.0.0" />
+    <PackageVersion Include="Moq" Version="4.20.72" />
+    <PackageVersion Include="Shouldly" Version="4.3.0" />
+    <PackageVersion Include="xunit" Version="2.9.3" />
+    <PackageVersion Include="xunit.runner.visualstudio" Version="3.1.3" />
+  </ItemGroup>
 </Project>

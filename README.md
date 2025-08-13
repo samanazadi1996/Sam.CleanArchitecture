@@ -68,7 +68,7 @@ Here are the credentials for the default users.
 - UserName - Admin / Password - Sam@12345
 
 
-You can use these default credentials to generate valid JWTokens at the ../api/v1/Account/Authenticate endpoint.
+You can use these default credentials to generate valid JWTokens at the ../api/Account/Authenticate endpoint.
 
 [![](./Documents/Images/Swagger.png)](#)
 
@@ -119,7 +119,7 @@ If you found this Implementation helpful or used it in your Projects, do give it
 # Features
 
 - [Clean Architecture](./Documents/CleanArchitecture.md)
-- [CQRS with MediatR Library](https://github.com/jbogard/MediatR)
+- CQRS with Mediator Pattern
 - [Entity Framework Core - Code First](https://github.com/dotnet/efcore)
 - [Repository Pattern - Generic](./Documents/RepositoryPatternGeneric.md)
 - [Serilog](https://github.com/serilog/serilog)
@@ -132,7 +132,6 @@ If you found this Implementation helpful or used it in your Projects, do give it
 - [Identity Seeding](./Documents/IdentitySeeding.md)
 - [Database Seeding](./Documents/DatabaseSeeding.md)
 - [Custom Exception Handling Middlewares](./Documents/ExceptionHandlingMiddlewares.md)
-- API Versioning
 - [Localization (fa / en)](./Documents/Localization.md)
 - [Fluent Validation](https://github.com/FluentValidation/FluentValidation)
 - Complete User Management Module (Register / Authenticate / Change UserName / Change Password)

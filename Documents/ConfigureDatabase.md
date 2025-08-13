@@ -49,7 +49,7 @@ After running the command, navigate to the Tools folder:
     ```
     And
     ```plaintext
-    Enter the name of the ClassLibrary you want to configure (Identity, Persistence, FileManager):
+    Enter the name of the ClassLibrary you want to configure (Identity, Persistence):
     ```
 
 4. Final Steps
