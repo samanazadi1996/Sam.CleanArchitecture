@@ -22,4 +22,9 @@
     <ProjectReference Include="..\..\Infrastructure\CleanArchitecture.Infrastructure.Persistence\CleanArchitecture.Infrastructure.Persistence.csproj" />
     <ProjectReference Include="..\..\Infrastructure\CleanArchitecture.Infrastructure.Resources\CleanArchitecture.Infrastructure.Resources.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <None Update="Assets\swagger\swagger-login.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
 </Project>

@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 using System.Collections.Generic;
@@ -9,10 +10,24 @@ public static class SwaggerExtensions
 {
     public static IApplicationBuilder UseCustomSwagger(this IApplicationBuilder app)
     {
-
+        const string swaggerLoginUrl = "/swagger/swagger-login.js";
+        const string swaggerLoginFile = "Assets/swagger/swagger-login.js"; 
         app.UseSwagger();
 
-        app.UseSwaggerUI();
+        app.UseSwaggerUI(c =>
+        {
+            c.InjectJavascript(swaggerLoginUrl);
+        });
+
+        app.Map(swaggerLoginUrl, builder =>
+        {
+            builder.Run(async context =>
+            {
+                context.Response.ContentType = "application/javascript";
+                var fileContent = await System.IO.File.ReadAllTextAsync(swaggerLoginFile);
+                await context.Response.WriteAsync(fileContent);
+            });
+        });
 
         return app;
     }
