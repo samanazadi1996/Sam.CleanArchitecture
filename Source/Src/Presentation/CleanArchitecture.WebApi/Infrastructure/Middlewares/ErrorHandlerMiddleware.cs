@@ -11,6 +11,10 @@ namespace CleanArchitecture.WebApi.Infrastructure.Middlewares;
 
 public class ErrorHandlerMiddleware(RequestDelegate next)
 {
+    private readonly JsonSerializerOptions jsonSerializerOptions = new()
+    {
+        PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+    };
     public async Task Invoke(HttpContext context)
     {
         try
@@ -44,10 +48,7 @@ public class ErrorHandlerMiddleware(RequestDelegate next)
                     responseModel.AddError(new Error(ErrorCode.Exception, error.Message));
                     break;
             }
-            var result = JsonSerializer.Serialize(responseModel, new JsonSerializerOptions
-            {
-                PropertyNamingPolicy = JsonNamingPolicy.CamelCase
-            });
+            var result = JsonSerializer.Serialize(responseModel, jsonSerializerOptions);
 
             await response.WriteAsync(result);
         }
