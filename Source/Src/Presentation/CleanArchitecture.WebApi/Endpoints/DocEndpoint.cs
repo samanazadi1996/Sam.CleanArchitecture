@@ -16,7 +16,6 @@ public class DocEndpoint : EndpointGroupBase
     }
 
     BaseResult<Dictionary<int, string>> GetErrorCodes()
-    {
-        return Enum.GetValues<ErrorCode>().ToDictionary(t => (int)t, t => t.ToString());
-    }
+        => Enum.GetValues<ErrorCode>().ToDictionary(t => (int)t, t => t.ToString());
+
 }
