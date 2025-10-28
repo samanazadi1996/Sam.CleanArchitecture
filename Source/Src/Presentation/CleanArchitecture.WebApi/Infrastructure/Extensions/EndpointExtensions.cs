@@ -35,41 +35,25 @@ public static class EndpointExtensions
         }
 
         return app;
+
+        string NormalizeGroupName(string endpointName)
+        {
+            if (string.IsNullOrWhiteSpace(endpointName))
+                return string.Empty;
+
+            return Regex.Replace(endpointName, "(Endpoints?)$", "", RegexOptions.IgnoreCase).Trim();
+        }
     }
 
-    #region --- Default route naming ---
-    public static RouteHandlerBuilder MapGet(this IEndpointRouteBuilder builder, Delegate handler)
-        => builder.MapGet(NormalizeGroupName(handler.Method.Name), handler);
+    public static RouteHandlerBuilder MapGet(this IEndpointRouteBuilder builder, Delegate handler, string pattern = null)
+        => builder.MapGet(pattern ?? handler.Method.Name, handler);
 
-    public static RouteHandlerBuilder MapPost(this IEndpointRouteBuilder builder, Delegate handler)
-        => builder.MapPost(NormalizeGroupName(handler.Method.Name), handler);
+    public static RouteHandlerBuilder MapPost(this IEndpointRouteBuilder builder, Delegate handler, string pattern = null)
+        => builder.MapPost(pattern ?? handler.Method.Name, handler);
 
-    public static RouteHandlerBuilder MapPut(this IEndpointRouteBuilder builder, Delegate handler)
-        => builder.MapPut(NormalizeGroupName(handler.Method.Name), handler);
+    public static RouteHandlerBuilder MapPut(this IEndpointRouteBuilder builder, Delegate handler, string pattern = null)
+        => builder.MapPut(pattern ?? handler.Method.Name, handler);
 
-    public static RouteHandlerBuilder MapDelete(this IEndpointRouteBuilder builder, Delegate handler)
-        => builder.MapDelete(NormalizeGroupName(handler.Method.Name), handler);
-    #endregion
-
-    #region --- Overloads with custom route template ---
-    public static RouteHandlerBuilder MapGet(this IEndpointRouteBuilder builder, Delegate handler, string pattern)
-        => builder.MapGet(pattern, handler);
-
-    public static RouteHandlerBuilder MapPost(this IEndpointRouteBuilder builder, Delegate handler, string pattern)
-        => builder.MapPost(pattern, handler);
-
-    public static RouteHandlerBuilder MapPut(this IEndpointRouteBuilder builder, Delegate handler, string pattern)
-        => builder.MapPut(pattern, handler);
-
-    public static RouteHandlerBuilder MapDelete(this IEndpointRouteBuilder builder, Delegate handler, string pattern)
-        => builder.MapDelete(pattern, handler);
-    #endregion
-
-    private static string NormalizeGroupName(string endpointName)
-    {
-        if (string.IsNullOrWhiteSpace(endpointName))
-            return string.Empty;
-
-        return Regex.Replace(endpointName, "(Endpoints?)$", "", RegexOptions.IgnoreCase).Trim();
-    }
+    public static RouteHandlerBuilder MapDelete(this IEndpointRouteBuilder builder, Delegate handler, string pattern = null)
+        => builder.MapDelete(pattern ?? handler.Method.Name, handler);
 }
