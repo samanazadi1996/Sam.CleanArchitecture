@@ -36,7 +36,7 @@ public static class EndpointExtensions
 
         return app;
 
-        string NormalizeGroupName(string endpointName)
+        static string NormalizeGroupName(string endpointName)
         {
             if (string.IsNullOrWhiteSpace(endpointName))
                 return string.Empty;
