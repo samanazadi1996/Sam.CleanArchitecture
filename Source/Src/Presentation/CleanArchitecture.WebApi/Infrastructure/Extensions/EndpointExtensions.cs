@@ -37,6 +37,7 @@ public static class EndpointExtensions
         return app;
     }
 
+    #region --- Default route naming ---
     public static RouteHandlerBuilder MapGet(this IEndpointRouteBuilder builder, Delegate handler)
         => builder.MapGet(NormalizeGroupName(handler.Method.Name), handler);
 
@@ -48,6 +49,21 @@ public static class EndpointExtensions
 
     public static RouteHandlerBuilder MapDelete(this IEndpointRouteBuilder builder, Delegate handler)
         => builder.MapDelete(NormalizeGroupName(handler.Method.Name), handler);
+    #endregion
+
+    #region --- Overloads with custom route template ---
+    public static RouteHandlerBuilder MapGet(this IEndpointRouteBuilder builder, Delegate handler, string pattern)
+        => builder.MapGet(pattern, handler);
+
+    public static RouteHandlerBuilder MapPost(this IEndpointRouteBuilder builder, Delegate handler, string pattern)
+        => builder.MapPost(pattern, handler);
+
+    public static RouteHandlerBuilder MapPut(this IEndpointRouteBuilder builder, Delegate handler, string pattern)
+        => builder.MapPut(pattern, handler);
+
+    public static RouteHandlerBuilder MapDelete(this IEndpointRouteBuilder builder, Delegate handler, string pattern)
+        => builder.MapDelete(pattern, handler);
+    #endregion
 
     private static string NormalizeGroupName(string endpointName)
     {
