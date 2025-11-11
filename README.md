@@ -4,7 +4,6 @@
 [![Marketplace](https://vsmarketplacebadges.dev/version/SamanAzadi1996.ASPDotnetCoreCleanArchitecture.svg?&colorB=magenta)](https://marketplace.visualstudio.com/items?itemName=SamanAzadi1996.ASPDotnetCoreCleanArchitecture)
 
 [![](https://github.com/samanazadi1996/Sam.CleanArchitecture/workflows/.NET/badge.svg)](https://github.com/samanazadi1996/Sam.CleanArchitecture/actions)
-[![](https://github.com/samanazadi1996/Sam.CleanArchitecture/workflows/.NET%20Core%20Desktop/badge.svg)](https://github.com/samanazadi1996/Sam.CleanArchitecture/actions)
 [![](https://github.com/samanazadi1996/Sam.CleanArchitecture/workflows/CodeQL%20Advanced/badge.svg)](https://github.com/samanazadi1996/Sam.CleanArchitecture/actions)
 [![](https://img.shields.io/website?url=https://clean-architecture.koyeb.app/health&label=Deployment)](https://clean-architecture.koyeb.app/swagger/index.html)
 
@@ -14,7 +13,7 @@ The purpose of this template is to provide a robust and streamlined methodology 
 
 The following prerequisites are required to build and run the solution:
 
-- [.NET 9.0 SDK](https://dotnet.microsoft.com/download/dotnet/9.0) (latest version)
+- [.NET 10.0 SDK](https://dotnet.microsoft.com/en-us/download/dotnet/10.0) (latest version)
 
 The easiest way to get started is to install the [.NET template](https://www.nuget.org/packages/Sam.CleanArchitecture.Template):
 ```
@@ -75,11 +74,11 @@ You can use these default credentials to generate valid JWTokens at the ../api/A
 # Purpose of this Project
 Does it really make sense to Setup your ASP.NET Core Solution everytime you start a new WebApi Project ? Aren't we wasting quite a lot of time in doing this over and over gain?
 
-This is the exact Problem that I intend to solve with this Full-Fledged ASP.NET Core 9 WebApi Solution Template, that also follows various principles of Clean Architecture.
+This is the exact Problem that I intend to solve with this Full-Fledged ASP.NET Core 10 WebApi Solution Template, that also follows various principles of Clean Architecture.
 
 The primary goal is to create a Full-Fledged implementation, that is well documented along with the steps taken to build this Solution from Scratch. This Solution Template will also be available within Visual Studio 2022 (by installing the required Nuget Package / Extension).
 
-Demonstrate Clean Monolith Architecture in ASP.NET Core 9
+Demonstrate Clean Monolith Architecture in ASP.NET Core 10
 - This is not a Proof of Concept
 - Implementation that is ready for Production
 - Integrate the most essential libraries and packages
@@ -113,7 +112,7 @@ If you found this Implementation helpful or used it in your Projects, do give it
 
 # Technologies
 
-- ASP.NET Core 9 WebApi
+- ASP.NET Core 10 WebApi
 - REST Standards
 
 # Features
@@ -144,7 +143,7 @@ If you found this Implementation helpful or used it in your Projects, do give it
 # Prerequisites
 
 - Visual Studio 2022 Community and above
-- .NET Core 9 SDK and above
+- .NET Core 10 SDK and above
 - Basic Understanding of Architectures and Clean Code Principles
 
 # Share it!
