@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reflection;
 using System.Text.RegularExpressions;
@@ -35,25 +36,25 @@ public static class EndpointExtensions
         }
 
         return app;
+
+        static string NormalizeGroupName(string endpointName)
+        {
+            if (string.IsNullOrWhiteSpace(endpointName))
+                return string.Empty;
+
+            return Regex.Replace(endpointName, "(Endpoints?)$", "", RegexOptions.IgnoreCase).Trim();
+        }
     }
 
-    public static RouteHandlerBuilder MapGet(this IEndpointRouteBuilder builder, Delegate handler)
-        => builder.MapGet(NormalizeGroupName(handler.Method.Name), handler);
+    public static RouteHandlerBuilder MapGet(this IEndpointRouteBuilder builder, Delegate handler, [StringSyntax("Route")] string pattern = null)
+        => builder.MapGet(pattern ?? handler.Method.Name, handler);
 
-    public static RouteHandlerBuilder MapPost(this IEndpointRouteBuilder builder, Delegate handler)
-        => builder.MapPost(NormalizeGroupName(handler.Method.Name), handler);
+    public static RouteHandlerBuilder MapPost(this IEndpointRouteBuilder builder, Delegate handler, [StringSyntax("Route")] string pattern = null)
+        => builder.MapPost(pattern ?? handler.Method.Name, handler);
 
-    public static RouteHandlerBuilder MapPut(this IEndpointRouteBuilder builder, Delegate handler)
-        => builder.MapPut(NormalizeGroupName(handler.Method.Name), handler);
+    public static RouteHandlerBuilder MapPut(this IEndpointRouteBuilder builder, Delegate handler, [StringSyntax("Route")] string pattern = null)
+        => builder.MapPut(pattern ?? handler.Method.Name, handler);
 
-    public static RouteHandlerBuilder MapDelete(this IEndpointRouteBuilder builder, Delegate handler)
-        => builder.MapDelete(NormalizeGroupName(handler.Method.Name), handler);
-
-    private static string NormalizeGroupName(string endpointName)
-    {
-        if (string.IsNullOrWhiteSpace(endpointName))
-            return string.Empty;
-
-        return Regex.Replace(endpointName, "(Endpoints?)$", "", RegexOptions.IgnoreCase).Trim();
-    }
+    public static RouteHandlerBuilder MapDelete(this IEndpointRouteBuilder builder, Delegate handler, [StringSyntax("Route")] string pattern = null)
+        => builder.MapDelete(pattern ?? handler.Method.Name, handler);
 }
