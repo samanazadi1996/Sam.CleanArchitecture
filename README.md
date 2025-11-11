@@ -4,7 +4,6 @@
 [![Marketplace](https://vsmarketplacebadges.dev/version/SamanAzadi1996.ASPDotnetCoreCleanArchitecture.svg?&colorB=magenta)](https://marketplace.visualstudio.com/items?itemName=SamanAzadi1996.ASPDotnetCoreCleanArchitecture)
 
 [![](https://github.com/samanazadi1996/Sam.CleanArchitecture/workflows/.NET/badge.svg)](https://github.com/samanazadi1996/Sam.CleanArchitecture/actions)
-<!-- [![](https://github.com/samanazadi1996/Sam.CleanArchitecture/workflows/.NET%20Core%20Desktop/badge.svg)](https://github.com/samanazadi1996/Sam.CleanArchitecture/actions) -->
 [![](https://github.com/samanazadi1996/Sam.CleanArchitecture/workflows/CodeQL%20Advanced/badge.svg)](https://github.com/samanazadi1996/Sam.CleanArchitecture/actions)
 [![](https://img.shields.io/website?url=https://clean-architecture.koyeb.app/health&label=Deployment)](https://clean-architecture.koyeb.app/swagger/index.html)
 
