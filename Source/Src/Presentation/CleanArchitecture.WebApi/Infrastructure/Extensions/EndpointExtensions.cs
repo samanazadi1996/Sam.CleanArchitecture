@@ -18,6 +18,8 @@ public abstract class EndpointGroupBase
 }
 public static class EndpointExtensions
 {
+    private static IEnumerable<Type>? EndpointGroupTypes;
+
     public static IServiceCollection AddEndpoints(this IServiceCollection services)
     {
         var endpointGroupTypes = GetEndpointGroupTypes();
@@ -54,7 +56,6 @@ public static class EndpointExtensions
             return Regex.Replace(endpointName, "(Endpoints?)$", "", RegexOptions.IgnoreCase).Trim();
         }
     }
-    private static IEnumerable<Type> EndpointGroupTypes;
     private static IEnumerable<Type> GetEndpointGroupTypes()
     {
         if (EndpointGroupTypes is not null)
