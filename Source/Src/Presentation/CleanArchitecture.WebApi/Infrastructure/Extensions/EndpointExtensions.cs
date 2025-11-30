@@ -18,7 +18,7 @@ public abstract class EndpointGroupBase
 }
 public static class EndpointExtensions
 {
-    private static IEnumerable<Type>? EndpointGroupTypes;
+    private static IEnumerable<Type> EndpointGroupTypes;
 
     public static IServiceCollection AddEndpoints(this IServiceCollection services)
     {
