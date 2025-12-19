@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.DependencyInjection;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reflection;
@@ -18,32 +17,32 @@ public abstract class EndpointGroupBase
 }
 public static class EndpointExtensions
 {
-    private static IEnumerable<Type> EndpointGroupTypes;
-
     public static IServiceCollection AddEndpoints(this IServiceCollection services)
     {
-        var endpointGroupTypes = GetEndpointGroupTypes();
+        var endpointGroupType = typeof(EndpointGroupBase);
+        var assembly = Assembly.GetExecutingAssembly();
+
+        var endpointGroupTypes = assembly.GetExportedTypes()
+            .Where(t => t.IsSubclassOf(endpointGroupType) && !t.IsAbstract);
 
         foreach (var type in endpointGroupTypes)
         {
-            services.AddTransient(type);
+            services.AddTransient(endpointGroupType, type);
         }
 
         return services;
-
     }
+
     public static WebApplication MapEndpoints(this WebApplication app)
     {
-        var endpointGroupTypes = GetEndpointGroupTypes();
+        var endpointGroups = app.Services.GetServices<EndpointGroupBase>();
 
-        foreach (var type in endpointGroupTypes)
+        foreach (var instance in endpointGroups)
         {
-            if (app.Services.GetService(type) is EndpointGroupBase instance)
-            {
-                var groupName = instance.GroupName ?? NormalizeGroupName(instance.GetType().Name);
-                var prefix = $"/api/{groupName}";
-                instance.Map(app.MapGroup(prefix).WithTags(groupName));
-            }
+            var groupName = instance.GroupName ?? NormalizeGroupName(instance.GetType().Name);
+            var prefix = $"/api/{groupName}";
+
+            instance.Map(app.MapGroup(prefix).WithTags(groupName));
         }
 
         return app;
@@ -55,20 +54,6 @@ public static class EndpointExtensions
 
             return Regex.Replace(endpointName, "(Endpoints?)$", "", RegexOptions.IgnoreCase).Trim();
         }
-    }
-    private static IEnumerable<Type> GetEndpointGroupTypes()
-    {
-        if (EndpointGroupTypes is not null)
-            return EndpointGroupTypes;
-
-        var endpointGroupType = typeof(EndpointGroupBase);
-
-        var assembly = Assembly.GetExecutingAssembly();
-
-        EndpointGroupTypes = assembly.GetExportedTypes()
-            .Where(t => t.IsSubclassOf(endpointGroupType));
-
-        return EndpointGroupTypes;
     }
 
     public static RouteHandlerBuilder MapGet(this IEndpointRouteBuilder builder, Delegate handler, [StringSyntax("Route")] string pattern = null)
