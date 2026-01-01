@@ -18,7 +18,7 @@ jobs:
 
     env:
       Test_Project_Path: ./Source/Tests             
-      Solution_Name: ./Source/CleanArchitecture.sln
+      Solution_Name: ./Source/CleanArchitecture.slnx
 
     steps:
     - name: Checkout
