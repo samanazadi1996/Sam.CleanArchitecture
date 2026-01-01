@@ -11,8 +11,11 @@ public class OpenApiFunctionalTests(CustomWebApplicationFactory<Program> factory
     [Fact]
     public async Task OpenApi_Json_Should_Be_Accessible()
     {
+        // Arrange
+        var url = ApiRoutes.OpenApi.SwaggerJson;
+
         // Act
-        var response = await client.GetAsync("/swagger/v1/swagger.json");
+        var response = await client.GetAsync(url);
 
         // Assert
         Assert.Equal(HttpStatusCode.OK, response.StatusCode);

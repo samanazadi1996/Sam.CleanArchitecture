@@ -18,6 +18,10 @@ internal static class ApiRoutes
         internal const string UpdateProduct = "/api/Product/UpdateProduct";
         internal const string DeleteProduct = "/api/Product/DeleteProduct";
     }
+    internal static class OpenApi
+    {
+        internal const string SwaggerJson = "/swagger/v1/swagger.json";
+    }
 
     internal static string AddQueryString(this string url, string key, string value)
     {
