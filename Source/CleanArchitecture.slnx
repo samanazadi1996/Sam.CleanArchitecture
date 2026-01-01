@@ -1,0 +1,20 @@
+<Solution>
+  <Folder Name="/Src/" />
+  <Folder Name="/Src/Core/">
+    <Project Path="Src/Core/CleanArchitecture.Application/CleanArchitecture.Application.csproj" />
+    <Project Path="Src/Core/CleanArchitecture.Domain/CleanArchitecture.Domain.csproj" />
+  </Folder>
+  <Folder Name="/Src/Infrastructure/">
+    <Project Path="Src/Infrastructure/CleanArchitecture.Infrastructure.Identity/CleanArchitecture.Infrastructure.Identity.csproj" />
+    <Project Path="Src/Infrastructure/CleanArchitecture.Infrastructure.Persistence/CleanArchitecture.Infrastructure.Persistence.csproj" />
+    <Project Path="Src/Infrastructure/CleanArchitecture.Infrastructure.Resources/CleanArchitecture.Infrastructure.Resources.csproj" />
+  </Folder>
+  <Folder Name="/Src/Presentation/">
+    <Project Path="Src/Presentation/CleanArchitecture.WebApi/CleanArchitecture.WebApi.csproj" DefaultStartup="true"/>
+  </Folder>
+  <Folder Name="/Tests/">
+    <Project Path="Tests/CleanArchitecture.FunctionalTests/CleanArchitecture.FunctionalTests.csproj" />
+    <Project Path="Tests/CleanArchitecture.IntegrationTests/CleanArchitecture.IntegrationTests.csproj" />
+    <Project Path="Tests/CleanArchitecture.UnitTests/CleanArchitecture.UnitTests.csproj" />
+  </Folder>
+</Solution>

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
@@ -16,23 +17,32 @@ public abstract class EndpointGroupBase
 }
 public static class EndpointExtensions
 {
-    public static WebApplication MapEndpoints(this WebApplication app)
+    public static IServiceCollection AddEndpoints(this IServiceCollection services)
     {
         var endpointGroupType = typeof(EndpointGroupBase);
-
         var assembly = Assembly.GetExecutingAssembly();
 
         var endpointGroupTypes = assembly.GetExportedTypes()
-            .Where(t => t.IsSubclassOf(endpointGroupType));
+            .Where(t => t.IsSubclassOf(endpointGroupType) && !t.IsAbstract);
 
         foreach (var type in endpointGroupTypes)
         {
-            if (Activator.CreateInstance(type) is EndpointGroupBase instance)
-            {
-                var groupName = instance.GroupName ?? NormalizeGroupName(instance.GetType().Name);
-                var prefix = $"/api/{groupName}";
-                instance.Map(app.MapGroup(prefix).WithTags(groupName));
-            }
+            services.AddTransient(endpointGroupType, type);
+        }
+
+        return services;
+    }
+
+    public static WebApplication MapEndpoints(this WebApplication app)
+    {
+        var endpointGroups = app.Services.GetServices<EndpointGroupBase>();
+
+        foreach (var instance in endpointGroups)
+        {
+            var groupName = instance.GroupName ?? NormalizeGroupName(instance.GetType().Name);
+            var prefix = $"/api/{groupName}";
+
+            instance.Map(app.MapGroup(prefix).WithTags(groupName));
         }
 
         return app;
