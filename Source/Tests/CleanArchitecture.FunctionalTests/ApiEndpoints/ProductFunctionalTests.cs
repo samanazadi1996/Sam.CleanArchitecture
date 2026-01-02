@@ -48,9 +48,9 @@ public class ProductFunctionalTests(CustomWebApplicationFactory<Program> factory
         var url = ApiRoutes.Product.CreateProduct;
         var command = new CreateProductCommand
         {
-            Name = RandomDataExtensionMethods.RandomString(10),
-            Price = RandomDataExtensionMethods.RandomNumber(100000000),
-            BarCode = RandomDataExtensionMethods.RandomString(11)
+            Name = RandomDataExtensions.RandomString(10),
+            Price = RandomDataExtensions.RandomNumber(100000000),
+            BarCode = RandomDataExtensions.RandomString(11)
         };
         var ghostAccount = await client.GetGhostAccount();
 
@@ -70,9 +70,9 @@ public class ProductFunctionalTests(CustomWebApplicationFactory<Program> factory
         var command = new UpdateProductCommand
         {
             Id = 1,
-            Name = RandomDataExtensionMethods.RandomString(10),
-            Price = RandomDataExtensionMethods.RandomNumber(100000000),
-            BarCode = RandomDataExtensionMethods.RandomString(11)
+            Name = RandomDataExtensions.RandomString(10),
+            Price = RandomDataExtensions.RandomNumber(100000000),
+            BarCode = RandomDataExtensions.RandomString(11)
         };
         var ghostAccount = await client.GetGhostAccount();
 

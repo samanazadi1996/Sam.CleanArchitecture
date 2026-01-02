@@ -3,7 +3,7 @@ using CleanArchitecture.Application.Wrappers;
 
 namespace CleanArchitecture.FunctionalTests.Common;
 
-public static class AuthenticationExtensionMethods
+public static class AuthenticationExtensions
 {
     public static async Task<AuthenticationResponse> GetGhostAccount(this HttpClient client)
     {

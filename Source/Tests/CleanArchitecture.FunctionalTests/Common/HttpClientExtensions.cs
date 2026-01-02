@@ -3,7 +3,7 @@ using System.Text.Json;
 
 namespace CleanArchitecture.FunctionalTests.Common;
 
-public static class HttpClientGetExtensionMethods
+public static class HttpClientExtensions
 {
     static readonly JsonSerializerOptions DefaultJsonOptions = new()
     {

@@ -1,6 +1,6 @@
 namespace CleanArchitecture.FunctionalTests.Common;
 
-public static class RandomDataExtensionMethods
+public static class RandomDataExtensions
 {
     public static string RandomString(int length)
     {
