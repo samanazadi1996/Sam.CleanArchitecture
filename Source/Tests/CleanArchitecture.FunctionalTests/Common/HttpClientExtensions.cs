@@ -5,75 +5,35 @@ namespace CleanArchitecture.FunctionalTests.Common;
 
 public static class HttpClientExtensions
 {
-    static readonly JsonSerializerOptions DefaultJsonOptions = new()
+    private static readonly JsonSerializerOptions DefaultJsonOptions = new()
     {
         PropertyNamingPolicy = JsonNamingPolicy.CamelCase
     };
 
     public static async Task<T> GetAndDeserializeAsync<T>(this HttpClient client, string requestUri, string? token = null)
-    {
-        var request = new HttpRequestMessage(HttpMethod.Get, requestUri);
+        => await client.BuildAndSendRequest<T>(HttpMethod.Get, requestUri, token);
 
-        if (!string.IsNullOrEmpty(token))
-        {
-            request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
-        }
-
-        HttpResponseMessage response = await client.SendAsync(request);
-        response.EnsureSuccessStatusCode();
-        string text = await response.Content.ReadAsStringAsync();
-
-        return JsonSerializer.Deserialize<T>(text, DefaultJsonOptions)!;
-    }
     public static async Task<T> PostAndDeserializeAsync<T>(this HttpClient client, string requestUri, object? model = null, string? token = null)
-    {
-        string jsonContent = JsonSerializer.Serialize(model, DefaultJsonOptions);
-        var content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
+        => await client.BuildAndSendRequest<T>(HttpMethod.Post, requestUri, token, model);
 
-        var request = new HttpRequestMessage(HttpMethod.Post, requestUri)
-        {
-            Content = content
-        };
-
-        if (!string.IsNullOrEmpty(token))
-        {
-            request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
-        }
-
-        HttpResponseMessage response = await client.SendAsync(request);
-
-        string text = await response.Content.ReadAsStringAsync();
-        return JsonSerializer.Deserialize<T>(text, DefaultJsonOptions)!;
-    }
     public static async Task<T> PutAndDeserializeAsync<T>(this HttpClient client, string requestUri, object? model = null, string? token = null)
-    {
-        string jsonContent = JsonSerializer.Serialize(model, DefaultJsonOptions);
-        var content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
+        => await client.BuildAndSendRequest<T>(HttpMethod.Put, requestUri, token, model);
 
-        var request = new HttpRequestMessage(HttpMethod.Put, requestUri)
-        {
-            Content = content
-        };
-
-        if (!string.IsNullOrEmpty(token))
-        {
-            request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
-        }
-
-        HttpResponseMessage response = await client.SendAsync(request);
-
-        string text = await response.Content.ReadAsStringAsync();
-
-        return JsonSerializer.Deserialize<T>(text, DefaultJsonOptions)!;
-    }
     public static async Task<T> DeleteAndDeserializeAsync<T>(this HttpClient client, string requestUri, string? token = null)
+        => await client.BuildAndSendRequest<T>(HttpMethod.Delete, requestUri, token);
+
+    private static async Task<T> BuildAndSendRequest<T>(this HttpClient client, HttpMethod method, string requestUri, string? token, object? model = null)
     {
-        var request = new HttpRequestMessage(HttpMethod.Delete, requestUri);
+        var request = new HttpRequestMessage(method, requestUri);
+
+        if (model is not null)
+        {
+            var json = JsonSerializer.Serialize(model, DefaultJsonOptions);
+            request.Content = new StringContent(json, Encoding.UTF8, "application/json");
+        }
 
         if (!string.IsNullOrEmpty(token))
-        {
-            request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
-        }
+            request.Headers.Authorization = new("Bearer", token);
 
         HttpResponseMessage response = await client.SendAsync(request);
 
