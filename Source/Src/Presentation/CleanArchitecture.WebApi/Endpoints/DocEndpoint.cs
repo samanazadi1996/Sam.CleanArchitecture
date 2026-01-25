@@ -15,8 +15,7 @@ public class DocEndpoint : EndpointGroupBase
         builder.MapGet(GetErrorCodes);
     }
 
-    Dictionary<string, string> GetErrorCodes()
-    {
-        return Enum.GetValues<ErrorCode>().ToDictionary(t => ((int)t).ToString(), t => t.ToString());
-    }
+    BaseResult<Dictionary<int, string>> GetErrorCodes()
+        => Enum.GetValues<ErrorCode>().ToDictionary(t => (int)t, t => t.ToString());
+
 }

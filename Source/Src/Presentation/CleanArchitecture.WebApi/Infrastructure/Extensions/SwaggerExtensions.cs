@@ -1,8 +1,7 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.OpenApi.Models;
-using System.Collections.Generic;
+using Microsoft.OpenApi;
 
 namespace CleanArchitecture.WebApi.Infrastructure.Extensions;
 
@@ -45,21 +44,9 @@ public static class SwaggerExtensions
                 BearerFormat = "JWT",
                 Description = "Input your Bearer token in this format - Bearer {your token here} to access this API",
             });
-            setup.AddSecurityRequirement(new OpenApiSecurityRequirement
+            setup.AddSecurityRequirement(document => new OpenApiSecurityRequirement
             {
-                {
-                    new OpenApiSecurityScheme
-                    {
-                        Reference = new OpenApiReference
-                        {
-                            Type = ReferenceType.SecurityScheme,
-                            Id = "Bearer",
-                        },
-                        Scheme = "Bearer",
-                        Name = "Bearer",
-                        In = ParameterLocation.Header,
-                    }, new List<string>()
-                },
+                [new OpenApiSecuritySchemeReference("Bearer", document)] = []
             });
         });
 

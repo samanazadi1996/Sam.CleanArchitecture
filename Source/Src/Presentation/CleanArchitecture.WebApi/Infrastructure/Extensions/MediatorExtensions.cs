@@ -7,6 +7,7 @@ using System.Linq;
 using System.Reflection;
 
 namespace CleanArchitecture.WebApi.Infrastructure.Extensions;
+
 public static class MediatorExtensions
 {
     public static IServiceCollection AddMediator(this IServiceCollection services)

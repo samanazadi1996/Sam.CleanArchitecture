@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
+using Microsoft.Extensions.DependencyInjection;
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reflection;
 using System.Text.RegularExpressions;
@@ -15,45 +17,54 @@ public abstract class EndpointGroupBase
 }
 public static class EndpointExtensions
 {
-    public static WebApplication MapEndpoints(this WebApplication app)
+    public static IServiceCollection AddEndpoints(this IServiceCollection services)
     {
         var endpointGroupType = typeof(EndpointGroupBase);
-
         var assembly = Assembly.GetExecutingAssembly();
 
         var endpointGroupTypes = assembly.GetExportedTypes()
-            .Where(t => t.IsSubclassOf(endpointGroupType));
+            .Where(t => t.IsSubclassOf(endpointGroupType) && !t.IsAbstract);
 
         foreach (var type in endpointGroupTypes)
         {
-            if (Activator.CreateInstance(type) is EndpointGroupBase instance)
-            {
-                var groupName = instance.GroupName ?? NormalizeGroupName(instance.GetType().Name);
-                var prefix = $"/api/{groupName}";
-                instance.Map(app.MapGroup(prefix).WithTags(groupName));
-            }
+            services.AddTransient(endpointGroupType, type);
+        }
+
+        return services;
+    }
+
+    public static WebApplication MapEndpoints(this WebApplication app)
+    {
+        var endpointGroups = app.Services.GetServices<EndpointGroupBase>();
+
+        foreach (var instance in endpointGroups)
+        {
+            var groupName = instance.GroupName ?? NormalizeGroupName(instance.GetType().Name);
+            var prefix = $"/api/{groupName}";
+
+            instance.Map(app.MapGroup(prefix).WithTags(groupName));
         }
 
         return app;
+
+        static string NormalizeGroupName(string endpointName)
+        {
+            if (string.IsNullOrWhiteSpace(endpointName))
+                return string.Empty;
+
+            return Regex.Replace(endpointName, "(Endpoints?)$", "", RegexOptions.IgnoreCase).Trim();
+        }
     }
 
-    public static RouteHandlerBuilder MapGet(this IEndpointRouteBuilder builder, Delegate handler)
-        => builder.MapGet(NormalizeGroupName(handler.Method.Name), handler);
+    public static RouteHandlerBuilder MapGet(this IEndpointRouteBuilder builder, Delegate handler, [StringSyntax("Route")] string pattern = null)
+        => builder.MapGet(pattern ?? handler.Method.Name, handler);
 
-    public static RouteHandlerBuilder MapPost(this IEndpointRouteBuilder builder, Delegate handler)
-        => builder.MapPost(NormalizeGroupName(handler.Method.Name), handler);
+    public static RouteHandlerBuilder MapPost(this IEndpointRouteBuilder builder, Delegate handler, [StringSyntax("Route")] string pattern = null)
+        => builder.MapPost(pattern ?? handler.Method.Name, handler);
 
-    public static RouteHandlerBuilder MapPut(this IEndpointRouteBuilder builder, Delegate handler)
-        => builder.MapPut(NormalizeGroupName(handler.Method.Name), handler);
+    public static RouteHandlerBuilder MapPut(this IEndpointRouteBuilder builder, Delegate handler, [StringSyntax("Route")] string pattern = null)
+        => builder.MapPut(pattern ?? handler.Method.Name, handler);
 
-    public static RouteHandlerBuilder MapDelete(this IEndpointRouteBuilder builder, Delegate handler)
-        => builder.MapDelete(NormalizeGroupName(handler.Method.Name), handler);
-
-    private static string NormalizeGroupName(string endpointName)
-    {
-        if (string.IsNullOrWhiteSpace(endpointName))
-            return string.Empty;
-
-        return Regex.Replace(endpointName, "(Endpoints?)$", "", RegexOptions.IgnoreCase).Trim();
-    }
+    public static RouteHandlerBuilder MapDelete(this IEndpointRouteBuilder builder, Delegate handler, [StringSyntax("Route")] string pattern = null)
+        => builder.MapDelete(pattern ?? handler.Method.Name, handler);
 }
