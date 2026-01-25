@@ -4,6 +4,7 @@
         parent.appendChild(el);
         return el;
     };
+    const isDarkMode = () => document.documentElement.classList.contains('dark-mode');
 
     const body = document.body;
     if (!body) throw "Body element not found";
@@ -37,7 +38,7 @@
             right: 20px;
             width: 320px;
             max-width: 90%;
-            background-color: #fff;
+            background-color: ${isDarkMode() ? "#1c2022" : "#fff"};
             border-radius: 12px;
             padding: 20px;
             box-shadow: 0 8px 24px rgba(0,0,0,0.25);
@@ -57,7 +58,7 @@
         const title = CreateElement("h3", header);
         title.innerText = "Login";
         title.style.margin = "0";
-        title.style.color = "#333";
+        title.style.color = isDarkMode() ? "#fff" : "#333";
 
         const closeBtn = CreateElement("button", header);
         closeBtn.innerText = "✖";
@@ -85,7 +86,7 @@
             label.style.display = "block";
             label.style.marginBottom = "4px";
             label.style.fontWeight = "bold";
-            label.style.color = "#555";
+            label.style.color = isDarkMode() ? "#fff" : "#333";
 
             const input = CreateElement("input", wrapper);
             input.type = type;
@@ -95,6 +96,8 @@
                 padding: 8px 10px;
                 border: 1px solid #ccc;
                 border-radius: 6px;
+                background-color: ${isDarkMode() ? "#1c2022" : "#fff"};
+                color: ${isDarkMode() ? "#fff" : "#333"};
                 font-size: 14px;
             `;
             return input;
