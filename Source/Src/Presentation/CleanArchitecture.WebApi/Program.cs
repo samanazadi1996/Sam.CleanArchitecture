@@ -36,7 +36,6 @@ builder.Services.AddAnyCors();
 builder.Services.AddAuthorization();
 builder.Services.AddCustomLocalization(builder.Configuration);
 builder.Services.AddHealthChecks();
-builder.Services.AddEndpoints();
 builder.Host.UseSerilog((context, configuration) => configuration.ReadFrom.Configuration(context.Configuration));
 
 var app = builder.Build();
