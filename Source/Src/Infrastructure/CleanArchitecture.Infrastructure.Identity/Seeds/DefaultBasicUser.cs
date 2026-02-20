@@ -14,8 +14,8 @@ public static class DefaultBasicUser
         {
             UserName = "Admin",
             Email = "Admin@Admin.com",
-            Name = "Saman",
-            PhoneNumber = "09304241296",
+            Name = "Admin",
+            PhoneNumber = "09000000000",
             EmailConfirmed = true,
             PhoneNumberConfirmed = true
         };
