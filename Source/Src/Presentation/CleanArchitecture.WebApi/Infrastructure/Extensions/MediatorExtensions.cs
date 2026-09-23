@@ -1,5 +1,4 @@
 ﻿using CleanArchitecture.Application.Behaviours;
-using CleanArchitecture.Application.Interfaces;
 using CleanArchitecture.WebApi.Infrastructure.Services;
 using Microsoft.Extensions.DependencyInjection;
 using System;

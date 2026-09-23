@@ -1,5 +1,3 @@
-using CleanArchitecture.Application.Wrappers;
-using CleanArchitecture.WebApi.Infrastructure.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Routing;
 using System;
