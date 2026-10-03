@@ -22,7 +22,7 @@ public static class ServiceRegistration
         else
         {
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
+                options.UseSqlite(configuration.GetConnectionString("DefaultConnection")));
         }
 
         services.AddScoped<IUnitOfWork, UnitOfWork>();

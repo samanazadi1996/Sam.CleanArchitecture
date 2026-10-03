@@ -35,13 +35,13 @@ To run a Docker Compose project that utilizes volumes, follow these steps:
 2. Create Docker Volume
     - Run the following command to create the Docker volume
         ``` lua
-        docker volume create --name=sqlserver_data
+        docker volume create --name=appdata
         ```
-        This command creates a Docker volume named sqlserver_data.
+        This command creates a Docker volume named appdata. The SQLite database files (`CleanArchitecture.db` and `CleanArchitectureIdentity.db`) are stored inside it, so they survive container rebuilds.
 
 3. Customize the project configuration
     - You can easily change the ports
-    - You can change the SQL password in the `.env` file
+    - You can change the SQLite file paths in the `.env` file or in `docker-compose.yml`
     - And more 😂
 
 4. Execute the `up` Command

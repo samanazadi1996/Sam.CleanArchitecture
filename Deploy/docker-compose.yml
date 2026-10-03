@@ -8,26 +8,14 @@ services:
       dockerfile: ../Source/Src/Presentation/CleanArchitecture.WebApi/Dockerfile
     environment:
       - ASPNETCORE_ENVIRONMENT=${ENVIRONMENT}
-      - ConnectionStrings__DefaultConnection=Data Source=sqlserver;Initial Catalog=CleanArchitecture;user id=sa;password=${SqlServerSaPassword};MultipleActiveResultSets=True;TrustServerCertificate=True
-      - ConnectionStrings__IdentityConnection=Data Source=sqlserver;Initial Catalog=CleanArchitectureIdentity;user id=sa;password=${SqlServerSaPassword};MultipleActiveResultSets=True;TrustServerCertificate=True
+      - ConnectionStrings__DefaultConnection=Data Source=/app/App_Data/CleanArchitecture.db
+      - ConnectionStrings__IdentityConnection=Data Source=/app/App_Data/CleanArchitectureIdentity.db
     ports:
       - "8080:8080"
-    depends_on:
-      - sqlserver
-    restart: unless-stopped
-
-  sqlserver:
-    image: mcr.microsoft.com/mssql/server
-    hostname: SqlServerHost
-    ports:
-      - "9433:1433"
     volumes:
-      - sqlserver_data:/var/opt/mssql
-    environment:
-      ACCEPT_EULA: Y
-      SA_PASSWORD: ${SqlServerSaPassword}
+      - appdata:/app/App_Data
     restart: unless-stopped
 
 volumes:
-  sqlserver_data:
+  appdata:
     external: true

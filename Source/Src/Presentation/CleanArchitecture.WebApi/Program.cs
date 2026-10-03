@@ -44,6 +44,9 @@ using (var scope = app.Services.CreateScope())
 
     if (!useInMemoryDatabase)
     {
+        //SQLite does not create the folder that contains the database file.
+        builder.Configuration.EnsureDatabaseDirectoriesExist();
+
         await services.GetRequiredService<IdentityContext>().Database.MigrateAsync();
         await services.GetRequiredService<ApplicationDbContext>().Database.MigrateAsync();
     }

@@ -2,6 +2,7 @@
 using CleanArchitecture.Domain.Common;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
+using Microsoft.EntityFrameworkCore.Metadata;
 using System;
 using System.Linq;
 
@@ -48,6 +49,7 @@ public static class EntityFrameworkExtensions
 
     /// <summary>
     /// Configures decimal properties for the given DbContext to have a specific precision and scale.
+    /// Uses the provider-agnostic precision/scale API so the correct store type is picked per provider.
     /// </summary>
     /// <param name="context">The DbContext to apply configurations to.</param>
     /// <param name="builder">The ModelBuilder to configure entity properties.</param>
@@ -57,7 +59,8 @@ public static class EntityFrameworkExtensions
                      .SelectMany(t => t.GetProperties())
                      .Where(p => p.ClrType == typeof(decimal) || p.ClrType == typeof(decimal?)))
         {
-            property.SetColumnType("decimal(18,6)");
+            property.SetPrecision(18);
+            property.SetScale(6);
         }
 
         builder.ApplyConfigurationsFromAssembly(context.GetType().Assembly);

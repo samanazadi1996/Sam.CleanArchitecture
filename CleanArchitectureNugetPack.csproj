@@ -19,8 +19,8 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<Content Include="Source\**\*" Exclude="**\bin\**\*;**\obj\**\*;**\.vs\**\*;**\.vscode\**\*" />
-		<Content Include="Templates\**\*" Exclude="**\bin\**\*;**\obj\**\*;**\.vs\**\*;**\.vscode\**\*" />
+		<Content Include="Source\**\*" Exclude="**\bin\**\*;**\obj\**\*;**\.vs\**\*;**\.vscode\**\*;**\App_Data\**\*" />
+		<Content Include="Templates\**\*" Exclude="**\bin\**\*;**\obj\**\*;**\.vs\**\*;**\.vscode\**\*;**\App_Data\**\*" />
 		<Compile Remove="**\*" />
 	</ItemGroup>
 
